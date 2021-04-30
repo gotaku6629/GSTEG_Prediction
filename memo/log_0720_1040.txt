@@ -1,0 +1,2497 @@
+2020-07-20 10:40:43,673:Logging to file ./gsteg/cr_caches/test//log_0720_0850.txt
+2020-07-20 10:40:43,673:{'rgb_data': './gsteg/Charades_v1_rgb/', 'dataset': 'charades', 'train_file': './gsteg/Charades/Charades_v1_train.csv', 'val_file': './gsteg/Charades/Charades_v1_test.csv', 'groundtruth_lookup': './utils/groundtruth.p', 'rgb_arch': 'i3d', 'workers': 4, 'epochs': 10, 'start_epoch': 0, 'batch_size': 1, 'lr': 0.005, 'lr_decay_rate': 3, 'momentum': 0.9, 'weight_decay': 0.0001, 'print_freq': 10, 'resume': './gsteg/cr_caches/test/model.pth.tar', 'evaluate': False, 'rgb_pretrained_weights': './gsteg/rgb_i3d_pretrained.pt', 'inputsize': 224, 'extract_feat_dim': 1024, 'world_size': 1, 'manual_seed': 0, 'dist_url': 'tcp://224.66.41.62:23456', 'dist_backend': 'gloo', 'train_size': 0.2, 'val_size': 0.2, 'cache_dir': './gsteg/cr_caches/', 'name': 'test', 's_class': 16, 'o_class': 38, 'v_class': 33, 'accum_grad': 1, 'distributed': False, 'cache': './gsteg/cr_caches/test/'}
+2020-07-20 10:40:43,699:1. create_model
+2020-07-20 10:40:43,700:1.1 create model & Networks
+2020-07-20 10:40:50,060:1.2 define optimizer
+2020-07-20 10:40:50,062:1.3 create sub_model
+2020-07-20 10:40:50,196:loading pretrained-weights from ./gsteg/rgb_i3d_pretrained.pt
+2020-07-20 10:40:50,720:1.4 define loss function
+2020-07-20 10:40:50,721:=> loading checkpoint './gsteg/cr_caches/test/model.pth.tar'
+2020-07-20 10:40:53,501:=> loaded checkpoint './gsteg/cr_caches/test/model.pth.tar' (epoch 7)
+2020-07-20 10:40:53,502:base_model
+2020-07-20 10:40:53,503:DataParallel(
+2020-07-20 10:40:53,503:  (module): InceptionI3d(
+2020-07-20 10:40:53,503:    (avg_pool): AvgPool3d(kernel_size=[2, 7, 7], stride=(1, 1, 1), padding=0)
+2020-07-20 10:40:53,503:    (dropout): Dropout(p=0.5, inplace=False)
+2020-07-20 10:40:53,503:    (logits): Unit3D(
+2020-07-20 10:40:53,503:      (conv3d): Conv3d(1024, 157, kernel_size=[1, 1, 1], stride=(1, 1, 1))
+2020-07-20 10:40:53,503:    )
+2020-07-20 10:40:53,503:    (Conv3d_1a_7x7): Unit3D(
+2020-07-20 10:40:53,503:      (conv3d): Conv3d(3, 64, kernel_size=[7, 7, 7], stride=(2, 2, 2), bias=False)
+2020-07-20 10:40:53,503:      (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,503:    )
+2020-07-20 10:40:53,503:    (MaxPool3d_2a_3x3): MaxPool3dSamePadding(kernel_size=[1, 3, 3], stride=(1, 2, 2), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,503:    (Conv3d_2b_1x1): Unit3D(
+2020-07-20 10:40:53,503:      (conv3d): Conv3d(64, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,503:      (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,503:    )
+2020-07-20 10:40:53,503:    (Conv3d_2c_3x3): Unit3D(
+2020-07-20 10:40:53,503:      (conv3d): Conv3d(64, 192, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,503:      (bn): BatchNorm3d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,503:    )
+2020-07-20 10:40:53,504:    (MaxPool3d_3a_3x3): MaxPool3dSamePadding(kernel_size=[1, 3, 3], stride=(1, 2, 2), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,504:    (Mixed_3b): InceptionModule(
+2020-07-20 10:40:53,504:      (b0): Unit3D(
+2020-07-20 10:40:53,504:        (conv3d): Conv3d(192, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,504:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,504:      )
+2020-07-20 10:40:53,504:      (b1a): Unit3D(
+2020-07-20 10:40:53,504:        (conv3d): Conv3d(192, 96, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,504:        (bn): BatchNorm3d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,504:      )
+2020-07-20 10:40:53,504:      (b1b): Unit3D(
+2020-07-20 10:40:53,504:        (conv3d): Conv3d(96, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,504:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,504:      )
+2020-07-20 10:40:53,504:      (b2a): Unit3D(
+2020-07-20 10:40:53,504:        (conv3d): Conv3d(192, 16, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,504:        (bn): BatchNorm3d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,504:      )
+2020-07-20 10:40:53,504:      (b2b): Unit3D(
+2020-07-20 10:40:53,504:        (conv3d): Conv3d(16, 32, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,504:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,504:      )
+2020-07-20 10:40:53,504:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,504:      (b3b): Unit3D(
+2020-07-20 10:40:53,504:        (conv3d): Conv3d(192, 32, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,504:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,504:      )
+2020-07-20 10:40:53,504:    )
+2020-07-20 10:40:53,504:    (Mixed_3c): InceptionModule(
+2020-07-20 10:40:53,504:      (b0): Unit3D(
+2020-07-20 10:40:53,504:        (conv3d): Conv3d(256, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,504:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,504:      )
+2020-07-20 10:40:53,504:      (b1a): Unit3D(
+2020-07-20 10:40:53,504:        (conv3d): Conv3d(256, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,504:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,504:      )
+2020-07-20 10:40:53,504:      (b1b): Unit3D(
+2020-07-20 10:40:53,504:        (conv3d): Conv3d(128, 192, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,504:        (bn): BatchNorm3d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,504:      )
+2020-07-20 10:40:53,504:      (b2a): Unit3D(
+2020-07-20 10:40:53,504:        (conv3d): Conv3d(256, 32, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,504:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,504:      )
+2020-07-20 10:40:53,504:      (b2b): Unit3D(
+2020-07-20 10:40:53,505:        (conv3d): Conv3d(32, 96, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,505:        (bn): BatchNorm3d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,505:      )
+2020-07-20 10:40:53,505:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,505:      (b3b): Unit3D(
+2020-07-20 10:40:53,505:        (conv3d): Conv3d(256, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,505:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,505:      )
+2020-07-20 10:40:53,505:    )
+2020-07-20 10:40:53,505:    (MaxPool3d_4a_3x3): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(2, 2, 2), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,505:    (Mixed_4b): InceptionModule(
+2020-07-20 10:40:53,505:      (b0): Unit3D(
+2020-07-20 10:40:53,505:        (conv3d): Conv3d(480, 192, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,505:        (bn): BatchNorm3d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,505:      )
+2020-07-20 10:40:53,505:      (b1a): Unit3D(
+2020-07-20 10:40:53,505:        (conv3d): Conv3d(480, 96, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,505:        (bn): BatchNorm3d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,505:      )
+2020-07-20 10:40:53,505:      (b1b): Unit3D(
+2020-07-20 10:40:53,505:        (conv3d): Conv3d(96, 208, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,505:        (bn): BatchNorm3d(208, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,505:      )
+2020-07-20 10:40:53,505:      (b2a): Unit3D(
+2020-07-20 10:40:53,505:        (conv3d): Conv3d(480, 16, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,505:        (bn): BatchNorm3d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,505:      )
+2020-07-20 10:40:53,505:      (b2b): Unit3D(
+2020-07-20 10:40:53,505:        (conv3d): Conv3d(16, 48, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,505:        (bn): BatchNorm3d(48, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,505:      )
+2020-07-20 10:40:53,505:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,505:      (b3b): Unit3D(
+2020-07-20 10:40:53,505:        (conv3d): Conv3d(480, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,505:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,505:      )
+2020-07-20 10:40:53,505:    )
+2020-07-20 10:40:53,505:    (Mixed_4c): InceptionModule(
+2020-07-20 10:40:53,505:      (b0): Unit3D(
+2020-07-20 10:40:53,505:        (conv3d): Conv3d(512, 160, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,505:        (bn): BatchNorm3d(160, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,505:      )
+2020-07-20 10:40:53,505:      (b1a): Unit3D(
+2020-07-20 10:40:53,505:        (conv3d): Conv3d(512, 112, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,505:        (bn): BatchNorm3d(112, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,505:      )
+2020-07-20 10:40:53,506:      (b1b): Unit3D(
+2020-07-20 10:40:53,506:        (conv3d): Conv3d(112, 224, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,506:        (bn): BatchNorm3d(224, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,506:      )
+2020-07-20 10:40:53,506:      (b2a): Unit3D(
+2020-07-20 10:40:53,506:        (conv3d): Conv3d(512, 24, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,506:        (bn): BatchNorm3d(24, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,506:      )
+2020-07-20 10:40:53,506:      (b2b): Unit3D(
+2020-07-20 10:40:53,506:        (conv3d): Conv3d(24, 64, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,506:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,506:      )
+2020-07-20 10:40:53,506:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,506:      (b3b): Unit3D(
+2020-07-20 10:40:53,506:        (conv3d): Conv3d(512, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,506:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,506:      )
+2020-07-20 10:40:53,506:    )
+2020-07-20 10:40:53,506:    (Mixed_4d): InceptionModule(
+2020-07-20 10:40:53,506:      (b0): Unit3D(
+2020-07-20 10:40:53,506:        (conv3d): Conv3d(512, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,506:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,506:      )
+2020-07-20 10:40:53,506:      (b1a): Unit3D(
+2020-07-20 10:40:53,506:        (conv3d): Conv3d(512, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,506:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,506:      )
+2020-07-20 10:40:53,506:      (b1b): Unit3D(
+2020-07-20 10:40:53,506:        (conv3d): Conv3d(128, 256, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,506:        (bn): BatchNorm3d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,506:      )
+2020-07-20 10:40:53,506:      (b2a): Unit3D(
+2020-07-20 10:40:53,506:        (conv3d): Conv3d(512, 24, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,506:        (bn): BatchNorm3d(24, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,506:      )
+2020-07-20 10:40:53,506:      (b2b): Unit3D(
+2020-07-20 10:40:53,506:        (conv3d): Conv3d(24, 64, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,506:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,506:      )
+2020-07-20 10:40:53,506:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,506:      (b3b): Unit3D(
+2020-07-20 10:40:53,506:        (conv3d): Conv3d(512, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,506:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,506:      )
+2020-07-20 10:40:53,506:    )
+2020-07-20 10:40:53,506:    (Mixed_4e): InceptionModule(
+2020-07-20 10:40:53,506:      (b0): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(512, 112, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(112, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:      (b1a): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(512, 144, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:      (b1b): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(144, 288, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(288, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:      (b2a): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(512, 32, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:      (b2b): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(32, 64, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,507:      (b3b): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(512, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:    )
+2020-07-20 10:40:53,507:    (Mixed_4f): InceptionModule(
+2020-07-20 10:40:53,507:      (b0): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(528, 256, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:      (b1a): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(528, 160, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(160, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:      (b1b): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(160, 320, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(320, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:      (b2a): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(528, 32, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:      (b2b): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(32, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,507:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,507:      (b3b): Unit3D(
+2020-07-20 10:40:53,507:        (conv3d): Conv3d(528, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,507:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,507:      )
+2020-07-20 10:40:53,508:    )
+2020-07-20 10:40:53,508:    (MaxPool3d_5a_2x2): MaxPool3dSamePadding(kernel_size=[2, 2, 2], stride=(2, 2, 2), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,508:    (Mixed_5b): InceptionModule(
+2020-07-20 10:40:53,508:      (b0): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(832, 256, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,508:      )
+2020-07-20 10:40:53,508:      (b1a): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(832, 160, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(160, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,508:      )
+2020-07-20 10:40:53,508:      (b1b): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(160, 320, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(320, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,508:      )
+2020-07-20 10:40:53,508:      (b2a): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(832, 32, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,508:      )
+2020-07-20 10:40:53,508:      (b2b): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(32, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,508:      )
+2020-07-20 10:40:53,508:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,508:      (b3b): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(832, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,508:      )
+2020-07-20 10:40:53,508:    )
+2020-07-20 10:40:53,508:    (Mixed_5c): InceptionModule(
+2020-07-20 10:40:53,508:      (b0): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(832, 384, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(384, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,508:      )
+2020-07-20 10:40:53,508:      (b1a): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(832, 192, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,508:      )
+2020-07-20 10:40:53,508:      (b1b): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(192, 384, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(384, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,508:      )
+2020-07-20 10:40:53,508:      (b2a): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(832, 48, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(48, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,508:      )
+2020-07-20 10:40:53,508:      (b2b): Unit3D(
+2020-07-20 10:40:53,508:        (conv3d): Conv3d(48, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,508:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,509:      )
+2020-07-20 10:40:53,509:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 10:40:53,509:      (b3b): Unit3D(
+2020-07-20 10:40:53,509:        (conv3d): Conv3d(832, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 10:40:53,509:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 10:40:53,509:      )
+2020-07-20 10:40:53,509:    )
+2020-07-20 10:40:53,509:  )
+2020-07-20 10:40:53,509:)
+2020-07-20 10:40:53,509:logits_model
+2020-07-20 10:40:53,510:AsyncTFBase(
+2020-07-20 10:40:53,510:  (s): Sequential(
+2020-07-20 10:40:53,510:    (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,510:    (1): ReLU()
+2020-07-20 10:40:53,510:    (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,510:    (3): Linear(in_features=1000, out_features=1000, bias=True)
+2020-07-20 10:40:53,510:    (4): ReLU()
+2020-07-20 10:40:53,510:    (5): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,510:    (6): Linear(in_features=1000, out_features=16, bias=True)
+2020-07-20 10:40:53,510:  )
+2020-07-20 10:40:53,510:  (o): Linear(in_features=1024, out_features=38, bias=True)
+2020-07-20 10:40:53,510:  (v): Linear(in_features=1024, out_features=33, bias=True)
+2020-07-20 10:40:53,510:  (so_a): BasicModule(
+2020-07-20 10:40:53,510:    (layers): Sequential(
+2020-07-20 10:40:53,510:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,510:      (1): ReLU()
+2020-07-20 10:40:53,510:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,510:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 10:40:53,510:    )
+2020-07-20 10:40:53,510:  )
+2020-07-20 10:40:53,510:  (so_b): BasicModule(
+2020-07-20 10:40:53,510:    (layers): Sequential(
+2020-07-20 10:40:53,510:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,510:      (1): ReLU()
+2020-07-20 10:40:53,510:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,510:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 10:40:53,510:    )
+2020-07-20 10:40:53,510:  )
+2020-07-20 10:40:53,510:  (ov_a): BasicModule(
+2020-07-20 10:40:53,510:    (layers): Sequential(
+2020-07-20 10:40:53,510:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,510:      (1): ReLU()
+2020-07-20 10:40:53,510:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,510:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 10:40:53,510:    )
+2020-07-20 10:40:53,510:  )
+2020-07-20 10:40:53,510:  (ov_b): BasicModule(
+2020-07-20 10:40:53,510:    (layers): Sequential(
+2020-07-20 10:40:53,510:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,510:      (1): ReLU()
+2020-07-20 10:40:53,511:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,511:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 10:40:53,511:    )
+2020-07-20 10:40:53,511:  )
+2020-07-20 10:40:53,511:  (vs_a): BasicModule(
+2020-07-20 10:40:53,511:    (layers): Sequential(
+2020-07-20 10:40:53,511:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,511:      (1): ReLU()
+2020-07-20 10:40:53,511:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,511:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 10:40:53,511:    )
+2020-07-20 10:40:53,511:  )
+2020-07-20 10:40:53,511:  (vs_b): BasicModule(
+2020-07-20 10:40:53,511:    (layers): Sequential(
+2020-07-20 10:40:53,511:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,511:      (1): ReLU()
+2020-07-20 10:40:53,511:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,511:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 10:40:53,511:    )
+2020-07-20 10:40:53,511:  )
+2020-07-20 10:40:53,511:  (ss_a): BasicModule(
+2020-07-20 10:40:53,511:    (layers): Sequential(
+2020-07-20 10:40:53,511:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,511:      (1): ReLU()
+2020-07-20 10:40:53,511:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,511:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 10:40:53,511:    )
+2020-07-20 10:40:53,511:  )
+2020-07-20 10:40:53,511:  (ss_b): BasicModule(
+2020-07-20 10:40:53,511:    (layers): Sequential(
+2020-07-20 10:40:53,511:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,511:      (1): ReLU()
+2020-07-20 10:40:53,511:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,511:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 10:40:53,511:    )
+2020-07-20 10:40:53,511:  )
+2020-07-20 10:40:53,511:  (oo_a): BasicModule(
+2020-07-20 10:40:53,511:    (layers): Sequential(
+2020-07-20 10:40:53,511:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,511:      (1): ReLU()
+2020-07-20 10:40:53,511:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,511:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 10:40:53,511:    )
+2020-07-20 10:40:53,511:  )
+2020-07-20 10:40:53,511:  (oo_b): BasicModule(
+2020-07-20 10:40:53,511:    (layers): Sequential(
+2020-07-20 10:40:53,511:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,511:      (1): ReLU()
+2020-07-20 10:40:53,511:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,511:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 10:40:53,511:    )
+2020-07-20 10:40:53,511:  )
+2020-07-20 10:40:53,512:  (vv_a): BasicModule(
+2020-07-20 10:40:53,512:    (layers): Sequential(
+2020-07-20 10:40:53,512:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,512:      (1): ReLU()
+2020-07-20 10:40:53,512:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,512:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 10:40:53,512:    )
+2020-07-20 10:40:53,512:  )
+2020-07-20 10:40:53,512:  (vv_b): BasicModule(
+2020-07-20 10:40:53,512:    (layers): Sequential(
+2020-07-20 10:40:53,512:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,512:      (1): ReLU()
+2020-07-20 10:40:53,512:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,512:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 10:40:53,512:    )
+2020-07-20 10:40:53,512:  )
+2020-07-20 10:40:53,512:  (so_t_a): BasicModule(
+2020-07-20 10:40:53,512:    (layers): Sequential(
+2020-07-20 10:40:53,512:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,512:      (1): ReLU()
+2020-07-20 10:40:53,512:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,512:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 10:40:53,512:    )
+2020-07-20 10:40:53,512:  )
+2020-07-20 10:40:53,512:  (so_t_b): BasicModule(
+2020-07-20 10:40:53,512:    (layers): Sequential(
+2020-07-20 10:40:53,512:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,512:      (1): ReLU()
+2020-07-20 10:40:53,512:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,512:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 10:40:53,512:    )
+2020-07-20 10:40:53,512:  )
+2020-07-20 10:40:53,512:  (ov_t_a): BasicModule(
+2020-07-20 10:40:53,512:    (layers): Sequential(
+2020-07-20 10:40:53,512:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,512:      (1): ReLU()
+2020-07-20 10:40:53,512:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,512:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 10:40:53,512:    )
+2020-07-20 10:40:53,512:  )
+2020-07-20 10:40:53,512:  (ov_t_b): BasicModule(
+2020-07-20 10:40:53,512:    (layers): Sequential(
+2020-07-20 10:40:53,512:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,512:      (1): ReLU()
+2020-07-20 10:40:53,512:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,512:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 10:40:53,512:    )
+2020-07-20 10:40:53,512:  )
+2020-07-20 10:40:53,512:  (vs_t_a): BasicModule(
+2020-07-20 10:40:53,512:    (layers): Sequential(
+2020-07-20 10:40:53,512:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,512:      (1): ReLU()
+2020-07-20 10:40:53,512:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,512:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 10:40:53,512:    )
+2020-07-20 10:40:53,512:  )
+2020-07-20 10:40:53,513:  (vs_t_b): BasicModule(
+2020-07-20 10:40:53,513:    (layers): Sequential(
+2020-07-20 10:40:53,513:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,513:      (1): ReLU()
+2020-07-20 10:40:53,513:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,513:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 10:40:53,513:    )
+2020-07-20 10:40:53,513:  )
+2020-07-20 10:40:53,513:  (os_t_a): BasicModule(
+2020-07-20 10:40:53,513:    (layers): Sequential(
+2020-07-20 10:40:53,513:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,513:      (1): ReLU()
+2020-07-20 10:40:53,513:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,513:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 10:40:53,513:    )
+2020-07-20 10:40:53,513:  )
+2020-07-20 10:40:53,513:  (os_t_b): BasicModule(
+2020-07-20 10:40:53,513:    (layers): Sequential(
+2020-07-20 10:40:53,513:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,513:      (1): ReLU()
+2020-07-20 10:40:53,513:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,513:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 10:40:53,513:    )
+2020-07-20 10:40:53,513:  )
+2020-07-20 10:40:53,513:  (vo_t_a): BasicModule(
+2020-07-20 10:40:53,513:    (layers): Sequential(
+2020-07-20 10:40:53,513:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,513:      (1): ReLU()
+2020-07-20 10:40:53,513:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,513:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 10:40:53,513:    )
+2020-07-20 10:40:53,513:  )
+2020-07-20 10:40:53,513:  (vo_t_b): BasicModule(
+2020-07-20 10:40:53,513:    (layers): Sequential(
+2020-07-20 10:40:53,513:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,513:      (1): ReLU()
+2020-07-20 10:40:53,513:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,513:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 10:40:53,513:    )
+2020-07-20 10:40:53,513:  )
+2020-07-20 10:40:53,513:  (sv_t_a): BasicModule(
+2020-07-20 10:40:53,513:    (layers): Sequential(
+2020-07-20 10:40:53,513:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,513:      (1): ReLU()
+2020-07-20 10:40:53,513:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,513:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 10:40:53,513:    )
+2020-07-20 10:40:53,513:  )
+2020-07-20 10:40:53,513:  (sv_t_b): BasicModule(
+2020-07-20 10:40:53,513:    (layers): Sequential(
+2020-07-20 10:40:53,513:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 10:40:53,513:      (1): ReLU()
+2020-07-20 10:40:53,513:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 10:40:53,513:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 10:40:53,513:    )
+2020-07-20 10:40:53,513:  )
+2020-07-20 10:40:53,513:)
+2020-07-20 10:40:53,513:2. get_dataset
+2020-07-20 10:40:54,634:2.1 dataset.get
+2020-07-20 10:40:54,634:Charades __init__
+2020-07-20 10:40:54,634:2.1.1 label from csv
+2020-07-20 10:40:54,818:2.1.2 video and label cache
+2020-07-20 10:40:54,818:cachefile ./gsteg/cr_caches/Charades_train.pkl
+2020-07-20 10:40:54,819:Loading cached result from './gsteg/cr_caches/Charades_train.pkl'
+2020-07-20 10:42:29,282:Charades __init__
+2020-07-20 10:42:29,283:2.1.1 label from csv
+2020-07-20 10:42:29,421:2.1.2 video and label cache
+2020-07-20 10:42:29,421:cachefile ./gsteg/cr_caches/Charades_val.pkl
+2020-07-20 10:42:29,423:Loading cached result from './gsteg/cr_caches/Charades_val.pkl'
+2020-07-20 10:42:52,110:Charades __init__
+2020-07-20 10:42:52,110:2.1.1 label from csv
+2020-07-20 10:42:52,136:2.1.2 video and label cache
+2020-07-20 10:42:52,136:cachefile ./gsteg/cr_caches/Charades_val_video.pkl
+2020-07-20 10:42:52,137:Loading cached result from './gsteg/cr_caches/Charades_val_video.pkl'
+2020-07-20 10:42:52,350:2.2 DataLoader
+2020-07-20 10:42:52,350:Charades __len__
+2020-07-20 10:42:52,350:Charades __len__
+2020-07-20 10:42:52,350:Charades __len__
+2020-07-20 10:42:52,350:Charades __len__
+2020-07-20 10:42:52,350:train_loader
+2020-07-20 10:42:52,350:<torch.utils.data.dataloader.DataLoader object at 0x7f4c19b0c890>
+2020-07-20 10:42:52,350:val_loader
+2020-07-20 10:42:52,350:<torch.utils.data.dataloader.DataLoader object at 0x7f4d66ea2510>
+2020-07-20 10:42:52,350:valvideo_loader
+2020-07-20 10:42:52,350:<torch.utils.data.dataloader.DataLoader object at 0x7f4c19b0cc50>
+2020-07-20 10:42:52,350:3. Train & Test (Validation)
+2020-07-20 10:42:52,350:epoch =
+2020-07-20 10:42:52,350:7
+2020-07-20 10:42:52,350:3.1 Training
+2020-07-20 10:42:52,351:Charades __len__
+2020-07-20 10:42:52,584:Charades __len__
+2020-07-20 10:42:52,627:Charades __getitem__
+2020-07-20 10:42:52,627:Charades __getitem__
+2020-07-20 10:42:52,628:Charades __getitem__
+2020-07-20 10:42:52,628:Charades __getitem__
+2020-07-20 10:42:53,178:Charades __getitem__
+2020-07-20 10:42:53,190:Charades __getitem__
+2020-07-20 10:42:53,197:Charades __getitem__
+2020-07-20 10:42:53,300:Charades __getitem__
+2020-07-20 10:42:55,905:Charades __getitem__
+2020-07-20 10:42:55,906:3.1.1 base_model
+2020-07-20 10:42:57,506:3.1.2 modeling
+2020-07-20 10:42:57,522:3.1.3 inference
+2020-07-20 10:42:57,605:s_output
+2020-07-20 10:42:57,652:tensor([[0.0092, 0.0714, 0.1864, 0.0429, 0.0415, 0.0800, 0.0297, 0.0433, 0.0653,
+2020-07-20 10:42:57,653:         0.1201, 0.0684, 0.1439, 0.0118, 0.0204, 0.0183, 0.0473]],
+2020-07-20 10:42:57,653:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:42:57,653:v_output
+2020-07-20 10:42:57,658:tensor([[0.0034, 0.0175, 0.0038, 0.0081, 0.0515, 0.0697, 0.0095, 0.0042, 0.7130,
+2020-07-20 10:42:57,658:         0.0175, 0.0094, 0.0016, 0.0344, 0.0057, 0.0295, 0.0079, 0.1260, 0.0043,
+2020-07-20 10:42:57,659:         0.1948, 0.0340, 0.0234, 0.0111, 0.0272, 0.1334, 0.0134, 0.0125, 0.0387,
+2020-07-20 10:42:57,659:         0.0045, 0.0085, 0.0082, 0.0133, 0.1109, 0.0084]], device='cuda:0',
+2020-07-20 10:42:57,659:       grad_fn=<CloneBackward>)
+2020-07-20 10:42:57,659:o_output
+2020-07-20 10:42:57,664:tensor([[0.1376, 0.0231, 0.0113, 0.0194, 0.0210, 0.0126, 0.0084, 0.0512, 0.0095,
+2020-07-20 10:42:57,665:         0.0197, 0.1349, 0.0563, 0.0087, 0.0051, 0.0083, 0.0402, 0.1483, 0.0042,
+2020-07-20 10:42:57,665:         0.0045, 0.0022, 0.0172, 0.0055, 0.0140, 0.0133, 0.0167, 0.0502, 0.0106,
+2020-07-20 10:42:57,665:         0.0146, 0.0030, 0.0416, 0.0089, 0.0097, 0.0120, 0.0520, 0.0098, 0.0238,
+2020-07-20 10:42:57,665:         0.0060, 0.0090]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:42:57,665:3.1.4 evaluation
+2020-07-20 10:42:58,794:updating parameters
+2020-07-20 10:42:58,802:Charades __len__
+2020-07-20 10:42:58,802:Charades __len__
+2020-07-20 10:42:58,802:Epoch: [7][0/282926(1414632)]	Time 6.451 (6.451)	Data 3.554 (3.554)	Loss 5.0847 (5.0847)	S_Prec@1 0.000 (0.000)	S_Prec@5 100.000 (100.000)	O_Prec@1 100.000 (100.000)	O_Prec@5 100.000 (100.000)	V_Prec@1 100.000 (100.000)	V_Prec@5 300.000 (300.000)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 10:43:01,089:Charades __getitem__
+2020-07-20 10:43:01,089:3.1.1 base_model
+2020-07-20 10:43:01,102:3.1.2 modeling
+2020-07-20 10:43:01,105:3.1.3 inference
+2020-07-20 10:43:01,107:s_output
+2020-07-20 10:43:01,108:tensor([[0.0121, 0.0432, 0.1469, 0.0700, 0.0468, 0.0562, 0.0195, 0.0655, 0.1586,
+2020-07-20 10:43:01,108:         0.0827, 0.0789, 0.1207, 0.0207, 0.0130, 0.0264, 0.0388]],
+2020-07-20 10:43:01,108:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:01,108:v_output
+2020-07-20 10:43:01,109:tensor([[0.0031, 0.0214, 0.0037, 0.0090, 0.0247, 0.0293, 0.0098, 0.0042, 0.6607,
+2020-07-20 10:43:01,110:         0.0213, 0.0079, 0.0013, 0.0379, 0.0062, 0.0679, 0.0053, 0.1246, 0.0038,
+2020-07-20 10:43:01,110:         0.2190, 0.0447, 0.0161, 0.0085, 0.0294, 0.1209, 0.0110, 0.0124, 0.0376,
+2020-07-20 10:43:01,110:         0.0042, 0.0091, 0.0071, 0.0125, 0.1204, 0.0117]], device='cuda:0',
+2020-07-20 10:43:01,110:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:01,110:o_output
+2020-07-20 10:43:01,111:tensor([[0.1455, 0.0173, 0.0096, 0.0156, 0.0204, 0.0140, 0.0076, 0.0688, 0.0102,
+2020-07-20 10:43:01,111:         0.0210, 0.0673, 0.0267, 0.0087, 0.0048, 0.0073, 0.0378, 0.0670, 0.0037,
+2020-07-20 10:43:01,111:         0.0041, 0.0021, 0.0371, 0.0052, 0.0112, 0.0138, 0.0164, 0.0671, 0.0124,
+2020-07-20 10:43:01,111:         0.0127, 0.0027, 0.0154, 0.0093, 0.0123, 0.0082, 0.0636, 0.0070, 0.0192,
+2020-07-20 10:43:01,111:         0.0060, 0.0070]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:01,111:3.1.4 evaluation
+2020-07-20 10:43:01,125:updating parameters
+2020-07-20 10:43:03,502:Charades __getitem__
+2020-07-20 10:43:03,503:3.1.1 base_model
+2020-07-20 10:43:03,516:3.1.2 modeling
+2020-07-20 10:43:03,519:3.1.3 inference
+2020-07-20 10:43:03,521:s_output
+2020-07-20 10:43:03,522:tensor([[0.0074, 0.0439, 0.1659, 0.0503, 0.0503, 0.0570, 0.0220, 0.0686, 0.1142,
+2020-07-20 10:43:03,522:         0.1030, 0.0743, 0.1588, 0.0100, 0.0164, 0.0199, 0.0376]],
+2020-07-20 10:43:03,522:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:03,522:v_output
+2020-07-20 10:43:03,523:tensor([[0.0030, 0.0300, 0.0026, 0.0094, 0.0187, 0.0164, 0.0069, 0.0068, 0.6301,
+2020-07-20 10:43:03,523:         0.0150, 0.0071, 0.0010, 0.0516, 0.0038, 0.0206, 0.0039, 0.1381, 0.0073,
+2020-07-20 10:43:03,524:         0.0960, 0.0288, 0.0133, 0.0081, 0.0373, 0.1341, 0.0082, 0.0176, 0.0517,
+2020-07-20 10:43:03,524:         0.0050, 0.0124, 0.0151, 0.0106, 0.0723, 0.0050]], device='cuda:0',
+2020-07-20 10:43:03,524:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:03,524:o_output
+2020-07-20 10:43:03,525:tensor([[0.1539, 0.0199, 0.0076, 0.0199, 0.0228, 0.0211, 0.0125, 0.0307, 0.0126,
+2020-07-20 10:43:03,525:         0.0361, 0.0589, 0.0280, 0.0165, 0.0074, 0.0155, 0.0390, 0.0447, 0.0038,
+2020-07-20 10:43:03,525:         0.0030, 0.0018, 0.0157, 0.0063, 0.0070, 0.0092, 0.0134, 0.0390, 0.0098,
+2020-07-20 10:43:03,525:         0.0170, 0.0034, 0.0110, 0.0097, 0.0158, 0.0063, 0.0278, 0.0067, 0.0213,
+2020-07-20 10:43:03,525:         0.0066, 0.0077]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:03,525:3.1.4 evaluation
+2020-07-20 10:43:03,539:updating parameters
+2020-07-20 10:43:05,375:Charades __getitem__
+2020-07-20 10:43:05,375:3.1.1 base_model
+2020-07-20 10:43:05,387:3.1.2 modeling
+2020-07-20 10:43:05,391:3.1.3 inference
+2020-07-20 10:43:05,394:s_output
+2020-07-20 10:43:05,395:tensor([[0.0124, 0.0613, 0.1576, 0.0864, 0.0313, 0.0677, 0.0200, 0.0713, 0.0757,
+2020-07-20 10:43:05,395:         0.0776, 0.0734, 0.1469, 0.0115, 0.0179, 0.0296, 0.0594]],
+2020-07-20 10:43:05,395:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:05,395:v_output
+2020-07-20 10:43:05,396:tensor([[0.0032, 0.0247, 0.0041, 0.0090, 0.0230, 0.0341, 0.0087, 0.0060, 0.7112,
+2020-07-20 10:43:05,396:         0.0229, 0.0084, 0.0015, 0.0434, 0.0057, 0.0290, 0.0062, 0.1215, 0.0051,
+2020-07-20 10:43:05,396:         0.0807, 0.0396, 0.0208, 0.0108, 0.0304, 0.1256, 0.0089, 0.0146, 0.0452,
+2020-07-20 10:43:05,396:         0.0053, 0.0097, 0.0109, 0.0138, 0.1124, 0.0052]], device='cuda:0',
+2020-07-20 10:43:05,396:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:05,396:o_output
+2020-07-20 10:43:05,397:tensor([[0.1546, 0.0295, 0.0086, 0.0199, 0.0255, 0.0185, 0.0111, 0.0261, 0.0145,
+2020-07-20 10:43:05,397:         0.0264, 0.0826, 0.0419, 0.0134, 0.0067, 0.0117, 0.0375, 0.0941, 0.0054,
+2020-07-20 10:43:05,397:         0.0040, 0.0025, 0.0152, 0.0063, 0.0124, 0.0173, 0.0153, 0.0526, 0.0124,
+2020-07-20 10:43:05,397:         0.0184, 0.0043, 0.0249, 0.0129, 0.0137, 0.0076, 0.0268, 0.0094, 0.0241,
+2020-07-20 10:43:05,397:         0.0085, 0.0087]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:05,397:3.1.4 evaluation
+2020-07-20 10:43:05,411:updating parameters
+2020-07-20 10:43:07,247:Charades __getitem__
+2020-07-20 10:43:07,248:3.1.1 base_model
+2020-07-20 10:43:07,261:3.1.2 modeling
+2020-07-20 10:43:07,264:3.1.3 inference
+2020-07-20 10:43:07,266:s_output
+2020-07-20 10:43:07,267:tensor([[0.0090, 0.0501, 0.1659, 0.0574, 0.0541, 0.0708, 0.0169, 0.0556, 0.0821,
+2020-07-20 10:43:07,267:         0.0800, 0.0477, 0.1897, 0.0151, 0.0249, 0.0222, 0.0585]],
+2020-07-20 10:43:07,267:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:07,267:v_output
+2020-07-20 10:43:07,268:tensor([[0.0029, 0.0197, 0.0036, 0.0089, 0.0280, 0.0358, 0.0110, 0.0049, 0.7021,
+2020-07-20 10:43:07,268:         0.0205, 0.0081, 0.0013, 0.0384, 0.0064, 0.0555, 0.0067, 0.1197, 0.0043,
+2020-07-20 10:43:07,268:         0.1538, 0.0411, 0.0175, 0.0082, 0.0306, 0.1195, 0.0108, 0.0121, 0.0379,
+2020-07-20 10:43:07,268:         0.0043, 0.0093, 0.0083, 0.0126, 0.1179, 0.0091]], device='cuda:0',
+2020-07-20 10:43:07,268:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:07,268:o_output
+2020-07-20 10:43:07,269:tensor([[0.1406, 0.0227, 0.0083, 0.0154, 0.0165, 0.0114, 0.0106, 0.0526, 0.0107,
+2020-07-20 10:43:07,270:         0.0214, 0.0835, 0.0350, 0.0101, 0.0057, 0.0083, 0.0402, 0.0777, 0.0040,
+2020-07-20 10:43:07,270:         0.0044, 0.0022, 0.0283, 0.0055, 0.0129, 0.0165, 0.0142, 0.0646, 0.0118,
+2020-07-20 10:43:07,270:         0.0130, 0.0028, 0.0215, 0.0095, 0.0112, 0.0081, 0.0481, 0.0073, 0.0195,
+2020-07-20 10:43:07,270:         0.0069, 0.0086]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:07,270:3.1.4 evaluation
+2020-07-20 10:43:07,284:updating parameters
+2020-07-20 10:43:09,120:Charades __getitem__
+2020-07-20 10:43:09,121:3.1.1 base_model
+2020-07-20 10:43:09,133:3.1.2 modeling
+2020-07-20 10:43:09,137:3.1.3 inference
+2020-07-20 10:43:09,139:s_output
+2020-07-20 10:43:09,140:tensor([[0.0186, 0.0439, 0.1386, 0.0421, 0.0585, 0.0503, 0.0216, 0.0885, 0.1476,
+2020-07-20 10:43:09,140:         0.1058, 0.0865, 0.1310, 0.0094, 0.0128, 0.0172, 0.0277]],
+2020-07-20 10:43:09,140:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:09,140:v_output
+2020-07-20 10:43:09,141:tensor([[0.0042, 0.0315, 0.0032, 0.0152, 0.0136, 0.0164, 0.0103, 0.0083, 0.6167,
+2020-07-20 10:43:09,141:         0.0165, 0.0105, 0.0012, 0.0597, 0.0041, 0.0192, 0.0039, 0.1656, 0.0060,
+2020-07-20 10:43:09,141:         0.0837, 0.0315, 0.0164, 0.0101, 0.0419, 0.1526, 0.0078, 0.0262, 0.0721,
+2020-07-20 10:43:09,141:         0.0058, 0.0187, 0.0141, 0.0138, 0.0712, 0.0045]], device='cuda:0',
+2020-07-20 10:43:09,141:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:09,141:o_output
+2020-07-20 10:43:09,142:tensor([[0.1467, 0.0367, 0.0099, 0.0258, 0.0202, 0.0167, 0.0145, 0.0292, 0.0190,
+2020-07-20 10:43:09,142:         0.0502, 0.0386, 0.0240, 0.0192, 0.0095, 0.0146, 0.0551, 0.0460, 0.0057,
+2020-07-20 10:43:09,142:         0.0041, 0.0023, 0.0133, 0.0077, 0.0077, 0.0137, 0.0118, 0.0370, 0.0105,
+2020-07-20 10:43:09,142:         0.0242, 0.0035, 0.0105, 0.0143, 0.0248, 0.0067, 0.0262, 0.0081, 0.0307,
+2020-07-20 10:43:09,142:         0.0084, 0.0090]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:09,142:3.1.4 evaluation
+2020-07-20 10:43:09,156:updating parameters
+2020-07-20 10:43:10,991:Charades __getitem__
+2020-07-20 10:43:10,992:3.1.1 base_model
+2020-07-20 10:43:11,004:3.1.2 modeling
+2020-07-20 10:43:11,008:3.1.3 inference
+2020-07-20 10:43:11,010:s_output
+2020-07-20 10:43:11,011:tensor([[0.0161, 0.0310, 0.1665, 0.0449, 0.0506, 0.0643, 0.0207, 0.0515, 0.1383,
+2020-07-20 10:43:11,011:         0.1035, 0.0774, 0.1282, 0.0164, 0.0159, 0.0256, 0.0491]],
+2020-07-20 10:43:11,011:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:11,011:v_output
+2020-07-20 10:43:11,012:tensor([[0.0034, 0.0386, 0.0028, 0.0179, 0.0173, 0.0187, 0.0157, 0.0111, 0.5386,
+2020-07-20 10:43:11,012:         0.0184, 0.0061, 0.0013, 0.0627, 0.0049, 0.0185, 0.0047, 0.1415, 0.0064,
+2020-07-20 10:43:11,012:         0.0787, 0.0378, 0.0223, 0.0093, 0.0385, 0.1270, 0.0100, 0.0206, 0.0762,
+2020-07-20 10:43:11,012:         0.0067, 0.0185, 0.0165, 0.0167, 0.1089, 0.0057]], device='cuda:0',
+2020-07-20 10:43:11,012:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:11,012:o_output
+2020-07-20 10:43:11,013:tensor([[0.1476, 0.0289, 0.0070, 0.0215, 0.0206, 0.0157, 0.0163, 0.0345, 0.0268,
+2020-07-20 10:43:11,013:         0.0505, 0.0491, 0.0245, 0.0249, 0.0124, 0.0171, 0.0386, 0.0394, 0.0055,
+2020-07-20 10:43:11,013:         0.0064, 0.0029, 0.0139, 0.0091, 0.0105, 0.0273, 0.0139, 0.0391, 0.0109,
+2020-07-20 10:43:11,013:         0.0204, 0.0042, 0.0113, 0.0178, 0.0174, 0.0055, 0.0304, 0.0072, 0.0345,
+2020-07-20 10:43:11,013:         0.0095, 0.0133]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:11,013:3.1.4 evaluation
+2020-07-20 10:43:11,028:updating parameters
+2020-07-20 10:43:12,863:Charades __getitem__
+2020-07-20 10:43:12,864:3.1.1 base_model
+2020-07-20 10:43:12,877:3.1.2 modeling
+2020-07-20 10:43:12,880:3.1.3 inference
+2020-07-20 10:43:12,882:s_output
+2020-07-20 10:43:12,883:tensor([[0.0115, 0.0596, 0.1395, 0.0588, 0.0563, 0.0632, 0.0172, 0.0615, 0.1196,
+2020-07-20 10:43:12,883:         0.0827, 0.0657, 0.1677, 0.0169, 0.0214, 0.0159, 0.0425]],
+2020-07-20 10:43:12,883:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:12,883:v_output
+2020-07-20 10:43:12,884:tensor([[0.0029, 0.0311, 0.0041, 0.0111, 0.0268, 0.0227, 0.0099, 0.0096, 0.6638,
+2020-07-20 10:43:12,884:         0.0171, 0.0063, 0.0015, 0.0527, 0.0068, 0.0268, 0.0062, 0.1553, 0.0080,
+2020-07-20 10:43:12,884:         0.0568, 0.0336, 0.0170, 0.0059, 0.0378, 0.1552, 0.0122, 0.0242, 0.0669,
+2020-07-20 10:43:12,884:         0.0068, 0.0155, 0.0179, 0.0152, 0.0571, 0.0046]], device='cuda:0',
+2020-07-20 10:43:12,884:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:12,885:o_output
+2020-07-20 10:43:12,886:tensor([[0.1293, 0.0338, 0.0072, 0.0165, 0.0181, 0.0230, 0.0180, 0.0227, 0.0175,
+2020-07-20 10:43:12,886:         0.0445, 0.0841, 0.0334, 0.0218, 0.0107, 0.0183, 0.0427, 0.0658, 0.0062,
+2020-07-20 10:43:12,886:         0.0042, 0.0024, 0.0136, 0.0091, 0.0127, 0.0120, 0.0123, 0.0642, 0.0130,
+2020-07-20 10:43:12,886:         0.0168, 0.0047, 0.0172, 0.0163, 0.0184, 0.0065, 0.0247, 0.0067, 0.0323,
+2020-07-20 10:43:12,886:         0.0078, 0.0103]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:12,886:3.1.4 evaluation
+2020-07-20 10:43:12,900:updating parameters
+2020-07-20 10:43:14,736:Charades __getitem__
+2020-07-20 10:43:14,737:3.1.1 base_model
+2020-07-20 10:43:14,749:3.1.2 modeling
+2020-07-20 10:43:14,752:3.1.3 inference
+2020-07-20 10:43:14,755:s_output
+2020-07-20 10:43:14,756:tensor([[0.0141, 0.0312, 0.2416, 0.0561, 0.0452, 0.0488, 0.0170, 0.0674, 0.0821,
+2020-07-20 10:43:14,756:         0.0633, 0.0587, 0.1814, 0.0168, 0.0186, 0.0250, 0.0326]],
+2020-07-20 10:43:14,756:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:14,756:v_output
+2020-07-20 10:43:14,757:tensor([[0.0041, 0.0249, 0.0116, 0.0093, 0.0259, 0.0314, 0.0086, 0.0052, 0.6317,
+2020-07-20 10:43:14,757:         0.0184, 0.0088, 0.0020, 0.0456, 0.0050, 0.0381, 0.0084, 0.1359, 0.0068,
+2020-07-20 10:43:14,757:         0.1672, 0.0330, 0.0164, 0.0088, 0.0343, 0.1426, 0.0113, 0.0157, 0.0519,
+2020-07-20 10:43:14,757:         0.0053, 0.0108, 0.0104, 0.0182, 0.0870, 0.0128]], device='cuda:0',
+2020-07-20 10:43:14,757:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:14,757:o_output
+2020-07-20 10:43:14,758:tensor([[0.1497, 0.0245, 0.0094, 0.0170, 0.0242, 0.0152, 0.0122, 0.0516, 0.0109,
+2020-07-20 10:43:14,758:         0.0248, 0.0825, 0.0590, 0.0112, 0.0058, 0.0108, 0.0488, 0.1197, 0.0051,
+2020-07-20 10:43:14,758:         0.0036, 0.0028, 0.0312, 0.0062, 0.0102, 0.0097, 0.0210, 0.0478, 0.0127,
+2020-07-20 10:43:14,759:         0.0119, 0.0046, 0.0195, 0.0098, 0.0176, 0.0090, 0.0601, 0.0072, 0.0221,
+2020-07-20 10:43:14,759:         0.0116, 0.0080]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:14,759:3.1.4 evaluation
+2020-07-20 10:43:14,773:updating parameters
+2020-07-20 10:43:17,059:Charades __getitem__
+2020-07-20 10:43:17,060:3.1.1 base_model
+2020-07-20 10:43:17,073:3.1.2 modeling
+2020-07-20 10:43:17,076:3.1.3 inference
+2020-07-20 10:43:17,078:s_output
+2020-07-20 10:43:17,079:tensor([[0.0084, 0.0277, 0.1820, 0.0400, 0.0591, 0.0589, 0.0223, 0.0675, 0.1172,
+2020-07-20 10:43:17,079:         0.0780, 0.0671, 0.1892, 0.0096, 0.0125, 0.0166, 0.0439]],
+2020-07-20 10:43:17,079:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:17,080:v_output
+2020-07-20 10:43:17,081:tensor([[0.0033, 0.0250, 0.0031, 0.0118, 0.0150, 0.0208, 0.0097, 0.0052, 0.6977,
+2020-07-20 10:43:17,081:         0.0212, 0.0081, 0.0012, 0.0486, 0.0048, 0.0350, 0.0040, 0.1250, 0.0044,
+2020-07-20 10:43:17,081:         0.1862, 0.0434, 0.0163, 0.0125, 0.0305, 0.1211, 0.0100, 0.0162, 0.0550,
+2020-07-20 10:43:17,081:         0.0045, 0.0125, 0.0094, 0.0121, 0.1277, 0.0080]], device='cuda:0',
+2020-07-20 10:43:17,081:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:17,081:o_output
+2020-07-20 10:43:17,082:tensor([[0.1371, 0.0258, 0.0095, 0.0238, 0.0264, 0.0143, 0.0128, 0.0590, 0.0131,
+2020-07-20 10:43:17,082:         0.0350, 0.0410, 0.0219, 0.0117, 0.0060, 0.0095, 0.0512, 0.0481, 0.0040,
+2020-07-20 10:43:17,082:         0.0043, 0.0021, 0.0250, 0.0055, 0.0077, 0.0172, 0.0166, 0.0476, 0.0122,
+2020-07-20 10:43:17,082:         0.0217, 0.0029, 0.0116, 0.0098, 0.0153, 0.0086, 0.0389, 0.0081, 0.0243,
+2020-07-20 10:43:17,082:         0.0088, 0.0083]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:17,082:3.1.4 evaluation
+2020-07-20 10:43:17,096:updating parameters
+2020-07-20 10:43:18,931:Charades __getitem__
+2020-07-20 10:43:18,932:3.1.1 base_model
+2020-07-20 10:43:18,944:3.1.2 modeling
+2020-07-20 10:43:18,947:3.1.3 inference
+2020-07-20 10:43:18,950:s_output
+2020-07-20 10:43:18,951:tensor([[0.0110, 0.0457, 0.2195, 0.0460, 0.0692, 0.0624, 0.0187, 0.0563, 0.0847,
+2020-07-20 10:43:18,951:         0.0770, 0.0580, 0.1567, 0.0115, 0.0166, 0.0164, 0.0505]],
+2020-07-20 10:43:18,951:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:18,951:v_output
+2020-07-20 10:43:18,952:tensor([[0.0031, 0.0285, 0.0052, 0.0191, 0.0299, 0.0222, 0.0119, 0.0064, 0.6321,
+2020-07-20 10:43:18,952:         0.0167, 0.0055, 0.0018, 0.0461, 0.0057, 0.0200, 0.0074, 0.1984, 0.0059,
+2020-07-20 10:43:18,952:         0.0461, 0.0362, 0.0183, 0.0098, 0.0323, 0.1578, 0.0085, 0.0235, 0.1019,
+2020-07-20 10:43:18,952:         0.0065, 0.0211, 0.0122, 0.0317, 0.0828, 0.0045]], device='cuda:0',
+2020-07-20 10:43:18,952:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:18,952:o_output
+2020-07-20 10:43:18,953:tensor([[0.1131, 0.0287, 0.0060, 0.0222, 0.0214, 0.0227, 0.0139, 0.0216, 0.0263,
+2020-07-20 10:43:18,953:         0.0705, 0.0927, 0.0548, 0.0144, 0.0072, 0.0125, 0.0282, 0.0667, 0.0085,
+2020-07-20 10:43:18,953:         0.0061, 0.0038, 0.0136, 0.0085, 0.0148, 0.0220, 0.0116, 0.0369, 0.0116,
+2020-07-20 10:43:18,953:         0.0195, 0.0042, 0.0138, 0.0282, 0.0140, 0.0058, 0.0296, 0.0065, 0.0452,
+2020-07-20 10:43:18,953:         0.0060, 0.0096]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:18,953:3.1.4 evaluation
+2020-07-20 10:43:18,967:updating parameters
+2020-07-20 10:43:18,971:Charades __len__
+2020-07-20 10:43:18,971:Charades __len__
+2020-07-20 10:43:18,992:Epoch: [7][10/282926(1414632)]	Time 1.871 (2.420)	Data 1.831 (2.120)	Loss 8.6900 (6.8830)	S_Prec@1 0.000 (9.091)	S_Prec@5 0.000 (54.545)	O_Prec@1 0.000 (27.273)	O_Prec@5 100.000 (90.909)	V_Prec@1 100.000 (45.455)	V_Prec@5 300.000 (127.273)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 10:43:20,825:Charades __getitem__
+2020-07-20 10:43:20,826:3.1.1 base_model
+2020-07-20 10:43:20,838:3.1.2 modeling
+2020-07-20 10:43:20,842:3.1.3 inference
+2020-07-20 10:43:20,844:s_output
+2020-07-20 10:43:20,845:tensor([[0.0080, 0.0426, 0.1726, 0.0439, 0.0740, 0.0514, 0.0198, 0.0588, 0.1010,
+2020-07-20 10:43:20,845:         0.0819, 0.0803, 0.1700, 0.0103, 0.0228, 0.0192, 0.0435]],
+2020-07-20 10:43:20,845:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:20,845:v_output
+2020-07-20 10:43:20,846:tensor([[0.0039, 0.0298, 0.0033, 0.0123, 0.0174, 0.0295, 0.0091, 0.0055, 0.6911,
+2020-07-20 10:43:20,846:         0.0218, 0.0096, 0.0016, 0.0587, 0.0049, 0.0294, 0.0048, 0.1505, 0.0053,
+2020-07-20 10:43:20,846:         0.1673, 0.0499, 0.0153, 0.0102, 0.0315, 0.1519, 0.0087, 0.0189, 0.0481,
+2020-07-20 10:43:20,846:         0.0047, 0.0126, 0.0104, 0.0128, 0.1085, 0.0074]], device='cuda:0',
+2020-07-20 10:43:20,846:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:20,846:o_output
+2020-07-20 10:43:20,847:tensor([[0.1492, 0.0338, 0.0121, 0.0213, 0.0368, 0.0236, 0.0092, 0.0533, 0.0132,
+2020-07-20 10:43:20,848:         0.0362, 0.0488, 0.0286, 0.0122, 0.0062, 0.0108, 0.0510, 0.0725, 0.0050,
+2020-07-20 10:43:20,848:         0.0043, 0.0022, 0.0225, 0.0059, 0.0102, 0.0145, 0.0186, 0.0417, 0.0146,
+2020-07-20 10:43:20,848:         0.0178, 0.0031, 0.0174, 0.0113, 0.0175, 0.0092, 0.0342, 0.0077, 0.0238,
+2020-07-20 10:43:20,848:         0.0076, 0.0067]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:20,848:3.1.4 evaluation
+2020-07-20 10:43:20,861:updating parameters
+2020-07-20 10:43:22,696:Charades __getitem__
+2020-07-20 10:43:22,697:3.1.1 base_model
+2020-07-20 10:43:22,710:3.1.2 modeling
+2020-07-20 10:43:22,714:3.1.3 inference
+2020-07-20 10:43:22,716:s_output
+2020-07-20 10:43:22,717:tensor([[0.0165, 0.0350, 0.2225, 0.0835, 0.0727, 0.0678, 0.0180, 0.0684, 0.0668,
+2020-07-20 10:43:22,717:         0.0796, 0.0414, 0.1373, 0.0176, 0.0110, 0.0163, 0.0457]],
+2020-07-20 10:43:22,717:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:22,717:v_output
+2020-07-20 10:43:22,718:tensor([[0.0030, 0.0199, 0.0045, 0.0082, 0.0298, 0.0412, 0.0101, 0.0040, 0.6339,
+2020-07-20 10:43:22,718:         0.0176, 0.0079, 0.0014, 0.0373, 0.0048, 0.0345, 0.0066, 0.1298, 0.0035,
+2020-07-20 10:43:22,718:         0.2122, 0.0368, 0.0147, 0.0066, 0.0293, 0.1189, 0.0094, 0.0123, 0.0421,
+2020-07-20 10:43:22,718:         0.0041, 0.0086, 0.0065, 0.0127, 0.1171, 0.0102]], device='cuda:0',
+2020-07-20 10:43:22,718:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:22,718:o_output
+2020-07-20 10:43:22,719:tensor([[0.1369, 0.0223, 0.0079, 0.0120, 0.0213, 0.0105, 0.0089, 0.0757, 0.0119,
+2020-07-20 10:43:22,719:         0.0193, 0.0825, 0.0382, 0.0087, 0.0049, 0.0065, 0.0381, 0.1036, 0.0048,
+2020-07-20 10:43:22,719:         0.0039, 0.0020, 0.0232, 0.0053, 0.0106, 0.0130, 0.0154, 0.0453, 0.0116,
+2020-07-20 10:43:22,719:         0.0112, 0.0030, 0.0210, 0.0113, 0.0122, 0.0072, 0.0636, 0.0080, 0.0195,
+2020-07-20 10:43:22,719:         0.0059, 0.0076]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:22,719:3.1.4 evaluation
+2020-07-20 10:43:22,733:updating parameters
+2020-07-20 10:43:24,569:Charades __getitem__
+2020-07-20 10:43:24,570:3.1.1 base_model
+2020-07-20 10:43:24,583:3.1.2 modeling
+2020-07-20 10:43:24,586:3.1.3 inference
+2020-07-20 10:43:24,588:s_output
+2020-07-20 10:43:24,589:tensor([[0.0126, 0.0414, 0.1763, 0.0409, 0.0533, 0.0636, 0.0140, 0.0848, 0.0619,
+2020-07-20 10:43:24,590:         0.1153, 0.0585, 0.1859, 0.0140, 0.0136, 0.0168, 0.0471]],
+2020-07-20 10:43:24,590:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:24,590:v_output
+2020-07-20 10:43:24,591:tensor([[0.0024, 0.0268, 0.0039, 0.0183, 0.0148, 0.0150, 0.0128, 0.0069, 0.6333,
+2020-07-20 10:43:24,591:         0.0148, 0.0048, 0.0013, 0.0519, 0.0059, 0.0335, 0.0047, 0.1605, 0.0047,
+2020-07-20 10:43:24,591:         0.0561, 0.0322, 0.0144, 0.0072, 0.0267, 0.1334, 0.0082, 0.0206, 0.0791,
+2020-07-20 10:43:24,591:         0.0055, 0.0187, 0.0103, 0.0381, 0.0967, 0.0053]], device='cuda:0',
+2020-07-20 10:43:24,591:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:24,591:o_output
+2020-07-20 10:43:24,592:tensor([[0.0987, 0.0254, 0.0057, 0.0204, 0.0189, 0.0151, 0.0095, 0.0217, 0.0196,
+2020-07-20 10:43:24,592:         0.0710, 0.0478, 0.0279, 0.0142, 0.0079, 0.0105, 0.0295, 0.0375, 0.0052,
+2020-07-20 10:43:24,592:         0.0059, 0.0037, 0.0130, 0.0071, 0.0110, 0.0211, 0.0120, 0.0577, 0.0097,
+2020-07-20 10:43:24,592:         0.0158, 0.0031, 0.0097, 0.0192, 0.0140, 0.0052, 0.0289, 0.0055, 0.0610,
+2020-07-20 10:43:24,592:         0.0052, 0.0106]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:24,592:3.1.4 evaluation
+2020-07-20 10:43:24,606:updating parameters
+2020-07-20 10:43:26,441:Charades __getitem__
+2020-07-20 10:43:26,442:3.1.1 base_model
+2020-07-20 10:43:26,455:3.1.2 modeling
+2020-07-20 10:43:26,458:3.1.3 inference
+2020-07-20 10:43:26,460:s_output
+2020-07-20 10:43:26,461:tensor([[0.0139, 0.0404, 0.2355, 0.0444, 0.0332, 0.0532, 0.0185, 0.0884, 0.0705,
+2020-07-20 10:43:26,461:         0.1136, 0.0416, 0.1601, 0.0107, 0.0152, 0.0190, 0.0419]],
+2020-07-20 10:43:26,461:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:26,461:v_output
+2020-07-20 10:43:26,462:tensor([[0.0028, 0.0194, 0.0033, 0.0077, 0.0313, 0.0590, 0.0076, 0.0043, 0.7194,
+2020-07-20 10:43:26,462:         0.0179, 0.0077, 0.0013, 0.0389, 0.0052, 0.0373, 0.0053, 0.1229, 0.0039,
+2020-07-20 10:43:26,462:         0.1991, 0.0370, 0.0180, 0.0084, 0.0261, 0.1278, 0.0127, 0.0114, 0.0319,
+2020-07-20 10:43:26,462:         0.0039, 0.0083, 0.0078, 0.0086, 0.1051, 0.0083]], device='cuda:0',
+2020-07-20 10:43:26,462:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:26,462:o_output
+2020-07-20 10:43:26,464:tensor([[0.1399, 0.0234, 0.0099, 0.0167, 0.0190, 0.0110, 0.0081, 0.0600, 0.0083,
+2020-07-20 10:43:26,464:         0.0202, 0.0786, 0.0348, 0.0091, 0.0049, 0.0079, 0.0367, 0.1250, 0.0036,
+2020-07-20 10:43:26,464:         0.0036, 0.0017, 0.0234, 0.0048, 0.0115, 0.0112, 0.0145, 0.0556, 0.0108,
+2020-07-20 10:43:26,464:         0.0110, 0.0027, 0.0315, 0.0069, 0.0094, 0.0083, 0.0518, 0.0076, 0.0168,
+2020-07-20 10:43:26,464:         0.0058, 0.0067]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:26,464:3.1.4 evaluation
+2020-07-20 10:43:26,478:updating parameters
+2020-07-20 10:43:28,314:Charades __getitem__
+2020-07-20 10:43:28,314:3.1.1 base_model
+2020-07-20 10:43:28,327:3.1.2 modeling
+2020-07-20 10:43:28,331:3.1.3 inference
+2020-07-20 10:43:28,333:s_output
+2020-07-20 10:43:28,334:tensor([[0.0161, 0.0266, 0.1592, 0.0400, 0.0681, 0.0612, 0.0147, 0.0693, 0.0808,
+2020-07-20 10:43:28,334:         0.1037, 0.0596, 0.2191, 0.0144, 0.0124, 0.0239, 0.0309]],
+2020-07-20 10:43:28,334:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:28,334:v_output
+2020-07-20 10:43:28,335:tensor([[0.0034, 0.0329, 0.0035, 0.0122, 0.0135, 0.0140, 0.0123, 0.0092, 0.5773,
+2020-07-20 10:43:28,335:         0.0178, 0.0074, 0.0011, 0.0549, 0.0048, 0.0203, 0.0034, 0.1267, 0.0058,
+2020-07-20 10:43:28,335:         0.0585, 0.0375, 0.0180, 0.0096, 0.0360, 0.1161, 0.0093, 0.0199, 0.0668,
+2020-07-20 10:43:28,335:         0.0056, 0.0157, 0.0126, 0.0156, 0.0994, 0.0044]], device='cuda:0',
+2020-07-20 10:43:28,335:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:28,335:o_output
+2020-07-20 10:43:28,336:tensor([[0.1460, 0.0194, 0.0066, 0.0223, 0.0171, 0.0146, 0.0114, 0.0241, 0.0247,
+2020-07-20 10:43:28,336:         0.0454, 0.0372, 0.0200, 0.0213, 0.0100, 0.0130, 0.0358, 0.0383, 0.0044,
+2020-07-20 10:43:28,336:         0.0048, 0.0027, 0.0123, 0.0075, 0.0074, 0.0216, 0.0107, 0.0419, 0.0103,
+2020-07-20 10:43:28,336:         0.0236, 0.0037, 0.0092, 0.0155, 0.0150, 0.0048, 0.0221, 0.0070, 0.0328,
+2020-07-20 10:43:28,336:         0.0083, 0.0110]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:28,336:3.1.4 evaluation
+2020-07-20 10:43:28,351:updating parameters
+2020-07-20 10:43:30,186:Charades __getitem__
+2020-07-20 10:43:30,187:3.1.1 base_model
+2020-07-20 10:43:30,200:3.1.2 modeling
+2020-07-20 10:43:30,204:3.1.3 inference
+2020-07-20 10:43:30,206:s_output
+2020-07-20 10:43:30,207:tensor([[0.0158, 0.0499, 0.1934, 0.0387, 0.0542, 0.0564, 0.0190, 0.0896, 0.0933,
+2020-07-20 10:43:30,207:         0.1138, 0.0566, 0.1449, 0.0087, 0.0117, 0.0147, 0.0395]],
+2020-07-20 10:43:30,207:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:30,207:v_output
+2020-07-20 10:43:30,208:tensor([[0.0034, 0.0257, 0.0030, 0.0131, 0.0572, 0.0296, 0.0156, 0.0086, 0.6379,
+2020-07-20 10:43:30,208:         0.0202, 0.0079, 0.0014, 0.0380, 0.0074, 0.0251, 0.0065, 0.1105, 0.0058,
+2020-07-20 10:43:30,208:         0.0814, 0.0454, 0.0242, 0.0091, 0.0328, 0.1121, 0.0148, 0.0160, 0.0405,
+2020-07-20 10:43:30,208:         0.0064, 0.0178, 0.0128, 0.0127, 0.1274, 0.0044]], device='cuda:0',
+2020-07-20 10:43:30,208:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:30,208:o_output
+2020-07-20 10:43:30,209:tensor([[0.1458, 0.0192, 0.0089, 0.0174, 0.0181, 0.0142, 0.0130, 0.0409, 0.0147,
+2020-07-20 10:43:30,209:         0.0363, 0.1368, 0.0382, 0.0151, 0.0089, 0.0132, 0.0300, 0.0518, 0.0041,
+2020-07-20 10:43:30,209:         0.0068, 0.0026, 0.0174, 0.0088, 0.0128, 0.0257, 0.0099, 0.0535, 0.0125,
+2020-07-20 10:43:30,209:         0.0159, 0.0032, 0.0158, 0.0121, 0.0122, 0.0075, 0.0251, 0.0100, 0.0235,
+2020-07-20 10:43:30,209:         0.0080, 0.0138]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:30,209:3.1.4 evaluation
+2020-07-20 10:43:30,223:updating parameters
+2020-07-20 10:43:32,298:Charades __getitem__
+2020-07-20 10:43:32,299:3.1.1 base_model
+2020-07-20 10:43:32,312:3.1.2 modeling
+2020-07-20 10:43:32,315:3.1.3 inference
+2020-07-20 10:43:32,318:s_output
+2020-07-20 10:43:32,319:tensor([[0.0152, 0.0507, 0.1580, 0.0591, 0.0598, 0.0626, 0.0241, 0.0570, 0.0811,
+2020-07-20 10:43:32,319:         0.0786, 0.0526, 0.1891, 0.0129, 0.0177, 0.0261, 0.0552]],
+2020-07-20 10:43:32,319:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:32,319:v_output
+2020-07-20 10:43:32,320:tensor([[0.0029, 0.0299, 0.0036, 0.0077, 0.0240, 0.0239, 0.0103, 0.0064, 0.6315,
+2020-07-20 10:43:32,320:         0.0174, 0.0068, 0.0012, 0.0508, 0.0059, 0.0283, 0.0054, 0.1393, 0.0044,
+2020-07-20 10:43:32,320:         0.1060, 0.0347, 0.0160, 0.0072, 0.0335, 0.1279, 0.0092, 0.0150, 0.0709,
+2020-07-20 10:43:32,320:         0.0052, 0.0103, 0.0093, 0.0123, 0.1106, 0.0062]], device='cuda:0',
+2020-07-20 10:43:32,320:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:32,320:o_output
+2020-07-20 10:43:32,321:tensor([[0.1311, 0.0216, 0.0072, 0.0151, 0.0185, 0.0165, 0.0158, 0.0358, 0.0190,
+2020-07-20 10:43:32,321:         0.0248, 0.0644, 0.0266, 0.0152, 0.0074, 0.0095, 0.0410, 0.0640, 0.0048,
+2020-07-20 10:43:32,321:         0.0038, 0.0023, 0.0189, 0.0069, 0.0091, 0.0134, 0.0127, 0.0509, 0.0133,
+2020-07-20 10:43:32,321:         0.0154, 0.0037, 0.0129, 0.0161, 0.0124, 0.0064, 0.0374, 0.0090, 0.0221,
+2020-07-20 10:43:32,321:         0.0085, 0.0129]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:32,321:3.1.4 evaluation
+2020-07-20 10:43:32,335:updating parameters
+2020-07-20 10:43:34,171:Charades __getitem__
+2020-07-20 10:43:34,171:3.1.1 base_model
+2020-07-20 10:43:34,184:3.1.2 modeling
+2020-07-20 10:43:34,187:3.1.3 inference
+2020-07-20 10:43:34,190:s_output
+2020-07-20 10:43:34,191:tensor([[0.0127, 0.0391, 0.1929, 0.0564, 0.0309, 0.0414, 0.0241, 0.1040, 0.0952,
+2020-07-20 10:43:34,191:         0.0813, 0.0632, 0.1517, 0.0119, 0.0179, 0.0252, 0.0520]],
+2020-07-20 10:43:34,191:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:34,191:v_output
+2020-07-20 10:43:34,192:tensor([[0.0035, 0.0214, 0.0036, 0.0101, 0.0200, 0.0535, 0.0101, 0.0058, 0.6168,
+2020-07-20 10:43:34,192:         0.0216, 0.0099, 0.0014, 0.0409, 0.0045, 0.0376, 0.0044, 0.1042, 0.0047,
+2020-07-20 10:43:34,192:         0.1386, 0.0385, 0.0179, 0.0110, 0.0278, 0.1072, 0.0112, 0.0147, 0.0405,
+2020-07-20 10:43:34,192:         0.0051, 0.0109, 0.0110, 0.0103, 0.1449, 0.0086]], device='cuda:0',
+2020-07-20 10:43:34,192:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:34,192:o_output
+2020-07-20 10:43:34,193:tensor([[0.1424, 0.0291, 0.0121, 0.0226, 0.0144, 0.0114, 0.0121, 0.0480, 0.0107,
+2020-07-20 10:43:34,193:         0.0298, 0.0499, 0.0285, 0.0130, 0.0068, 0.0116, 0.0399, 0.1153, 0.0042,
+2020-07-20 10:43:34,193:         0.0044, 0.0020, 0.0398, 0.0062, 0.0100, 0.0170, 0.0146, 0.0384, 0.0111,
+2020-07-20 10:43:34,193:         0.0169, 0.0033, 0.0276, 0.0080, 0.0093, 0.0078, 0.0425, 0.0117, 0.0228,
+2020-07-20 10:43:34,193:         0.0072, 0.0108]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:34,193:3.1.4 evaluation
+2020-07-20 10:43:34,207:updating parameters
+2020-07-20 10:43:36,308:Charades __getitem__
+2020-07-20 10:43:36,308:3.1.1 base_model
+2020-07-20 10:43:36,321:3.1.2 modeling
+2020-07-20 10:43:36,325:3.1.3 inference
+2020-07-20 10:43:36,327:s_output
+2020-07-20 10:43:36,328:tensor([[0.0158, 0.0381, 0.1874, 0.0458, 0.0320, 0.0637, 0.0126, 0.0695, 0.1072,
+2020-07-20 10:43:36,328:         0.1038, 0.0957, 0.1471, 0.0119, 0.0133, 0.0153, 0.0407]],
+2020-07-20 10:43:36,328:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:36,328:v_output
+2020-07-20 10:43:36,329:tensor([[0.0035, 0.0242, 0.0038, 0.0165, 0.0143, 0.0175, 0.0092, 0.0054, 0.6239,
+2020-07-20 10:43:36,329:         0.0226, 0.0080, 0.0012, 0.0452, 0.0056, 0.0442, 0.0040, 0.1298, 0.0046,
+2020-07-20 10:43:36,329:         0.1571, 0.0427, 0.0152, 0.0092, 0.0349, 0.1218, 0.0102, 0.0197, 0.0476,
+2020-07-20 10:43:36,329:         0.0046, 0.0168, 0.0086, 0.0139, 0.1015, 0.0071]], device='cuda:0',
+2020-07-20 10:43:36,329:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:36,329:o_output
+2020-07-20 10:43:36,330:tensor([[0.1514, 0.0272, 0.0102, 0.0209, 0.0210, 0.0139, 0.0092, 0.0485, 0.0123,
+2020-07-20 10:43:36,330:         0.0517, 0.0404, 0.0167, 0.0116, 0.0063, 0.0085, 0.0436, 0.0423, 0.0040,
+2020-07-20 10:43:36,330:         0.0038, 0.0022, 0.0227, 0.0058, 0.0090, 0.0137, 0.0142, 0.0648, 0.0110,
+2020-07-20 10:43:36,330:         0.0180, 0.0031, 0.0105, 0.0099, 0.0244, 0.0079, 0.0314, 0.0076, 0.0276,
+2020-07-20 10:43:36,330:         0.0074, 0.0083]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:36,330:3.1.4 evaluation
+2020-07-20 10:43:36,345:updating parameters
+2020-07-20 10:43:38,273:Charades __getitem__
+2020-07-20 10:43:38,274:3.1.1 base_model
+2020-07-20 10:43:38,286:3.1.2 modeling
+2020-07-20 10:43:38,290:3.1.3 inference
+2020-07-20 10:43:38,292:s_output
+2020-07-20 10:43:38,293:tensor([[0.0121, 0.0386, 0.2243, 0.0459, 0.0345, 0.0537, 0.0163, 0.0631, 0.1245,
+2020-07-20 10:43:38,293:         0.0864, 0.0475, 0.1536, 0.0096, 0.0152, 0.0292, 0.0454]],
+2020-07-20 10:43:38,293:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:38,293:v_output
+2020-07-20 10:43:38,294:tensor([[0.0035, 0.0263, 0.0047, 0.0116, 0.0162, 0.0245, 0.0097, 0.0056, 0.6594,
+2020-07-20 10:43:38,294:         0.0195, 0.0083, 0.0014, 0.0530, 0.0049, 0.0398, 0.0044, 0.1210, 0.0056,
+2020-07-20 10:43:38,294:         0.1618, 0.0372, 0.0167, 0.0115, 0.0337, 0.1209, 0.0088, 0.0169, 0.0609,
+2020-07-20 10:43:38,294:         0.0050, 0.0116, 0.0102, 0.0160, 0.1304, 0.0105]], device='cuda:0',
+2020-07-20 10:43:38,294:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:38,294:o_output
+2020-07-20 10:43:38,295:tensor([[0.1367, 0.0250, 0.0099, 0.0263, 0.0363, 0.0141, 0.0131, 0.0576, 0.0140,
+2020-07-20 10:43:38,295:         0.0343, 0.0427, 0.0268, 0.0123, 0.0065, 0.0106, 0.0538, 0.0635, 0.0047,
+2020-07-20 10:43:38,295:         0.0041, 0.0024, 0.0234, 0.0062, 0.0090, 0.0123, 0.0195, 0.0471, 0.0114,
+2020-07-20 10:43:38,295:         0.0176, 0.0032, 0.0148, 0.0116, 0.0156, 0.0086, 0.0364, 0.0086, 0.0287,
+2020-07-20 10:43:38,295:         0.0082, 0.0094]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:38,295:3.1.4 evaluation
+2020-07-20 10:43:38,309:updating parameters
+2020-07-20 10:43:38,313:Charades __len__
+2020-07-20 10:43:38,313:Charades __len__
+2020-07-20 10:43:38,334:Epoch: [7][20/282926(1414632)]	Time 1.965 (2.189)	Data 1.924 (2.012)	Loss 3.7155 (6.2372)	S_Prec@1 100.000 (23.810)	S_Prec@5 100.000 (61.905)	O_Prec@1 0.000 (19.048)	O_Prec@5 0.000 (95.238)	V_Prec@1 0.000 (42.857)	V_Prec@5 0.000 (152.381)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 10:43:40,167:Charades __getitem__
+2020-07-20 10:43:40,167:3.1.1 base_model
+2020-07-20 10:43:40,180:3.1.2 modeling
+2020-07-20 10:43:40,183:3.1.3 inference
+2020-07-20 10:43:40,186:s_output
+2020-07-20 10:43:40,187:tensor([[0.0076, 0.0427, 0.1986, 0.0511, 0.0366, 0.0688, 0.0162, 0.0407, 0.0895,
+2020-07-20 10:43:40,187:         0.0938, 0.0739, 0.2017, 0.0108, 0.0200, 0.0173, 0.0308]],
+2020-07-20 10:43:40,187:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:40,187:v_output
+2020-07-20 10:43:40,188:tensor([[0.0030, 0.0204, 0.0025, 0.0126, 0.0132, 0.0163, 0.0099, 0.0054, 0.6621,
+2020-07-20 10:43:40,188:         0.0178, 0.0080, 0.0009, 0.0392, 0.0044, 0.0290, 0.0035, 0.1210, 0.0056,
+2020-07-20 10:43:40,188:         0.1203, 0.0368, 0.0143, 0.0090, 0.0320, 0.1163, 0.0089, 0.0176, 0.0505,
+2020-07-20 10:43:40,188:         0.0041, 0.0140, 0.0110, 0.0104, 0.0945, 0.0048]], device='cuda:0',
+2020-07-20 10:43:40,188:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:40,188:o_output
+2020-07-20 10:43:40,189:tensor([[0.1510, 0.0272, 0.0080, 0.0201, 0.0169, 0.0110, 0.0122, 0.0420, 0.0114,
+2020-07-20 10:43:40,189:         0.0373, 0.0394, 0.0206, 0.0121, 0.0059, 0.0114, 0.0508, 0.0407, 0.0035,
+2020-07-20 10:43:40,189:         0.0037, 0.0017, 0.0177, 0.0053, 0.0064, 0.0146, 0.0109, 0.0472, 0.0098,
+2020-07-20 10:43:40,189:         0.0160, 0.0023, 0.0098, 0.0090, 0.0171, 0.0064, 0.0266, 0.0070, 0.0224,
+2020-07-20 10:43:40,189:         0.0107, 0.0084]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:40,189:3.1.4 evaluation
+2020-07-20 10:43:40,203:updating parameters
+2020-07-20 10:43:42,039:Charades __getitem__
+2020-07-20 10:43:42,040:3.1.1 base_model
+2020-07-20 10:43:42,053:3.1.2 modeling
+2020-07-20 10:43:42,056:3.1.3 inference
+2020-07-20 10:43:42,058:s_output
+2020-07-20 10:43:42,059:tensor([[0.0098, 0.0236, 0.1669, 0.0367, 0.0807, 0.0542, 0.0291, 0.0470, 0.0930,
+2020-07-20 10:43:42,059:         0.0758, 0.0375, 0.2774, 0.0145, 0.0103, 0.0162, 0.0274]],
+2020-07-20 10:43:42,059:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:42,059:v_output
+2020-07-20 10:43:42,060:tensor([[0.0070, 0.0211, 0.0026, 0.0151, 0.0223, 0.0185, 0.0113, 0.0066, 0.6369,
+2020-07-20 10:43:42,060:         0.0223, 0.0268, 0.0012, 0.0376, 0.0060, 0.0339, 0.0040, 0.1248, 0.0051,
+2020-07-20 10:43:42,060:         0.1211, 0.0428, 0.0190, 0.0199, 0.0336, 0.1158, 0.0121, 0.0245, 0.0492,
+2020-07-20 10:43:42,060:         0.0054, 0.0189, 0.0101, 0.0117, 0.1153, 0.0039]], device='cuda:0',
+2020-07-20 10:43:42,060:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:42,060:o_output
+2020-07-20 10:43:42,062:tensor([[0.1544, 0.0239, 0.0197, 0.0379, 0.0169, 0.0122, 0.0104, 0.0356, 0.0139,
+2020-07-20 10:43:42,062:         0.0552, 0.0540, 0.0226, 0.0134, 0.0072, 0.0102, 0.0591, 0.0375, 0.0041,
+2020-07-20 10:43:42,062:         0.0046, 0.0023, 0.0178, 0.0069, 0.0087, 0.0158, 0.0086, 0.0535, 0.0119,
+2020-07-20 10:43:42,062:         0.0304, 0.0027, 0.0108, 0.0109, 0.0183, 0.0110, 0.0194, 0.0151, 0.0284,
+2020-07-20 10:43:42,062:         0.0074, 0.0104]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:42,062:3.1.4 evaluation
+2020-07-20 10:43:42,076:updating parameters
+2020-07-20 10:43:43,911:Charades __getitem__
+2020-07-20 10:43:43,911:3.1.1 base_model
+2020-07-20 10:43:43,924:3.1.2 modeling
+2020-07-20 10:43:43,927:3.1.3 inference
+2020-07-20 10:43:43,930:s_output
+2020-07-20 10:43:43,931:tensor([[0.0106, 0.0569, 0.2521, 0.0369, 0.0506, 0.0485, 0.0248, 0.0414, 0.0861,
+2020-07-20 10:43:43,931:         0.0911, 0.0443, 0.1717, 0.0117, 0.0135, 0.0165, 0.0433]],
+2020-07-20 10:43:43,931:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:43,931:v_output
+2020-07-20 10:43:43,932:tensor([[0.0025, 0.0304, 0.0057, 0.0094, 0.0301, 0.0357, 0.0079, 0.0073, 0.6757,
+2020-07-20 10:43:43,932:         0.0150, 0.0047, 0.0017, 0.0583, 0.0050, 0.0210, 0.0100, 0.1861, 0.0055,
+2020-07-20 10:43:43,932:         0.0570, 0.0327, 0.0145, 0.0049, 0.0279, 0.1716, 0.0071, 0.0203, 0.0581,
+2020-07-20 10:43:43,932:         0.0055, 0.0122, 0.0130, 0.0172, 0.0530, 0.0042]], device='cuda:0',
+2020-07-20 10:43:43,932:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:43,932:o_output
+2020-07-20 10:43:43,933:tensor([[0.1085, 0.0508, 0.0054, 0.0124, 0.0146, 0.0242, 0.0122, 0.0253, 0.0171,
+2020-07-20 10:43:43,933:         0.0297, 0.1076, 0.0542, 0.0160, 0.0082, 0.0129, 0.0295, 0.1231, 0.0092,
+2020-07-20 10:43:43,933:         0.0035, 0.0026, 0.0141, 0.0070, 0.0143, 0.0102, 0.0093, 0.0386, 0.0118,
+2020-07-20 10:43:43,933:         0.0117, 0.0052, 0.0206, 0.0168, 0.0155, 0.0052, 0.0382, 0.0064, 0.0270,
+2020-07-20 10:43:43,933:         0.0068, 0.0075]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:43,933:3.1.4 evaluation
+2020-07-20 10:43:43,947:updating parameters
+2020-07-20 10:43:45,973:Charades __getitem__
+2020-07-20 10:43:45,973:3.1.1 base_model
+2020-07-20 10:43:45,986:3.1.2 modeling
+2020-07-20 10:43:45,989:3.1.3 inference
+2020-07-20 10:43:45,992:s_output
+2020-07-20 10:43:45,993:tensor([[0.0112, 0.0589, 0.1699, 0.0636, 0.0640, 0.0598, 0.0231, 0.0824, 0.0906,
+2020-07-20 10:43:45,993:         0.0691, 0.0551, 0.1647, 0.0152, 0.0163, 0.0212, 0.0348]],
+2020-07-20 10:43:45,993:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:45,993:v_output
+2020-07-20 10:43:45,994:tensor([[0.0036, 0.0218, 0.0033, 0.0132, 0.0182, 0.0196, 0.0131, 0.0046, 0.5533,
+2020-07-20 10:43:45,994:         0.0245, 0.0079, 0.0012, 0.0377, 0.0045, 0.0298, 0.0045, 0.1106, 0.0043,
+2020-07-20 10:43:45,994:         0.2075, 0.0472, 0.0211, 0.0127, 0.0335, 0.1025, 0.0098, 0.0153, 0.0489,
+2020-07-20 10:43:45,994:         0.0041, 0.0119, 0.0079, 0.0131, 0.1272, 0.0083]], device='cuda:0',
+2020-07-20 10:43:45,994:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:45,994:o_output
+2020-07-20 10:43:45,995:tensor([[0.1838, 0.0192, 0.0097, 0.0225, 0.0182, 0.0112, 0.0089, 0.0692, 0.0123,
+2020-07-20 10:43:45,995:         0.0296, 0.0530, 0.0243, 0.0100, 0.0052, 0.0081, 0.0437, 0.0481, 0.0038,
+2020-07-20 10:43:45,995:         0.0057, 0.0022, 0.0198, 0.0051, 0.0087, 0.0262, 0.0151, 0.0410, 0.0098,
+2020-07-20 10:43:45,995:         0.0199, 0.0030, 0.0104, 0.0097, 0.0140, 0.0078, 0.0449, 0.0083, 0.0254,
+2020-07-20 10:43:45,995:         0.0077, 0.0087]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:45,995:3.1.4 evaluation
+2020-07-20 10:43:46,009:updating parameters
+2020-07-20 10:43:47,845:Charades __getitem__
+2020-07-20 10:43:47,846:3.1.1 base_model
+2020-07-20 10:43:47,858:3.1.2 modeling
+2020-07-20 10:43:47,862:3.1.3 inference
+2020-07-20 10:43:47,864:s_output
+2020-07-20 10:43:47,865:tensor([[0.0143, 0.0415, 0.1554, 0.0785, 0.0524, 0.0468, 0.0255, 0.0824, 0.0691,
+2020-07-20 10:43:47,865:         0.0825, 0.0756, 0.1740, 0.0135, 0.0172, 0.0235, 0.0477]],
+2020-07-20 10:43:47,865:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:47,865:v_output
+2020-07-20 10:43:47,867:tensor([[0.0039, 0.0290, 0.0041, 0.0146, 0.0200, 0.0325, 0.0155, 0.0058, 0.6230,
+2020-07-20 10:43:47,867:         0.0201, 0.0106, 0.0016, 0.0539, 0.0054, 0.0242, 0.0053, 0.1521, 0.0045,
+2020-07-20 10:43:47,867:         0.1445, 0.0417, 0.0209, 0.0096, 0.0354, 0.1344, 0.0106, 0.0179, 0.0645,
+2020-07-20 10:43:47,867:         0.0053, 0.0141, 0.0098, 0.0165, 0.1177, 0.0077]], device='cuda:0',
+2020-07-20 10:43:47,867:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:47,867:o_output
+2020-07-20 10:43:47,868:tensor([[0.1482, 0.0299, 0.0107, 0.0190, 0.0257, 0.0197, 0.0116, 0.0475, 0.0202,
+2020-07-20 10:43:47,868:         0.0345, 0.0517, 0.0281, 0.0129, 0.0066, 0.0098, 0.0542, 0.0778, 0.0059,
+2020-07-20 10:43:47,868:         0.0065, 0.0029, 0.0188, 0.0068, 0.0107, 0.0244, 0.0171, 0.0411, 0.0124,
+2020-07-20 10:43:47,868:         0.0185, 0.0038, 0.0179, 0.0172, 0.0179, 0.0083, 0.0355, 0.0093, 0.0278,
+2020-07-20 10:43:47,868:         0.0082, 0.0088]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:47,868:3.1.4 evaluation
+2020-07-20 10:43:47,882:updating parameters
+2020-07-20 10:43:49,718:Charades __getitem__
+2020-07-20 10:43:49,718:3.1.1 base_model
+2020-07-20 10:43:49,731:3.1.2 modeling
+2020-07-20 10:43:49,734:3.1.3 inference
+2020-07-20 10:43:49,737:s_output
+2020-07-20 10:43:49,738:tensor([[0.0109, 0.0418, 0.1944, 0.0632, 0.0412, 0.0545, 0.0169, 0.0685, 0.1286,
+2020-07-20 10:43:49,738:         0.0997, 0.0701, 0.1456, 0.0090, 0.0115, 0.0198, 0.0243]],
+2020-07-20 10:43:49,738:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:49,738:v_output
+2020-07-20 10:43:49,739:tensor([[0.0031, 0.0266, 0.0045, 0.0108, 0.0156, 0.0236, 0.0113, 0.0064, 0.5928,
+2020-07-20 10:43:49,739:         0.0189, 0.0076, 0.0013, 0.0457, 0.0052, 0.0273, 0.0051, 0.1380, 0.0056,
+2020-07-20 10:43:49,739:         0.0912, 0.0410, 0.0130, 0.0068, 0.0352, 0.1247, 0.0100, 0.0179, 0.0630,
+2020-07-20 10:43:49,739:         0.0053, 0.0134, 0.0108, 0.0140, 0.1080, 0.0058]], device='cuda:0',
+2020-07-20 10:43:49,739:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:49,739:o_output
+2020-07-20 10:43:49,740:tensor([[0.1336, 0.0248, 0.0068, 0.0143, 0.0185, 0.0143, 0.0117, 0.0432, 0.0181,
+2020-07-20 10:43:49,740:         0.0301, 0.0447, 0.0279, 0.0148, 0.0074, 0.0106, 0.0369, 0.0719, 0.0057,
+2020-07-20 10:43:49,740:         0.0043, 0.0024, 0.0189, 0.0070, 0.0081, 0.0163, 0.0105, 0.0469, 0.0130,
+2020-07-20 10:43:49,740:         0.0143, 0.0038, 0.0137, 0.0171, 0.0155, 0.0054, 0.0337, 0.0079, 0.0233,
+2020-07-20 10:43:49,740:         0.0072, 0.0092]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:49,740:3.1.4 evaluation
+2020-07-20 10:43:49,754:updating parameters
+2020-07-20 10:43:51,591:Charades __getitem__
+2020-07-20 10:43:51,592:3.1.1 base_model
+2020-07-20 10:43:51,604:3.1.2 modeling
+2020-07-20 10:43:51,608:3.1.3 inference
+2020-07-20 10:43:51,610:s_output
+2020-07-20 10:43:51,611:tensor([[0.0108, 0.0514, 0.1803, 0.0587, 0.0520, 0.0443, 0.0223, 0.0470, 0.0996,
+2020-07-20 10:43:51,611:         0.1221, 0.0601, 0.1597, 0.0102, 0.0180, 0.0260, 0.0373]],
+2020-07-20 10:43:51,611:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:51,611:v_output
+2020-07-20 10:43:51,612:tensor([[0.0044, 0.0516, 0.0046, 0.0166, 0.0172, 0.0141, 0.0146, 0.0167, 0.5273,
+2020-07-20 10:43:51,612:         0.0144, 0.0092, 0.0016, 0.0849, 0.0057, 0.0176, 0.0052, 0.1916, 0.0082,
+2020-07-20 10:43:51,612:         0.0446, 0.0296, 0.0181, 0.0089, 0.0429, 0.1591, 0.0096, 0.0272, 0.1000,
+2020-07-20 10:43:51,612:         0.0088, 0.0204, 0.0196, 0.0275, 0.0761, 0.0043]], device='cuda:0',
+2020-07-20 10:43:51,612:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:51,612:o_output
+2020-07-20 10:43:51,613:tensor([[0.1256, 0.0295, 0.0072, 0.0259, 0.0182, 0.0224, 0.0150, 0.0194, 0.0388,
+2020-07-20 10:43:51,613:         0.0720, 0.0497, 0.0284, 0.0384, 0.0179, 0.0200, 0.0436, 0.0460, 0.0083,
+2020-07-20 10:43:51,613:         0.0052, 0.0043, 0.0123, 0.0124, 0.0098, 0.0164, 0.0113, 0.0393, 0.0117,
+2020-07-20 10:43:51,613:         0.0256, 0.0063, 0.0105, 0.0279, 0.0224, 0.0053, 0.0241, 0.0085, 0.0448,
+2020-07-20 10:43:51,613:         0.0088, 0.0147]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:51,613:3.1.4 evaluation
+2020-07-20 10:43:51,627:updating parameters
+2020-07-20 10:43:53,463:Charades __getitem__
+2020-07-20 10:43:53,464:3.1.1 base_model
+2020-07-20 10:43:53,477:3.1.2 modeling
+2020-07-20 10:43:53,480:3.1.3 inference
+2020-07-20 10:43:53,483:s_output
+2020-07-20 10:43:53,483:tensor([[0.0149, 0.0469, 0.2163, 0.0601, 0.0367, 0.0520, 0.0164, 0.1240, 0.0559,
+2020-07-20 10:43:53,484:         0.1053, 0.0653, 0.1150, 0.0119, 0.0134, 0.0189, 0.0470]],
+2020-07-20 10:43:53,484:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:53,484:v_output
+2020-07-20 10:43:53,485:tensor([[0.0040, 0.0277, 0.0032, 0.0121, 0.0201, 0.0138, 0.0119, 0.0084, 0.6521,
+2020-07-20 10:43:53,485:         0.0184, 0.0100, 0.0012, 0.0439, 0.0062, 0.0218, 0.0052, 0.1442, 0.0065,
+2020-07-20 10:43:53,485:         0.0569, 0.0376, 0.0166, 0.0090, 0.0382, 0.1365, 0.0103, 0.0243, 0.0741,
+2020-07-20 10:43:53,485:         0.0060, 0.0169, 0.0144, 0.0157, 0.0675, 0.0036]], device='cuda:0',
+2020-07-20 10:43:53,485:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:53,485:o_output
+2020-07-20 10:43:53,486:tensor([[0.1413, 0.0259, 0.0085, 0.0229, 0.0190, 0.0144, 0.0186, 0.0240, 0.0163,
+2020-07-20 10:43:53,486:         0.0429, 0.0613, 0.0292, 0.0182, 0.0093, 0.0143, 0.0525, 0.0370, 0.0047,
+2020-07-20 10:43:53,486:         0.0045, 0.0024, 0.0111, 0.0080, 0.0083, 0.0153, 0.0106, 0.0513, 0.0108,
+2020-07-20 10:43:53,486:         0.0223, 0.0035, 0.0105, 0.0136, 0.0190, 0.0066, 0.0207, 0.0073, 0.0317,
+2020-07-20 10:43:53,486:         0.0127, 0.0101]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:53,486:3.1.4 evaluation
+2020-07-20 10:43:53,500:updating parameters
+2020-07-20 10:43:55,335:Charades __getitem__
+2020-07-20 10:43:55,336:3.1.1 base_model
+2020-07-20 10:43:55,348:3.1.2 modeling
+2020-07-20 10:43:55,352:3.1.3 inference
+2020-07-20 10:43:55,354:s_output
+2020-07-20 10:43:55,355:tensor([[0.0079, 0.0741, 0.1788, 0.0504, 0.0339, 0.0368, 0.0196, 0.0463, 0.1048,
+2020-07-20 10:43:55,355:         0.1472, 0.0560, 0.1484, 0.0075, 0.0197, 0.0219, 0.0467]],
+2020-07-20 10:43:55,355:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:55,355:v_output
+2020-07-20 10:43:55,356:tensor([[0.0040, 0.0366, 0.0040, 0.0108, 0.0215, 0.0306, 0.0101, 0.0056, 0.7057,
+2020-07-20 10:43:55,356:         0.0231, 0.0084, 0.0020, 0.0680, 0.0064, 0.0363, 0.0063, 0.1662, 0.0067,
+2020-07-20 10:43:55,356:         0.1907, 0.0510, 0.0165, 0.0100, 0.0340, 0.1607, 0.0098, 0.0181, 0.0562,
+2020-07-20 10:43:55,356:         0.0061, 0.0116, 0.0138, 0.0152, 0.1170, 0.0121]], device='cuda:0',
+2020-07-20 10:43:55,356:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:55,356:o_output
+2020-07-20 10:43:55,357:tensor([[0.1585, 0.0299, 0.0112, 0.0218, 0.0543, 0.0476, 0.0099, 0.0672, 0.0154,
+2020-07-20 10:43:55,357:         0.0382, 0.0588, 0.0300, 0.0135, 0.0068, 0.0139, 0.0405, 0.0709, 0.0064,
+2020-07-20 10:43:55,357:         0.0049, 0.0028, 0.0237, 0.0075, 0.0112, 0.0139, 0.0287, 0.0564, 0.0190,
+2020-07-20 10:43:55,357:         0.0181, 0.0043, 0.0179, 0.0162, 0.0155, 0.0118, 0.0567, 0.0098, 0.0261,
+2020-07-20 10:43:55,357:         0.0089, 0.0086]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:55,357:3.1.4 evaluation
+2020-07-20 10:43:55,371:updating parameters
+2020-07-20 10:43:57,207:Charades __getitem__
+2020-07-20 10:43:57,208:3.1.1 base_model
+2020-07-20 10:43:57,221:3.1.2 modeling
+2020-07-20 10:43:57,224:3.1.3 inference
+2020-07-20 10:43:57,226:s_output
+2020-07-20 10:43:57,227:tensor([[0.0102, 0.0344, 0.2161, 0.0427, 0.0539, 0.0530, 0.0205, 0.0808, 0.0885,
+2020-07-20 10:43:57,227:         0.1220, 0.0734, 0.1235, 0.0106, 0.0156, 0.0318, 0.0231]],
+2020-07-20 10:43:57,227:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:57,227:v_output
+2020-07-20 10:43:57,228:tensor([[0.0050, 0.0265, 0.0030, 0.0178, 0.0216, 0.0244, 0.0102, 0.0090, 0.7000,
+2020-07-20 10:43:57,228:         0.0228, 0.0128, 0.0015, 0.0513, 0.0052, 0.0222, 0.0047, 0.1393, 0.0069,
+2020-07-20 10:43:57,228:         0.0674, 0.0472, 0.0222, 0.0234, 0.0315, 0.1304, 0.0100, 0.0308, 0.0514,
+2020-07-20 10:43:57,228:         0.0063, 0.0235, 0.0169, 0.0151, 0.0880, 0.0037]], device='cuda:0',
+2020-07-20 10:43:57,228:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:57,228:o_output
+2020-07-20 10:43:57,230:tensor([[0.1557, 0.0385, 0.0097, 0.0530, 0.0241, 0.0169, 0.0103, 0.0286, 0.0154,
+2020-07-20 10:43:57,230:         0.0784, 0.0575, 0.0309, 0.0187, 0.0099, 0.0172, 0.0482, 0.0533, 0.0057,
+2020-07-20 10:43:57,230:         0.0051, 0.0027, 0.0123, 0.0077, 0.0107, 0.0197, 0.0113, 0.0416, 0.0104,
+2020-07-20 10:43:57,230:         0.0359, 0.0035, 0.0171, 0.0141, 0.0179, 0.0086, 0.0212, 0.0088, 0.0475,
+2020-07-20 10:43:57,230:         0.0077, 0.0090]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:57,230:3.1.4 evaluation
+2020-07-20 10:43:57,243:updating parameters
+2020-07-20 10:43:57,247:Charades __len__
+2020-07-20 10:43:57,247:Charades __len__
+2020-07-20 10:43:57,269:Epoch: [7][30/282926(1414632)]	Time 1.872 (2.093)	Data 1.832 (1.961)	Loss 3.9123 (6.2689)	S_Prec@1 100.000 (25.806)	S_Prec@5 100.000 (54.839)	O_Prec@1 0.000 (12.903)	O_Prec@5 0.000 (77.419)	V_Prec@1 100.000 (48.387)	V_Prec@5 100.000 (151.613)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 10:43:59,104:Charades __getitem__
+2020-07-20 10:43:59,105:3.1.1 base_model
+2020-07-20 10:43:59,117:3.1.2 modeling
+2020-07-20 10:43:59,121:3.1.3 inference
+2020-07-20 10:43:59,123:s_output
+2020-07-20 10:43:59,124:tensor([[0.0116, 0.0559, 0.1884, 0.0321, 0.0436, 0.0542, 0.0227, 0.0573, 0.1065,
+2020-07-20 10:43:59,124:         0.1101, 0.0513, 0.1710, 0.0181, 0.0161, 0.0212, 0.0400]],
+2020-07-20 10:43:59,124:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:59,124:v_output
+2020-07-20 10:43:59,125:tensor([[0.0025, 0.0225, 0.0050, 0.0121, 0.0330, 0.0310, 0.0091, 0.0061, 0.7011,
+2020-07-20 10:43:59,125:         0.0175, 0.0048, 0.0014, 0.0390, 0.0058, 0.0296, 0.0066, 0.1468, 0.0051,
+2020-07-20 10:43:59,125:         0.0842, 0.0379, 0.0176, 0.0085, 0.0292, 0.1425, 0.0131, 0.0163, 0.0587,
+2020-07-20 10:43:59,125:         0.0055, 0.0147, 0.0123, 0.0164, 0.0812, 0.0050]], device='cuda:0',
+2020-07-20 10:43:59,125:       grad_fn=<CloneBackward>)
+2020-07-20 10:43:59,125:o_output
+2020-07-20 10:43:59,126:tensor([[0.1198, 0.0239, 0.0064, 0.0196, 0.0163, 0.0131, 0.0182, 0.0302, 0.0143,
+2020-07-20 10:43:59,126:         0.0376, 0.0981, 0.0541, 0.0134, 0.0066, 0.0126, 0.0381, 0.0815, 0.0050,
+2020-07-20 10:43:59,126:         0.0044, 0.0029, 0.0200, 0.0068, 0.0124, 0.0163, 0.0106, 0.0576, 0.0109,
+2020-07-20 10:43:59,126:         0.0137, 0.0035, 0.0183, 0.0128, 0.0133, 0.0063, 0.0301, 0.0067, 0.0250,
+2020-07-20 10:43:59,126:         0.0074, 0.0092]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:43:59,126:3.1.4 evaluation
+2020-07-20 10:43:59,140:updating parameters
+2020-07-20 10:44:00,976:Charades __getitem__
+2020-07-20 10:44:00,977:3.1.1 base_model
+2020-07-20 10:44:00,990:3.1.2 modeling
+2020-07-20 10:44:00,993:3.1.3 inference
+2020-07-20 10:44:00,996:s_output
+2020-07-20 10:44:00,997:tensor([[0.0106, 0.0580, 0.2222, 0.0864, 0.0383, 0.0560, 0.0234, 0.0881, 0.0593,
+2020-07-20 10:44:00,997:         0.0694, 0.0486, 0.1574, 0.0115, 0.0222, 0.0152, 0.0332]],
+2020-07-20 10:44:00,997:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:00,997:v_output
+2020-07-20 10:44:00,998:tensor([[0.0040, 0.0295, 0.0029, 0.0240, 0.0162, 0.0125, 0.0146, 0.0078, 0.5968,
+2020-07-20 10:44:00,998:         0.0195, 0.0069, 0.0013, 0.0540, 0.0062, 0.0300, 0.0045, 0.1555, 0.0063,
+2020-07-20 10:44:00,998:         0.1267, 0.0360, 0.0222, 0.0144, 0.0381, 0.1380, 0.0085, 0.0286, 0.0961,
+2020-07-20 10:44:00,998:         0.0059, 0.0257, 0.0122, 0.0207, 0.0832, 0.0050]], device='cuda:0',
+2020-07-20 10:44:00,998:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:00,998:o_output
+2020-07-20 10:44:00,999:tensor([[0.1507, 0.0279, 0.0084, 0.0344, 0.0169, 0.0175, 0.0136, 0.0445, 0.0242,
+2020-07-20 10:44:00,999:         0.0870, 0.0463, 0.0189, 0.0171, 0.0092, 0.0122, 0.0518, 0.0265, 0.0051,
+2020-07-20 10:44:00,999:         0.0056, 0.0031, 0.0149, 0.0077, 0.0101, 0.0194, 0.0111, 0.0497, 0.0095,
+2020-07-20 10:44:00,999:         0.0290, 0.0036, 0.0074, 0.0179, 0.0277, 0.0086, 0.0334, 0.0081, 0.0520,
+2020-07-20 10:44:00,999:         0.0110, 0.0122]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:00,999:3.1.4 evaluation
+2020-07-20 10:44:01,013:updating parameters
+2020-07-20 10:44:02,858:Charades __getitem__
+2020-07-20 10:44:02,858:3.1.1 base_model
+2020-07-20 10:44:02,871:3.1.2 modeling
+2020-07-20 10:44:02,875:3.1.3 inference
+2020-07-20 10:44:02,877:s_output
+2020-07-20 10:44:02,878:tensor([[0.0134, 0.0507, 0.1697, 0.0817, 0.0380, 0.0456, 0.0175, 0.0820, 0.0663,
+2020-07-20 10:44:02,878:         0.0526, 0.0905, 0.1872, 0.0126, 0.0213, 0.0226, 0.0482]],
+2020-07-20 10:44:02,878:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:02,878:v_output
+2020-07-20 10:44:02,879:tensor([[0.0045, 0.0343, 0.0040, 0.0215, 0.0117, 0.0109, 0.0107, 0.0091, 0.5838,
+2020-07-20 10:44:02,879:         0.0188, 0.0095, 0.0014, 0.0643, 0.0041, 0.0206, 0.0032, 0.1770, 0.0104,
+2020-07-20 10:44:02,879:         0.0617, 0.0361, 0.0143, 0.0134, 0.0393, 0.1598, 0.0071, 0.0389, 0.0833,
+2020-07-20 10:44:02,879:         0.0073, 0.0277, 0.0197, 0.0191, 0.0755, 0.0045]], device='cuda:0',
+2020-07-20 10:44:02,879:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:02,879:o_output
+2020-07-20 10:44:02,880:tensor([[0.1446, 0.0380, 0.0073, 0.0375, 0.0261, 0.0237, 0.0172, 0.0249, 0.0213,
+2020-07-20 10:44:02,880:         0.0977, 0.0300, 0.0178, 0.0218, 0.0102, 0.0204, 0.0480, 0.0300, 0.0058,
+2020-07-20 10:44:02,880:         0.0049, 0.0028, 0.0211, 0.0092, 0.0072, 0.0170, 0.0137, 0.0338, 0.0136,
+2020-07-20 10:44:02,880:         0.0305, 0.0040, 0.0078, 0.0182, 0.0328, 0.0077, 0.0239, 0.0080, 0.0431,
+2020-07-20 10:44:02,880:         0.0095, 0.0097]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:02,880:3.1.4 evaluation
+2020-07-20 10:44:02,895:updating parameters
+2020-07-20 10:44:04,753:Charades __getitem__
+2020-07-20 10:44:04,754:3.1.1 base_model
+2020-07-20 10:44:04,766:3.1.2 modeling
+2020-07-20 10:44:04,770:3.1.3 inference
+2020-07-20 10:44:04,772:s_output
+2020-07-20 10:44:04,773:tensor([[0.0145, 0.0419, 0.1890, 0.0398, 0.0832, 0.0822, 0.0246, 0.0797, 0.0711,
+2020-07-20 10:44:04,773:         0.0903, 0.0602, 0.1165, 0.0110, 0.0191, 0.0269, 0.0499]],
+2020-07-20 10:44:04,773:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:04,773:v_output
+2020-07-20 10:44:04,774:tensor([[0.0049, 0.0226, 0.0043, 0.0169, 0.0226, 0.0294, 0.0110, 0.0057, 0.6972,
+2020-07-20 10:44:04,774:         0.0340, 0.0139, 0.0017, 0.0414, 0.0107, 0.0713, 0.0049, 0.1043, 0.0052,
+2020-07-20 10:44:04,775:         0.1057, 0.0628, 0.0244, 0.0192, 0.0330, 0.1114, 0.0163, 0.0169, 0.0388,
+2020-07-20 10:44:04,775:         0.0064, 0.0168, 0.0101, 0.0116, 0.1356, 0.0053]], device='cuda:0',
+2020-07-20 10:44:04,775:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:04,775:o_output
+2020-07-20 10:44:04,776:tensor([[0.1802, 0.0252, 0.0162, 0.0361, 0.0258, 0.0144, 0.0089, 0.0365, 0.0129,
+2020-07-20 10:44:04,776:         0.0487, 0.0539, 0.0273, 0.0113, 0.0067, 0.0106, 0.0433, 0.0610, 0.0043,
+2020-07-20 10:44:04,776:         0.0063, 0.0027, 0.0206, 0.0078, 0.0144, 0.0252, 0.0147, 0.1114, 0.0145,
+2020-07-20 10:44:04,776:         0.0289, 0.0033, 0.0175, 0.0114, 0.0122, 0.0126, 0.0194, 0.0109, 0.0305,
+2020-07-20 10:44:04,776:         0.0059, 0.0115]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:04,776:3.1.4 evaluation
+2020-07-20 10:44:04,790:updating parameters
+2020-07-20 10:44:06,625:Charades __getitem__
+2020-07-20 10:44:06,626:3.1.1 base_model
+2020-07-20 10:44:06,638:3.1.2 modeling
+2020-07-20 10:44:06,642:3.1.3 inference
+2020-07-20 10:44:06,644:s_output
+2020-07-20 10:44:06,645:tensor([[0.0088, 0.0331, 0.1803, 0.0565, 0.0590, 0.0559, 0.0270, 0.0658, 0.1270,
+2020-07-20 10:44:06,645:         0.1191, 0.0677, 0.1221, 0.0084, 0.0144, 0.0190, 0.0360]],
+2020-07-20 10:44:06,645:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:06,645:v_output
+2020-07-20 10:44:06,646:tensor([[0.0040, 0.0240, 0.0038, 0.0115, 0.0251, 0.0432, 0.0090, 0.0075, 0.6442,
+2020-07-20 10:44:06,646:         0.0234, 0.0132, 0.0015, 0.0406, 0.0078, 0.0697, 0.0052, 0.0929, 0.0068,
+2020-07-20 10:44:06,646:         0.1758, 0.0393, 0.0171, 0.0086, 0.0348, 0.0985, 0.0163, 0.0152, 0.0285,
+2020-07-20 10:44:06,646:         0.0061, 0.0134, 0.0144, 0.0072, 0.1254, 0.0083]], device='cuda:0',
+2020-07-20 10:44:06,646:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:06,646:o_output
+2020-07-20 10:44:06,647:tensor([[0.1502, 0.0224, 0.0146, 0.0161, 0.0176, 0.0140, 0.0117, 0.0602, 0.0104,
+2020-07-20 10:44:06,647:         0.0232, 0.0633, 0.0280, 0.0157, 0.0086, 0.0147, 0.0423, 0.0909, 0.0037,
+2020-07-20 10:44:06,647:         0.0043, 0.0019, 0.0315, 0.0078, 0.0129, 0.0115, 0.0158, 0.1018, 0.0139,
+2020-07-20 10:44:06,647:         0.0191, 0.0035, 0.0264, 0.0088, 0.0178, 0.0126, 0.0383, 0.0168, 0.0170,
+2020-07-20 10:44:06,647:         0.0058, 0.0095]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:06,647:3.1.4 evaluation
+2020-07-20 10:44:06,661:updating parameters
+2020-07-20 10:44:08,496:Charades __getitem__
+2020-07-20 10:44:08,497:3.1.1 base_model
+2020-07-20 10:44:08,510:3.1.2 modeling
+2020-07-20 10:44:08,514:3.1.3 inference
+2020-07-20 10:44:08,516:s_output
+2020-07-20 10:44:08,517:tensor([[0.0148, 0.0343, 0.1682, 0.0566, 0.0471, 0.0595, 0.0221, 0.0541, 0.0975,
+2020-07-20 10:44:08,517:         0.0642, 0.1111, 0.1777, 0.0111, 0.0226, 0.0251, 0.0341]],
+2020-07-20 10:44:08,517:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:08,517:v_output
+2020-07-20 10:44:08,518:tensor([[0.0036, 0.0360, 0.0034, 0.0121, 0.0196, 0.0214, 0.0112, 0.0116, 0.5911,
+2020-07-20 10:44:08,518:         0.0196, 0.0071, 0.0013, 0.0560, 0.0059, 0.0263, 0.0054, 0.1301, 0.0071,
+2020-07-20 10:44:08,518:         0.0857, 0.0396, 0.0176, 0.0082, 0.0340, 0.1236, 0.0117, 0.0183, 0.0620,
+2020-07-20 10:44:08,518:         0.0067, 0.0146, 0.0172, 0.0140, 0.0981, 0.0058]], device='cuda:0',
+2020-07-20 10:44:08,518:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:08,518:o_output
+2020-07-20 10:44:08,519:tensor([[0.1401, 0.0202, 0.0091, 0.0195, 0.0196, 0.0156, 0.0146, 0.0393, 0.0195,
+2020-07-20 10:44:08,519:         0.0356, 0.0572, 0.0292, 0.0245, 0.0124, 0.0173, 0.0321, 0.0511, 0.0050,
+2020-07-20 10:44:08,519:         0.0049, 0.0027, 0.0151, 0.0087, 0.0104, 0.0162, 0.0121, 0.0537, 0.0115,
+2020-07-20 10:44:08,519:         0.0173, 0.0040, 0.0136, 0.0138, 0.0135, 0.0051, 0.0338, 0.0088, 0.0280,
+2020-07-20 10:44:08,519:         0.0071, 0.0116]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:08,519:3.1.4 evaluation
+2020-07-20 10:44:08,534:updating parameters
+2020-07-20 10:44:10,369:Charades __getitem__
+2020-07-20 10:44:10,370:3.1.1 base_model
+2020-07-20 10:44:10,382:3.1.2 modeling
+2020-07-20 10:44:10,386:3.1.3 inference
+2020-07-20 10:44:10,388:s_output
+2020-07-20 10:44:10,389:tensor([[0.0107, 0.0573, 0.1667, 0.0536, 0.0688, 0.0678, 0.0207, 0.0587, 0.1119,
+2020-07-20 10:44:10,389:         0.0792, 0.0598, 0.1614, 0.0181, 0.0147, 0.0258, 0.0247]],
+2020-07-20 10:44:10,389:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:10,389:v_output
+2020-07-20 10:44:10,390:tensor([[0.0032, 0.0248, 0.0033, 0.0141, 0.0210, 0.0229, 0.0127, 0.0063, 0.5681,
+2020-07-20 10:44:10,390:         0.0188, 0.0068, 0.0013, 0.0414, 0.0061, 0.0365, 0.0053, 0.1230, 0.0046,
+2020-07-20 10:44:10,390:         0.1720, 0.0425, 0.0145, 0.0074, 0.0333, 0.1103, 0.0101, 0.0141, 0.0486,
+2020-07-20 10:44:10,390:         0.0057, 0.0139, 0.0106, 0.0119, 0.1183, 0.0078]], device='cuda:0',
+2020-07-20 10:44:10,390:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:10,390:o_output
+2020-07-20 10:44:10,391:tensor([[0.1426, 0.0206, 0.0084, 0.0151, 0.0191, 0.0115, 0.0114, 0.0649, 0.0148,
+2020-07-20 10:44:10,391:         0.0336, 0.0573, 0.0251, 0.0137, 0.0071, 0.0108, 0.0354, 0.0496, 0.0040,
+2020-07-20 10:44:10,391:         0.0060, 0.0022, 0.0202, 0.0073, 0.0106, 0.0244, 0.0140, 0.0577, 0.0130,
+2020-07-20 10:44:10,391:         0.0121, 0.0030, 0.0118, 0.0115, 0.0124, 0.0067, 0.0522, 0.0081, 0.0226,
+2020-07-20 10:44:10,391:         0.0065, 0.0109]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:10,391:3.1.4 evaluation
+2020-07-20 10:44:10,406:updating parameters
+2020-07-20 10:44:12,242:Charades __getitem__
+2020-07-20 10:44:12,243:3.1.1 base_model
+2020-07-20 10:44:12,256:3.1.2 modeling
+2020-07-20 10:44:12,259:3.1.3 inference
+2020-07-20 10:44:12,261:s_output
+2020-07-20 10:44:12,262:tensor([[0.0119, 0.0307, 0.1709, 0.0518, 0.0317, 0.0654, 0.0135, 0.0921, 0.0771,
+2020-07-20 10:44:12,262:         0.0820, 0.0967, 0.1873, 0.0134, 0.0111, 0.0269, 0.0376]],
+2020-07-20 10:44:12,262:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:12,262:v_output
+2020-07-20 10:44:12,264:tensor([[0.0041, 0.0349, 0.0043, 0.0125, 0.0235, 0.0343, 0.0125, 0.0091, 0.6099,
+2020-07-20 10:44:12,264:         0.0169, 0.0101, 0.0015, 0.0543, 0.0048, 0.0199, 0.0055, 0.1520, 0.0062,
+2020-07-20 10:44:12,264:         0.0945, 0.0317, 0.0247, 0.0104, 0.0377, 0.1404, 0.0127, 0.0184, 0.0901,
+2020-07-20 10:44:12,264:         0.0061, 0.0129, 0.0126, 0.0170, 0.0817, 0.0069]], device='cuda:0',
+2020-07-20 10:44:12,264:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:12,264:o_output
+2020-07-20 10:44:12,265:tensor([[0.1490, 0.0283, 0.0065, 0.0253, 0.0180, 0.0132, 0.0204, 0.0444, 0.0246,
+2020-07-20 10:44:12,265:         0.0374, 0.0643, 0.0341, 0.0215, 0.0101, 0.0136, 0.0551, 0.0914, 0.0070,
+2020-07-20 10:44:12,265:         0.0045, 0.0028, 0.0165, 0.0081, 0.0105, 0.0151, 0.0139, 0.0399, 0.0099,
+2020-07-20 10:44:12,265:         0.0147, 0.0061, 0.0232, 0.0180, 0.0163, 0.0051, 0.0394, 0.0073, 0.0329,
+2020-07-20 10:44:12,265:         0.0115, 0.0116]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:12,265:3.1.4 evaluation
+2020-07-20 10:44:12,280:updating parameters
+2020-07-20 10:44:14,115:Charades __getitem__
+2020-07-20 10:44:14,116:3.1.1 base_model
+2020-07-20 10:44:14,129:3.1.2 modeling
+2020-07-20 10:44:14,132:3.1.3 inference
+2020-07-20 10:44:14,135:s_output
+2020-07-20 10:44:14,135:tensor([[0.0149, 0.0228, 0.2129, 0.0407, 0.0906, 0.0440, 0.0121, 0.0523, 0.0814,
+2020-07-20 10:44:14,136:         0.1524, 0.0579, 0.1441, 0.0085, 0.0141, 0.0215, 0.0297]],
+2020-07-20 10:44:14,136:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:14,136:v_output
+2020-07-20 10:44:14,137:tensor([[0.0028, 0.0351, 0.0058, 0.0094, 0.0187, 0.0128, 0.0097, 0.0084, 0.5442,
+2020-07-20 10:44:14,137:         0.0118, 0.0054, 0.0012, 0.0576, 0.0041, 0.0183, 0.0058, 0.1375, 0.0061,
+2020-07-20 10:44:14,137:         0.0529, 0.0247, 0.0141, 0.0084, 0.0342, 0.1268, 0.0091, 0.0154, 0.0613,
+2020-07-20 10:44:14,137:         0.0056, 0.0126, 0.0140, 0.0174, 0.0795, 0.0050]], device='cuda:0',
+2020-07-20 10:44:14,137:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:14,137:o_output
+2020-07-20 10:44:14,138:tensor([[0.1137, 0.0192, 0.0052, 0.0184, 0.0203, 0.0173, 0.0133, 0.0202, 0.0186,
+2020-07-20 10:44:14,138:         0.0353, 0.0628, 0.0360, 0.0219, 0.0094, 0.0137, 0.0333, 0.0424, 0.0049,
+2020-07-20 10:44:14,138:         0.0037, 0.0027, 0.0137, 0.0079, 0.0084, 0.0120, 0.0130, 0.0385, 0.0099,
+2020-07-20 10:44:14,138:         0.0190, 0.0046, 0.0081, 0.0153, 0.0124, 0.0043, 0.0264, 0.0056, 0.0271,
+2020-07-20 10:44:14,138:         0.0070, 0.0124]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:14,138:3.1.4 evaluation
+2020-07-20 10:44:14,153:updating parameters
+2020-07-20 10:44:15,988:Charades __getitem__
+2020-07-20 10:44:15,988:3.1.1 base_model
+2020-07-20 10:44:16,001:3.1.2 modeling
+2020-07-20 10:44:16,005:3.1.3 inference
+2020-07-20 10:44:16,007:s_output
+2020-07-20 10:44:16,008:tensor([[0.0141, 0.0328, 0.1528, 0.0757, 0.0379, 0.0786, 0.0212, 0.0766, 0.0770,
+2020-07-20 10:44:16,008:         0.0793, 0.0493, 0.1753, 0.0207, 0.0256, 0.0282, 0.0548]],
+2020-07-20 10:44:16,008:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:16,008:v_output
+2020-07-20 10:44:16,009:tensor([[0.0039, 0.0247, 0.0034, 0.0215, 0.0232, 0.0220, 0.0170, 0.0071, 0.6180,
+2020-07-20 10:44:16,009:         0.0271, 0.0083, 0.0014, 0.0431, 0.0086, 0.0362, 0.0045, 0.1309, 0.0055,
+2020-07-20 10:44:16,009:         0.0819, 0.0560, 0.0226, 0.0185, 0.0294, 0.1118, 0.0170, 0.0178, 0.0535,
+2020-07-20 10:44:16,009:         0.0069, 0.0234, 0.0141, 0.0158, 0.1475, 0.0050]], device='cuda:0',
+2020-07-20 10:44:16,009:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:16,009:o_output
+2020-07-20 10:44:16,010:tensor([[0.1593, 0.0204, 0.0101, 0.0379, 0.0240, 0.0124, 0.0098, 0.0332, 0.0171,
+2020-07-20 10:44:16,010:         0.0715, 0.0547, 0.0249, 0.0146, 0.0080, 0.0142, 0.0276, 0.0413, 0.0042,
+2020-07-20 10:44:16,010:         0.0094, 0.0030, 0.0132, 0.0087, 0.0128, 0.0464, 0.0124, 0.0838, 0.0119,
+2020-07-20 10:44:16,011:         0.0236, 0.0032, 0.0127, 0.0149, 0.0118, 0.0081, 0.0249, 0.0082, 0.0361,
+2020-07-20 10:44:16,011:         0.0066, 0.0129]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:16,011:3.1.4 evaluation
+2020-07-20 10:44:16,025:updating parameters
+2020-07-20 10:44:16,028:Charades __len__
+2020-07-20 10:44:16,029:Charades __len__
+2020-07-20 10:44:16,050:Epoch: [7][40/282926(1414632)]	Time 1.872 (2.041)	Data 1.831 (1.931)	Loss 5.9939 (6.3325)	S_Prec@1 0.000 (19.512)	S_Prec@5 0.000 (51.220)	O_Prec@1 0.000 (12.195)	O_Prec@5 100.000 (78.049)	V_Prec@1 0.000 (51.220)	V_Prec@5 100.000 (143.902)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 10:44:17,882:Charades __getitem__
+2020-07-20 10:44:17,883:3.1.1 base_model
+2020-07-20 10:44:17,895:3.1.2 modeling
+2020-07-20 10:44:17,899:3.1.3 inference
+2020-07-20 10:44:17,901:s_output
+2020-07-20 10:44:17,902:tensor([[0.0123, 0.0390, 0.1252, 0.0526, 0.0524, 0.0864, 0.0214, 0.0569, 0.0818,
+2020-07-20 10:44:17,902:         0.1319, 0.1083, 0.1308, 0.0137, 0.0234, 0.0267, 0.0372]],
+2020-07-20 10:44:17,902:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:17,902:v_output
+2020-07-20 10:44:17,904:tensor([[0.0035, 0.0315, 0.0046, 0.0155, 0.0224, 0.0234, 0.0115, 0.0089, 0.7696,
+2020-07-20 10:44:17,904:         0.0275, 0.0077, 0.0016, 0.0561, 0.0137, 0.0828, 0.0064, 0.1142, 0.0069,
+2020-07-20 10:44:17,904:         0.0644, 0.0559, 0.0218, 0.0119, 0.0338, 0.1285, 0.0186, 0.0179, 0.0416,
+2020-07-20 10:44:17,904:         0.0074, 0.0177, 0.0162, 0.0117, 0.0931, 0.0043]], device='cuda:0',
+2020-07-20 10:44:17,904:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:17,904:o_output
+2020-07-20 10:44:17,905:tensor([[0.1615, 0.0388, 0.0098, 0.0272, 0.0244, 0.0200, 0.0133, 0.0229, 0.0171,
+2020-07-20 10:44:17,905:         0.0458, 0.0694, 0.0290, 0.0177, 0.0103, 0.0169, 0.0369, 0.0593, 0.0052,
+2020-07-20 10:44:17,905:         0.0055, 0.0027, 0.0140, 0.0090, 0.0186, 0.0226, 0.0117, 0.1825, 0.0145,
+2020-07-20 10:44:17,905:         0.0202, 0.0042, 0.0168, 0.0139, 0.0184, 0.0091, 0.0178, 0.0082, 0.0294,
+2020-07-20 10:44:17,905:         0.0091, 0.0114]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:17,905:3.1.4 evaluation
+2020-07-20 10:44:17,919:updating parameters
+2020-07-20 10:44:19,755:Charades __getitem__
+2020-07-20 10:44:19,756:3.1.1 base_model
+2020-07-20 10:44:19,769:3.1.2 modeling
+2020-07-20 10:44:19,772:3.1.3 inference
+2020-07-20 10:44:19,775:s_output
+2020-07-20 10:44:19,775:tensor([[0.0141, 0.0549, 0.1939, 0.0738, 0.0356, 0.0678, 0.0190, 0.0922, 0.0846,
+2020-07-20 10:44:19,775:         0.0542, 0.0816, 0.1355, 0.0141, 0.0149, 0.0248, 0.0391]],
+2020-07-20 10:44:19,775:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:19,775:v_output
+2020-07-20 10:44:19,776:tensor([[0.0032, 0.0274, 0.0034, 0.0098, 0.0225, 0.0278, 0.0115, 0.0074, 0.7163,
+2020-07-20 10:44:19,777:         0.0211, 0.0085, 0.0013, 0.0484, 0.0089, 0.0548, 0.0055, 0.1158, 0.0050,
+2020-07-20 10:44:19,777:         0.1458, 0.0411, 0.0164, 0.0108, 0.0316, 0.1249, 0.0125, 0.0146, 0.0431,
+2020-07-20 10:44:19,777:         0.0053, 0.0114, 0.0111, 0.0113, 0.1060, 0.0069]], device='cuda:0',
+2020-07-20 10:44:19,777:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:19,777:o_output
+2020-07-20 10:44:19,778:tensor([[0.1312, 0.0257, 0.0092, 0.0218, 0.0170, 0.0140, 0.0124, 0.0578, 0.0157,
+2020-07-20 10:44:19,778:         0.0295, 0.0654, 0.0272, 0.0163, 0.0084, 0.0110, 0.0410, 0.0647, 0.0044,
+2020-07-20 10:44:19,778:         0.0045, 0.0023, 0.0186, 0.0071, 0.0113, 0.0152, 0.0127, 0.0941, 0.0137,
+2020-07-20 10:44:19,778:         0.0179, 0.0037, 0.0180, 0.0109, 0.0156, 0.0078, 0.0357, 0.0089, 0.0230,
+2020-07-20 10:44:19,778:         0.0088, 0.0122]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:19,778:3.1.4 evaluation
+2020-07-20 10:44:19,792:updating parameters
+2020-07-20 10:44:21,628:Charades __getitem__
+2020-07-20 10:44:21,629:3.1.1 base_model
+2020-07-20 10:44:21,641:3.1.2 modeling
+2020-07-20 10:44:21,645:3.1.3 inference
+2020-07-20 10:44:21,647:s_output
+2020-07-20 10:44:21,648:tensor([[0.0087, 0.0464, 0.1341, 0.0385, 0.0828, 0.0534, 0.0320, 0.0887, 0.0946,
+2020-07-20 10:44:21,648:         0.0756, 0.0818, 0.1800, 0.0103, 0.0232, 0.0240, 0.0259]],
+2020-07-20 10:44:21,648:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:21,648:v_output
+2020-07-20 10:44:21,649:tensor([[0.0029, 0.0455, 0.0043, 0.0132, 0.0169, 0.0147, 0.0107, 0.0120, 0.5724,
+2020-07-20 10:44:21,649:         0.0143, 0.0051, 0.0014, 0.0802, 0.0045, 0.0185, 0.0046, 0.1658, 0.0079,
+2020-07-20 10:44:21,649:         0.0642, 0.0288, 0.0156, 0.0059, 0.0371, 0.1541, 0.0072, 0.0235, 0.0758,
+2020-07-20 10:44:21,649:         0.0070, 0.0163, 0.0192, 0.0184, 0.0647, 0.0048]], device='cuda:0',
+2020-07-20 10:44:21,649:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:21,649:o_output
+2020-07-20 10:44:21,650:tensor([[0.1245, 0.0290, 0.0055, 0.0153, 0.0241, 0.0249, 0.0160, 0.0292, 0.0284,
+2020-07-20 10:44:21,651:         0.0442, 0.0488, 0.0286, 0.0284, 0.0131, 0.0189, 0.0377, 0.0445, 0.0064,
+2020-07-20 10:44:21,651:         0.0042, 0.0028, 0.0131, 0.0094, 0.0093, 0.0126, 0.0143, 0.0384, 0.0116,
+2020-07-20 10:44:21,651:         0.0174, 0.0051, 0.0098, 0.0205, 0.0226, 0.0050, 0.0274, 0.0064, 0.0320,
+2020-07-20 10:44:21,651:         0.0079, 0.0099]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:21,651:3.1.4 evaluation
+2020-07-20 10:44:21,665:updating parameters
+2020-07-20 10:44:23,500:Charades __getitem__
+2020-07-20 10:44:23,501:3.1.1 base_model
+2020-07-20 10:44:23,513:3.1.2 modeling
+2020-07-20 10:44:23,517:3.1.3 inference
+2020-07-20 10:44:23,519:s_output
+2020-07-20 10:44:23,520:tensor([[0.0113, 0.0566, 0.1468, 0.0457, 0.0487, 0.0692, 0.0247, 0.1037, 0.1182,
+2020-07-20 10:44:23,520:         0.0835, 0.0537, 0.1412, 0.0096, 0.0127, 0.0271, 0.0471]],
+2020-07-20 10:44:23,520:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:23,520:v_output
+2020-07-20 10:44:23,521:tensor([[0.0038, 0.0347, 0.0037, 0.0152, 0.0173, 0.0213, 0.0118, 0.0118, 0.6064,
+2020-07-20 10:44:23,521:         0.0217, 0.0091, 0.0013, 0.0586, 0.0051, 0.0222, 0.0038, 0.1316, 0.0073,
+2020-07-20 10:44:23,521:         0.0546, 0.0460, 0.0212, 0.0124, 0.0339, 0.1255, 0.0105, 0.0221, 0.0524,
+2020-07-20 10:44:23,521:         0.0069, 0.0194, 0.0180, 0.0136, 0.1081, 0.0040]], device='cuda:0',
+2020-07-20 10:44:23,521:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:23,521:o_output
+2020-07-20 10:44:23,522:tensor([[0.1540, 0.0294, 0.0080, 0.0303, 0.0187, 0.0157, 0.0140, 0.0233, 0.0208,
+2020-07-20 10:44:23,522:         0.0502, 0.0447, 0.0258, 0.0247, 0.0121, 0.0185, 0.0366, 0.0552, 0.0053,
+2020-07-20 10:44:23,522:         0.0056, 0.0028, 0.0151, 0.0088, 0.0095, 0.0250, 0.0109, 0.0408, 0.0117,
+2020-07-20 10:44:23,522:         0.0267, 0.0040, 0.0133, 0.0140, 0.0146, 0.0065, 0.0195, 0.0085, 0.0324,
+2020-07-20 10:44:23,522:         0.0071, 0.0118]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:23,523:3.1.4 evaluation
+2020-07-20 10:44:23,537:updating parameters
+2020-07-20 10:44:25,373:Charades __getitem__
+2020-07-20 10:44:25,374:3.1.1 base_model
+2020-07-20 10:44:25,387:3.1.2 modeling
+2020-07-20 10:44:25,390:3.1.3 inference
+2020-07-20 10:44:25,392:s_output
+2020-07-20 10:44:25,393:tensor([[0.0204, 0.0457, 0.1568, 0.0403, 0.0575, 0.0764, 0.0280, 0.0728, 0.0772,
+2020-07-20 10:44:25,393:         0.0725, 0.0795, 0.1656, 0.0220, 0.0250, 0.0260, 0.0344]],
+2020-07-20 10:44:25,393:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:25,393:v_output
+2020-07-20 10:44:25,394:tensor([[0.0062, 0.0260, 0.0031, 0.0275, 0.0180, 0.0192, 0.0125, 0.0074, 0.5513,
+2020-07-20 10:44:25,394:         0.0190, 0.0135, 0.0014, 0.0501, 0.0046, 0.0232, 0.0044, 0.1492, 0.0062,
+2020-07-20 10:44:25,394:         0.1678, 0.0368, 0.0188, 0.0117, 0.0478, 0.1370, 0.0097, 0.0278, 0.0526,
+2020-07-20 10:44:25,394:         0.0056, 0.0273, 0.0122, 0.0115, 0.0741, 0.0053]], device='cuda:0',
+2020-07-20 10:44:25,394:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:25,395:o_output
+2020-07-20 10:44:25,396:tensor([[0.1762, 0.0396, 0.0166, 0.0255, 0.0201, 0.0137, 0.0137, 0.0476, 0.0159,
+2020-07-20 10:44:25,396:         0.0639, 0.0484, 0.0218, 0.0159, 0.0083, 0.0125, 0.0608, 0.0424, 0.0052,
+2020-07-20 10:44:25,396:         0.0050, 0.0023, 0.0154, 0.0076, 0.0093, 0.0162, 0.0133, 0.0441, 0.0099,
+2020-07-20 10:44:25,396:         0.0237, 0.0032, 0.0115, 0.0115, 0.0389, 0.0103, 0.0292, 0.0097, 0.0272,
+2020-07-20 10:44:25,396:         0.0099, 0.0085]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:25,396:3.1.4 evaluation
+2020-07-20 10:44:25,410:updating parameters
+2020-07-20 10:44:27,249:Charades __getitem__
+2020-07-20 10:44:27,250:3.1.1 base_model
+2020-07-20 10:44:27,262:3.1.2 modeling
+2020-07-20 10:44:27,266:3.1.3 inference
+2020-07-20 10:44:27,268:s_output
+2020-07-20 10:44:27,269:tensor([[0.0132, 0.0593, 0.1615, 0.0524, 0.0316, 0.0745, 0.0176, 0.1196, 0.0925,
+2020-07-20 10:44:27,269:         0.0684, 0.0674, 0.1509, 0.0134, 0.0211, 0.0187, 0.0381]],
+2020-07-20 10:44:27,269:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:27,269:v_output
+2020-07-20 10:44:27,270:tensor([[0.0034, 0.0247, 0.0044, 0.0114, 0.0189, 0.0237, 0.0082, 0.0079, 0.6001,
+2020-07-20 10:44:27,270:         0.0168, 0.0075, 0.0014, 0.0401, 0.0048, 0.0262, 0.0058, 0.1377, 0.0092,
+2020-07-20 10:44:27,270:         0.0800, 0.0324, 0.0136, 0.0081, 0.0357, 0.1305, 0.0121, 0.0196, 0.0528,
+2020-07-20 10:44:27,270:         0.0058, 0.0163, 0.0174, 0.0142, 0.0699, 0.0061]], device='cuda:0',
+2020-07-20 10:44:27,270:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:27,270:o_output
+2020-07-20 10:44:27,271:tensor([[0.1445, 0.0221, 0.0069, 0.0178, 0.0209, 0.0133, 0.0139, 0.0361, 0.0102,
+2020-07-20 10:44:27,271:         0.0361, 0.0613, 0.0392, 0.0172, 0.0085, 0.0182, 0.0300, 0.0656, 0.0044,
+2020-07-20 10:44:27,271:         0.0039, 0.0023, 0.0145, 0.0074, 0.0090, 0.0111, 0.0138, 0.0574, 0.0113,
+2020-07-20 10:44:27,271:         0.0134, 0.0039, 0.0168, 0.0107, 0.0176, 0.0057, 0.0424, 0.0068, 0.0244,
+2020-07-20 10:44:27,271:         0.0077, 0.0092]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:27,271:3.1.4 evaluation
+2020-07-20 10:44:27,286:updating parameters
+2020-07-20 10:44:29,131:Charades __getitem__
+2020-07-20 10:44:29,131:3.1.1 base_model
+2020-07-20 10:44:29,144:3.1.2 modeling
+2020-07-20 10:44:29,147:3.1.3 inference
+2020-07-20 10:44:29,150:s_output
+2020-07-20 10:44:29,151:tensor([[0.0150, 0.0391, 0.1349, 0.0472, 0.0433, 0.0727, 0.0442, 0.0825, 0.0688,
+2020-07-20 10:44:29,151:         0.0736, 0.0824, 0.1827, 0.0106, 0.0184, 0.0281, 0.0564]],
+2020-07-20 10:44:29,151:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:29,151:v_output
+2020-07-20 10:44:29,152:tensor([[0.0042, 0.0250, 0.0037, 0.0122, 0.0181, 0.0281, 0.0102, 0.0052, 0.5959,
+2020-07-20 10:44:29,152:         0.0201, 0.0112, 0.0014, 0.0470, 0.0047, 0.0393, 0.0048, 0.1297, 0.0049,
+2020-07-20 10:44:29,152:         0.2004, 0.0396, 0.0165, 0.0115, 0.0362, 0.1225, 0.0102, 0.0162, 0.0422,
+2020-07-20 10:44:29,152:         0.0045, 0.0128, 0.0094, 0.0120, 0.1123, 0.0091]], device='cuda:0',
+2020-07-20 10:44:29,152:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:29,152:o_output
+2020-07-20 10:44:29,153:tensor([[0.1623, 0.0261, 0.0122, 0.0208, 0.0220, 0.0148, 0.0098, 0.0651, 0.0122,
+2020-07-20 10:44:29,153:         0.0314, 0.0494, 0.0267, 0.0116, 0.0061, 0.0095, 0.0540, 0.0682, 0.0046,
+2020-07-20 10:44:29,153:         0.0041, 0.0023, 0.0302, 0.0057, 0.0090, 0.0143, 0.0163, 0.0427, 0.0118,
+2020-07-20 10:44:29,153:         0.0191, 0.0033, 0.0159, 0.0100, 0.0166, 0.0081, 0.0462, 0.0083, 0.0207,
+2020-07-20 10:44:29,153:         0.0083, 0.0084]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:29,153:3.1.4 evaluation
+2020-07-20 10:44:29,167:updating parameters
+2020-07-20 10:44:31,546:Charades __getitem__
+2020-07-20 10:44:31,546:3.1.1 base_model
+2020-07-20 10:44:31,559:3.1.2 modeling
+2020-07-20 10:44:31,563:3.1.3 inference
+2020-07-20 10:44:31,565:s_output
+2020-07-20 10:44:31,566:tensor([[0.0127, 0.0507, 0.1790, 0.0527, 0.0538, 0.0584, 0.0168, 0.0747, 0.0905,
+2020-07-20 10:44:31,566:         0.0820, 0.0708, 0.1424, 0.0164, 0.0195, 0.0221, 0.0575]],
+2020-07-20 10:44:31,566:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:31,566:v_output
+2020-07-20 10:44:31,567:tensor([[0.0046, 0.0217, 0.0026, 0.0096, 0.0161, 0.0290, 0.0092, 0.0050, 0.6016,
+2020-07-20 10:44:31,567:         0.0235, 0.0173, 0.0012, 0.0386, 0.0046, 0.0287, 0.0038, 0.1048, 0.0038,
+2020-07-20 10:44:31,567:         0.2031, 0.0435, 0.0163, 0.0155, 0.0311, 0.0982, 0.0074, 0.0159, 0.0373,
+2020-07-20 10:44:31,567:         0.0045, 0.0097, 0.0080, 0.0089, 0.1527, 0.0074]], device='cuda:0',
+2020-07-20 10:44:31,567:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:31,567:o_output
+2020-07-20 10:44:31,568:tensor([[0.1666, 0.0203, 0.0112, 0.0253, 0.0256, 0.0120, 0.0090, 0.0634, 0.0129,
+2020-07-20 10:44:31,568:         0.0239, 0.0423, 0.0197, 0.0112, 0.0056, 0.0081, 0.0596, 0.0674, 0.0037,
+2020-07-20 10:44:31,568:         0.0038, 0.0018, 0.0205, 0.0055, 0.0085, 0.0154, 0.0154, 0.0375, 0.0127,
+2020-07-20 10:44:31,568:         0.0230, 0.0027, 0.0154, 0.0106, 0.0147, 0.0094, 0.0385, 0.0136, 0.0207,
+2020-07-20 10:44:31,568:         0.0059, 0.0078]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:31,568:3.1.4 evaluation
+2020-07-20 10:44:31,582:updating parameters
+2020-07-20 10:44:33,675:Charades __getitem__
+2020-07-20 10:44:33,675:3.1.1 base_model
+2020-07-20 10:44:33,688:3.1.2 modeling
+2020-07-20 10:44:33,692:3.1.3 inference
+2020-07-20 10:44:33,694:s_output
+2020-07-20 10:44:33,695:tensor([[0.0113, 0.0569, 0.1289, 0.0464, 0.0613, 0.0691, 0.0175, 0.0754, 0.0789,
+2020-07-20 10:44:33,695:         0.1011, 0.0773, 0.1732, 0.0112, 0.0145, 0.0256, 0.0515]],
+2020-07-20 10:44:33,695:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:33,695:v_output
+2020-07-20 10:44:33,696:tensor([[0.0027, 0.0256, 0.0079, 0.0119, 0.0203, 0.0325, 0.0094, 0.0054, 0.6627,
+2020-07-20 10:44:33,696:         0.0178, 0.0053, 0.0018, 0.0529, 0.0049, 0.0343, 0.0077, 0.1619, 0.0051,
+2020-07-20 10:44:33,696:         0.1155, 0.0343, 0.0155, 0.0068, 0.0309, 0.1547, 0.0087, 0.0168, 0.0641,
+2020-07-20 10:44:33,696:         0.0050, 0.0126, 0.0098, 0.0189, 0.0829, 0.0078]], device='cuda:0',
+2020-07-20 10:44:33,696:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:33,696:o_output
+2020-07-20 10:44:33,697:tensor([[0.1249, 0.0423, 0.0069, 0.0161, 0.0172, 0.0164, 0.0127, 0.0396, 0.0155,
+2020-07-20 10:44:33,697:         0.0329, 0.0655, 0.0466, 0.0118, 0.0062, 0.0100, 0.0353, 0.1242, 0.0066,
+2020-07-20 10:44:33,697:         0.0040, 0.0027, 0.0210, 0.0060, 0.0122, 0.0127, 0.0146, 0.0483, 0.0125,
+2020-07-20 10:44:33,697:         0.0110, 0.0040, 0.0193, 0.0147, 0.0173, 0.0085, 0.0522, 0.0081, 0.0284,
+2020-07-20 10:44:33,697:         0.0081, 0.0093]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:33,697:3.1.4 evaluation
+2020-07-20 10:44:33,712:updating parameters
+2020-07-20 10:44:35,548:Charades __getitem__
+2020-07-20 10:44:35,548:3.1.1 base_model
+2020-07-20 10:44:35,561:3.1.2 modeling
+2020-07-20 10:44:35,564:3.1.3 inference
+2020-07-20 10:44:35,566:s_output
+2020-07-20 10:44:35,567:tensor([[0.0157, 0.0417, 0.1665, 0.0818, 0.0488, 0.0756, 0.0231, 0.0753, 0.0656,
+2020-07-20 10:44:35,567:         0.0954, 0.0630, 0.1396, 0.0111, 0.0201, 0.0227, 0.0540]],
+2020-07-20 10:44:35,567:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:35,567:v_output
+2020-07-20 10:44:35,568:tensor([[0.0053, 0.0246, 0.0030, 0.0112, 0.0335, 0.0197, 0.0112, 0.0053, 0.5982,
+2020-07-20 10:44:35,568:         0.0203, 0.0149, 0.0015, 0.0444, 0.0059, 0.0396, 0.0065, 0.1137, 0.0046,
+2020-07-20 10:44:35,568:         0.2937, 0.0409, 0.0207, 0.0144, 0.0392, 0.1114, 0.0120, 0.0146, 0.0355,
+2020-07-20 10:44:35,568:         0.0049, 0.0114, 0.0095, 0.0091, 0.1070, 0.0083]], device='cuda:0',
+2020-07-20 10:44:35,568:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:35,568:o_output
+2020-07-20 10:44:35,569:tensor([[0.1887, 0.0194, 0.0146, 0.0198, 0.0317, 0.0196, 0.0093, 0.0542, 0.0121,
+2020-07-20 10:44:35,570:         0.0242, 0.0902, 0.0265, 0.0112, 0.0059, 0.0097, 0.0892, 0.0419, 0.0038,
+2020-07-20 10:44:35,570:         0.0042, 0.0020, 0.0236, 0.0063, 0.0106, 0.0124, 0.0194, 0.0618, 0.0137,
+2020-07-20 10:44:35,570:         0.0232, 0.0030, 0.0103, 0.0099, 0.0214, 0.0145, 0.0445, 0.0105, 0.0198,
+2020-07-20 10:44:35,570:         0.0086, 0.0083]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:35,570:3.1.4 evaluation
+2020-07-20 10:44:35,584:updating parameters
+2020-07-20 10:44:35,588:Charades __len__
+2020-07-20 10:44:35,588:Charades __len__
+2020-07-20 10:44:35,609:Epoch: [7][50/282926(1414632)]	Time 1.873 (2.024)	Data 1.832 (1.928)	Loss 5.7199 (6.2204)	S_Prec@1 0.000 (17.647)	S_Prec@5 100.000 (50.980)	O_Prec@1 0.000 (11.765)	O_Prec@5 100.000 (76.471)	V_Prec@1 100.000 (50.980)	V_Prec@5 300.000 (143.137)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 10:44:37,441:Charades __getitem__
+2020-07-20 10:44:37,442:3.1.1 base_model
+2020-07-20 10:44:37,454:3.1.2 modeling
+2020-07-20 10:44:37,458:3.1.3 inference
+2020-07-20 10:44:37,460:s_output
+2020-07-20 10:44:37,461:tensor([[0.0182, 0.0341, 0.2323, 0.0582, 0.0467, 0.0499, 0.0283, 0.0575, 0.0693,
+2020-07-20 10:44:37,461:         0.0818, 0.0825, 0.1528, 0.0128, 0.0167, 0.0226, 0.0363]],
+2020-07-20 10:44:37,461:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:37,461:v_output
+2020-07-20 10:44:37,462:tensor([[0.0028, 0.0213, 0.0046, 0.0210, 0.0210, 0.0242, 0.0112, 0.0050, 0.7037,
+2020-07-20 10:44:37,462:         0.0191, 0.0059, 0.0016, 0.0435, 0.0064, 0.0398, 0.0053, 0.1743, 0.0052,
+2020-07-20 10:44:37,462:         0.0987, 0.0413, 0.0175, 0.0080, 0.0304, 0.1524, 0.0093, 0.0253, 0.0745,
+2020-07-20 10:44:37,462:         0.0046, 0.0213, 0.0085, 0.0272, 0.0843, 0.0059]], device='cuda:0',
+2020-07-20 10:44:37,462:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:37,462:o_output
+2020-07-20 10:44:37,463:tensor([[0.1240, 0.0320, 0.0085, 0.0221, 0.0197, 0.0139, 0.0108, 0.0355, 0.0140,
+2020-07-20 10:44:37,463:         0.0868, 0.0616, 0.0334, 0.0102, 0.0058, 0.0087, 0.0400, 0.0594, 0.0052,
+2020-07-20 10:44:37,463:         0.0054, 0.0029, 0.0158, 0.0061, 0.0125, 0.0165, 0.0116, 0.0589, 0.0099,
+2020-07-20 10:44:37,463:         0.0153, 0.0030, 0.0168, 0.0139, 0.0174, 0.0085, 0.0333, 0.0065, 0.0493,
+2020-07-20 10:44:37,463:         0.0062, 0.0083]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:37,463:3.1.4 evaluation
+2020-07-20 10:44:37,478:updating parameters
+2020-07-20 10:44:39,856:Charades __getitem__
+2020-07-20 10:44:39,856:3.1.1 base_model
+2020-07-20 10:44:39,869:3.1.2 modeling
+2020-07-20 10:44:39,872:3.1.3 inference
+2020-07-20 10:44:39,875:s_output
+2020-07-20 10:44:39,876:tensor([[0.0101, 0.0439, 0.1485, 0.0596, 0.0408, 0.0530, 0.0201, 0.0720, 0.0470,
+2020-07-20 10:44:39,876:         0.1372, 0.0923, 0.1757, 0.0116, 0.0199, 0.0263, 0.0420]],
+2020-07-20 10:44:39,876:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:39,876:v_output
+2020-07-20 10:44:39,877:tensor([[0.0030, 0.0238, 0.0029, 0.0124, 0.0170, 0.0171, 0.0107, 0.0059, 0.6500,
+2020-07-20 10:44:39,877:         0.0158, 0.0070, 0.0011, 0.0430, 0.0050, 0.0353, 0.0042, 0.1267, 0.0051,
+2020-07-20 10:44:39,877:         0.1166, 0.0330, 0.0149, 0.0090, 0.0314, 0.1225, 0.0101, 0.0163, 0.0667,
+2020-07-20 10:44:39,877:         0.0044, 0.0136, 0.0101, 0.0133, 0.0997, 0.0066]], device='cuda:0',
+2020-07-20 10:44:39,877:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:39,877:o_output
+2020-07-20 10:44:39,878:tensor([[0.1327, 0.0217, 0.0079, 0.0227, 0.0170, 0.0121, 0.0125, 0.0415, 0.0140,
+2020-07-20 10:44:39,878:         0.0426, 0.0497, 0.0220, 0.0134, 0.0067, 0.0100, 0.0407, 0.0398, 0.0038,
+2020-07-20 10:44:39,878:         0.0041, 0.0021, 0.0191, 0.0058, 0.0084, 0.0147, 0.0120, 0.0567, 0.0102,
+2020-07-20 10:44:39,878:         0.0142, 0.0027, 0.0104, 0.0109, 0.0145, 0.0063, 0.0376, 0.0070, 0.0270,
+2020-07-20 10:44:39,878:         0.0083, 0.0087]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:39,878:3.1.4 evaluation
+2020-07-20 10:44:39,893:updating parameters
+2020-07-20 10:44:41,945:Charades __getitem__
+2020-07-20 10:44:41,945:3.1.1 base_model
+2020-07-20 10:44:41,958:3.1.2 modeling
+2020-07-20 10:44:41,961:3.1.3 inference
+2020-07-20 10:44:41,964:s_output
+2020-07-20 10:44:41,965:tensor([[0.0190, 0.0478, 0.1339, 0.0548, 0.0468, 0.0470, 0.0239, 0.0807, 0.0999,
+2020-07-20 10:44:41,965:         0.0989, 0.0873, 0.1369, 0.0142, 0.0311, 0.0260, 0.0519]],
+2020-07-20 10:44:41,965:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:41,965:v_output
+2020-07-20 10:44:41,966:tensor([[0.0033, 0.0296, 0.0034, 0.0159, 0.0157, 0.0151, 0.0119, 0.0072, 0.5805,
+2020-07-20 10:44:41,966:         0.0149, 0.0066, 0.0014, 0.0590, 0.0044, 0.0194, 0.0044, 0.1903, 0.0056,
+2020-07-20 10:44:41,966:         0.0547, 0.0339, 0.0148, 0.0081, 0.0321, 0.1543, 0.0075, 0.0291, 0.1021,
+2020-07-20 10:44:41,966:         0.0059, 0.0190, 0.0115, 0.0288, 0.0770, 0.0039]], device='cuda:0',
+2020-07-20 10:44:41,966:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:41,966:o_output
+2020-07-20 10:44:41,967:tensor([[0.1197, 0.0393, 0.0062, 0.0265, 0.0162, 0.0191, 0.0101, 0.0206, 0.0266,
+2020-07-20 10:44:41,967:         0.0888, 0.0462, 0.0203, 0.0173, 0.0083, 0.0120, 0.0373, 0.0434, 0.0078,
+2020-07-20 10:44:41,967:         0.0053, 0.0032, 0.0120, 0.0074, 0.0093, 0.0191, 0.0092, 0.0341, 0.0098,
+2020-07-20 10:44:41,967:         0.0195, 0.0040, 0.0092, 0.0241, 0.0155, 0.0054, 0.0275, 0.0066, 0.0610,
+2020-07-20 10:44:41,967:         0.0063, 0.0096]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:41,968:3.1.4 evaluation
+2020-07-20 10:44:41,982:updating parameters
+2020-07-20 10:44:43,822:Charades __getitem__
+2020-07-20 10:44:43,823:3.1.1 base_model
+2020-07-20 10:44:43,835:3.1.2 modeling
+2020-07-20 10:44:43,839:3.1.3 inference
+2020-07-20 10:44:43,841:s_output
+2020-07-20 10:44:43,842:tensor([[0.0128, 0.0361, 0.1965, 0.0532, 0.0646, 0.0412, 0.0233, 0.0731, 0.0611,
+2020-07-20 10:44:43,842:         0.1283, 0.0547, 0.1657, 0.0117, 0.0158, 0.0280, 0.0339]],
+2020-07-20 10:44:43,842:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:43,842:v_output
+2020-07-20 10:44:43,843:tensor([[0.0035, 0.0266, 0.0034, 0.0174, 0.0160, 0.0167, 0.0118, 0.0060, 0.6379,
+2020-07-20 10:44:43,843:         0.0158, 0.0073, 0.0013, 0.0497, 0.0042, 0.0186, 0.0043, 0.1909, 0.0054,
+2020-07-20 10:44:43,843:         0.0897, 0.0340, 0.0198, 0.0069, 0.0389, 0.1708, 0.0084, 0.0271, 0.1228,
+2020-07-20 10:44:43,843:         0.0046, 0.0181, 0.0100, 0.0198, 0.0605, 0.0047]], device='cuda:0',
+2020-07-20 10:44:43,843:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:43,843:o_output
+2020-07-20 10:44:43,844:tensor([[0.1417, 0.0379, 0.0083, 0.0208, 0.0157, 0.0161, 0.0223, 0.0292, 0.0207,
+2020-07-20 10:44:43,844:         0.0625, 0.0458, 0.0236, 0.0139, 0.0067, 0.0105, 0.0747, 0.0484, 0.0061,
+2020-07-20 10:44:43,844:         0.0044, 0.0025, 0.0121, 0.0061, 0.0077, 0.0132, 0.0107, 0.0355, 0.0085,
+2020-07-20 10:44:43,844:         0.0161, 0.0035, 0.0114, 0.0162, 0.0253, 0.0064, 0.0297, 0.0068, 0.0366,
+2020-07-20 10:44:43,844:         0.0124, 0.0087]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:43,844:3.1.4 evaluation
+2020-07-20 10:44:43,859:updating parameters
+2020-07-20 10:44:45,693:Charades __getitem__
+2020-07-20 10:44:45,694:3.1.1 base_model
+2020-07-20 10:44:45,707:3.1.2 modeling
+2020-07-20 10:44:45,711:3.1.3 inference
+2020-07-20 10:44:45,713:s_output
+2020-07-20 10:44:45,714:tensor([[0.0125, 0.0232, 0.1707, 0.0498, 0.0586, 0.0554, 0.0186, 0.0825, 0.1123,
+2020-07-20 10:44:45,714:         0.1131, 0.0663, 0.1404, 0.0143, 0.0124, 0.0145, 0.0554]],
+2020-07-20 10:44:45,714:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:45,714:v_output
+2020-07-20 10:44:45,715:tensor([[0.0033, 0.0266, 0.0031, 0.0099, 0.0277, 0.0206, 0.0120, 0.0069, 0.6220,
+2020-07-20 10:44:45,715:         0.0134, 0.0088, 0.0011, 0.0460, 0.0059, 0.0227, 0.0045, 0.1483, 0.0038,
+2020-07-20 10:44:45,715:         0.0608, 0.0301, 0.0149, 0.0079, 0.0302, 0.1296, 0.0084, 0.0168, 0.0566,
+2020-07-20 10:44:45,715:         0.0054, 0.0122, 0.0089, 0.0137, 0.1097, 0.0038]], device='cuda:0',
+2020-07-20 10:44:45,715:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:45,715:o_output
+2020-07-20 10:44:45,716:tensor([[0.1043, 0.0226, 0.0084, 0.0175, 0.0150, 0.0133, 0.0098, 0.0240, 0.0205,
+2020-07-20 10:44:45,716:         0.0388, 0.0705, 0.0265, 0.0157, 0.0078, 0.0089, 0.0300, 0.0565, 0.0048,
+2020-07-20 10:44:45,716:         0.0046, 0.0023, 0.0148, 0.0076, 0.0094, 0.0177, 0.0090, 0.0405, 0.0123,
+2020-07-20 10:44:45,716:         0.0183, 0.0032, 0.0119, 0.0165, 0.0110, 0.0057, 0.0194, 0.0081, 0.0253,
+2020-07-20 10:44:45,716:         0.0057, 0.0136]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:45,716:3.1.4 evaluation
+2020-07-20 10:44:45,731:updating parameters
+2020-07-20 10:44:48,109:Charades __getitem__
+2020-07-20 10:44:48,110:3.1.1 base_model
+2020-07-20 10:44:48,123:3.1.2 modeling
+2020-07-20 10:44:48,126:3.1.3 inference
+2020-07-20 10:44:48,129:s_output
+2020-07-20 10:44:48,129:tensor([[0.0111, 0.0346, 0.2092, 0.0738, 0.0587, 0.0749, 0.0121, 0.0565, 0.0957,
+2020-07-20 10:44:48,130:         0.0822, 0.0701, 0.1286, 0.0120, 0.0231, 0.0220, 0.0352]],
+2020-07-20 10:44:48,130:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:48,130:v_output
+2020-07-20 10:44:48,131:tensor([[0.0038, 0.0214, 0.0081, 0.0101, 0.0190, 0.0416, 0.0084, 0.0044, 0.6354,
+2020-07-20 10:44:48,131:         0.0159, 0.0100, 0.0019, 0.0412, 0.0043, 0.0298, 0.0080, 0.1617, 0.0049,
+2020-07-20 10:44:48,131:         0.1457, 0.0286, 0.0142, 0.0069, 0.0359, 0.1546, 0.0076, 0.0162, 0.0596,
+2020-07-20 10:44:48,131:         0.0046, 0.0101, 0.0084, 0.0170, 0.0721, 0.0072]], device='cuda:0',
+2020-07-20 10:44:48,131:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:48,131:o_output
+2020-07-20 10:44:48,132:tensor([[0.1335, 0.0304, 0.0091, 0.0142, 0.0166, 0.0135, 0.0114, 0.0422, 0.0128,
+2020-07-20 10:44:48,132:         0.0222, 0.0695, 0.0641, 0.0105, 0.0052, 0.0088, 0.0595, 0.1589, 0.0063,
+2020-07-20 10:44:48,132:         0.0032, 0.0026, 0.0238, 0.0058, 0.0109, 0.0090, 0.0139, 0.0364, 0.0114,
+2020-07-20 10:44:48,132:         0.0125, 0.0044, 0.0310, 0.0130, 0.0202, 0.0086, 0.0491, 0.0090, 0.0219,
+2020-07-20 10:44:48,132:         0.0090, 0.0071]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:48,132:3.1.4 evaluation
+2020-07-20 10:44:48,146:updating parameters
+2020-07-20 10:44:50,122:Charades __getitem__
+2020-07-20 10:44:50,122:3.1.1 base_model
+2020-07-20 10:44:50,135:3.1.2 modeling
+2020-07-20 10:44:50,139:3.1.3 inference
+2020-07-20 10:44:50,141:s_output
+2020-07-20 10:44:50,142:tensor([[0.0131, 0.0339, 0.1391, 0.0512, 0.0537, 0.0635, 0.0260, 0.0760, 0.0819,
+2020-07-20 10:44:50,142:         0.1425, 0.0491, 0.1682, 0.0095, 0.0123, 0.0347, 0.0453]],
+2020-07-20 10:44:50,142:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:50,142:v_output
+2020-07-20 10:44:50,143:tensor([[0.0031, 0.0302, 0.0053, 0.0111, 0.0208, 0.0401, 0.0101, 0.0070, 0.7390,
+2020-07-20 10:44:50,143:         0.0291, 0.0072, 0.0018, 0.0527, 0.0071, 0.0322, 0.0057, 0.1364, 0.0061,
+2020-07-20 10:44:50,143:         0.0815, 0.0561, 0.0222, 0.0088, 0.0318, 0.1374, 0.0114, 0.0175, 0.0468,
+2020-07-20 10:44:50,143:         0.0066, 0.0123, 0.0147, 0.0155, 0.1606, 0.0086]], device='cuda:0',
+2020-07-20 10:44:50,143:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:50,143:o_output
+2020-07-20 10:44:50,144:tensor([[0.1512, 0.0255, 0.0078, 0.0169, 0.0543, 0.0185, 0.0191, 0.0334, 0.0141,
+2020-07-20 10:44:50,144:         0.0295, 0.0571, 0.0509, 0.0153, 0.0080, 0.0150, 0.0396, 0.1045, 0.0052,
+2020-07-20 10:44:50,144:         0.0053, 0.0026, 0.0219, 0.0083, 0.0105, 0.0227, 0.0279, 0.0562, 0.0174,
+2020-07-20 10:44:50,144:         0.0212, 0.0040, 0.0280, 0.0135, 0.0141, 0.0083, 0.0328, 0.0089, 0.0257,
+2020-07-20 10:44:50,144:         0.0078, 0.0117]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:50,144:3.1.4 evaluation
+2020-07-20 10:44:50,158:updating parameters
+2020-07-20 10:44:51,996:Charades __getitem__
+2020-07-20 10:44:51,997:3.1.1 base_model
+2020-07-20 10:44:52,010:3.1.2 modeling
+2020-07-20 10:44:52,013:3.1.3 inference
+2020-07-20 10:44:52,016:s_output
+2020-07-20 10:44:52,016:tensor([[0.0163, 0.0506, 0.1213, 0.0293, 0.0515, 0.0467, 0.0209, 0.0804, 0.1070,
+2020-07-20 10:44:52,016:         0.1105, 0.0839, 0.1711, 0.0190, 0.0307, 0.0218, 0.0388]],
+2020-07-20 10:44:52,016:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:52,016:v_output
+2020-07-20 10:44:52,017:tensor([[0.0036, 0.0222, 0.0026, 0.0162, 0.0466, 0.0255, 0.0141, 0.0090, 0.6911,
+2020-07-20 10:44:52,018:         0.0243, 0.0093, 0.0014, 0.0379, 0.0134, 0.0692, 0.0063, 0.0993, 0.0057,
+2020-07-20 10:44:52,018:         0.1008, 0.0456, 0.0220, 0.0154, 0.0310, 0.0993, 0.0188, 0.0165, 0.0345,
+2020-07-20 10:44:52,018:         0.0074, 0.0187, 0.0145, 0.0089, 0.1019, 0.0044]], device='cuda:0',
+2020-07-20 10:44:52,018:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:52,018:o_output
+2020-07-20 10:44:52,019:tensor([[0.1438, 0.0258, 0.0125, 0.0322, 0.0158, 0.0107, 0.0121, 0.0344, 0.0142,
+2020-07-20 10:44:52,019:         0.0471, 0.1207, 0.0275, 0.0171, 0.0103, 0.0148, 0.0311, 0.0456, 0.0039,
+2020-07-20 10:44:52,019:         0.0063, 0.0022, 0.0155, 0.0099, 0.0189, 0.0254, 0.0098, 0.1450, 0.0125,
+2020-07-20 10:44:52,019:         0.0195, 0.0032, 0.0165, 0.0111, 0.0160, 0.0120, 0.0210, 0.0114, 0.0262,
+2020-07-20 10:44:52,019:         0.0068, 0.0138]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:52,019:3.1.4 evaluation
+2020-07-20 10:44:52,033:updating parameters
+2020-07-20 10:44:53,869:Charades __getitem__
+2020-07-20 10:44:53,870:3.1.1 base_model
+2020-07-20 10:44:53,883:3.1.2 modeling
+2020-07-20 10:44:53,886:3.1.3 inference
+2020-07-20 10:44:53,889:s_output
+2020-07-20 10:44:53,890:tensor([[0.0135, 0.0292, 0.1516, 0.0629, 0.0489, 0.0621, 0.0330, 0.0744, 0.0995,
+2020-07-20 10:44:53,890:         0.0962, 0.0657, 0.1589, 0.0123, 0.0164, 0.0318, 0.0437]],
+2020-07-20 10:44:53,890:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:53,890:v_output
+2020-07-20 10:44:53,891:tensor([[0.0027, 0.0225, 0.0032, 0.0113, 0.0147, 0.0192, 0.0098, 0.0056, 0.6330,
+2020-07-20 10:44:53,891:         0.0175, 0.0067, 0.0010, 0.0391, 0.0042, 0.0301, 0.0039, 0.1148, 0.0043,
+2020-07-20 10:44:53,891:         0.1096, 0.0347, 0.0138, 0.0082, 0.0297, 0.1112, 0.0072, 0.0150, 0.0544,
+2020-07-20 10:44:53,891:         0.0042, 0.0116, 0.0090, 0.0130, 0.0961, 0.0059]], device='cuda:0',
+2020-07-20 10:44:53,891:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:53,891:o_output
+2020-07-20 10:44:53,892:tensor([[0.1316, 0.0225, 0.0072, 0.0191, 0.0157, 0.0118, 0.0135, 0.0383, 0.0140,
+2020-07-20 10:44:53,892:         0.0325, 0.0446, 0.0223, 0.0119, 0.0062, 0.0091, 0.0478, 0.0536, 0.0037,
+2020-07-20 10:44:53,892:         0.0038, 0.0020, 0.0189, 0.0055, 0.0083, 0.0151, 0.0119, 0.0402, 0.0095,
+2020-07-20 10:44:53,892:         0.0149, 0.0026, 0.0118, 0.0099, 0.0141, 0.0057, 0.0295, 0.0069, 0.0237,
+2020-07-20 10:44:53,892:         0.0078, 0.0083]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:53,892:3.1.4 evaluation
+2020-07-20 10:44:53,907:updating parameters
+2020-07-20 10:44:56,283:Charades __getitem__
+2020-07-20 10:44:56,284:3.1.1 base_model
+2020-07-20 10:44:56,297:3.1.2 modeling
+2020-07-20 10:44:56,300:3.1.3 inference
+2020-07-20 10:44:56,302:s_output
+2020-07-20 10:44:56,303:tensor([[0.0089, 0.0467, 0.1402, 0.0500, 0.0548, 0.0660, 0.0189, 0.1050, 0.0730,
+2020-07-20 10:44:56,303:         0.0883, 0.0458, 0.2021, 0.0102, 0.0251, 0.0251, 0.0398]],
+2020-07-20 10:44:56,303:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:56,303:v_output
+2020-07-20 10:44:56,304:tensor([[0.0040, 0.0310, 0.0038, 0.0119, 0.0361, 0.0322, 0.0178, 0.0094, 0.6266,
+2020-07-20 10:44:56,304:         0.0219, 0.0108, 0.0016, 0.0504, 0.0095, 0.0394, 0.0065, 0.1137, 0.0067,
+2020-07-20 10:44:56,304:         0.1153, 0.0395, 0.0248, 0.0103, 0.0396, 0.1217, 0.0190, 0.0164, 0.0472,
+2020-07-20 10:44:56,304:         0.0076, 0.0127, 0.0150, 0.0137, 0.1195, 0.0080]], device='cuda:0',
+2020-07-20 10:44:56,304:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:56,304:o_output
+2020-07-20 10:44:56,305:tensor([[0.1507, 0.0233, 0.0095, 0.0200, 0.0274, 0.0190, 0.0163, 0.0395, 0.0185,
+2020-07-20 10:44:56,306:         0.0300, 0.0888, 0.0307, 0.0202, 0.0109, 0.0152, 0.0579, 0.0635, 0.0050,
+2020-07-20 10:44:56,306:         0.0066, 0.0028, 0.0233, 0.0104, 0.0128, 0.0206, 0.0188, 0.0757, 0.0153,
+2020-07-20 10:44:56,306:         0.0218, 0.0045, 0.0194, 0.0149, 0.0149, 0.0083, 0.0303, 0.0091, 0.0296,
+2020-07-20 10:44:56,306:         0.0100, 0.0186]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:56,306:3.1.4 evaluation
+2020-07-20 10:44:56,320:updating parameters
+2020-07-20 10:44:56,324:Charades __len__
+2020-07-20 10:44:56,324:Charades __len__
+2020-07-20 10:44:56,345:Epoch: [7][60/282926(1414632)]	Time 2.413 (2.032)	Data 2.372 (1.945)	Loss 7.3815 (6.1945)	S_Prec@1 0.000 (16.393)	S_Prec@5 0.000 (50.820)	O_Prec@1 0.000 (13.115)	O_Prec@5 200.000 (81.967)	V_Prec@1 100.000 (52.459)	V_Prec@5 300.000 (149.180)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 10:44:58,282:Charades __getitem__
+2020-07-20 10:44:58,283:3.1.1 base_model
+2020-07-20 10:44:58,295:3.1.2 modeling
+2020-07-20 10:44:58,299:3.1.3 inference
+2020-07-20 10:44:58,301:s_output
+2020-07-20 10:44:58,302:tensor([[0.0214, 0.0481, 0.1880, 0.0650, 0.0600, 0.0756, 0.0209, 0.0645, 0.0978,
+2020-07-20 10:44:58,302:         0.0683, 0.0964, 0.1120, 0.0132, 0.0258, 0.0178, 0.0253]],
+2020-07-20 10:44:58,302:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:58,302:v_output
+2020-07-20 10:44:58,303:tensor([[0.0041, 0.0302, 0.0041, 0.0131, 0.0200, 0.0332, 0.0092, 0.0056, 0.7227,
+2020-07-20 10:44:58,303:         0.0210, 0.0100, 0.0017, 0.0679, 0.0062, 0.0445, 0.0052, 0.1320, 0.0061,
+2020-07-20 10:44:58,303:         0.2556, 0.0434, 0.0175, 0.0106, 0.0332, 0.1361, 0.0098, 0.0166, 0.0396,
+2020-07-20 10:44:58,303:         0.0054, 0.0122, 0.0121, 0.0110, 0.1382, 0.0142]], device='cuda:0',
+2020-07-20 10:44:58,303:       grad_fn=<CloneBackward>)
+2020-07-20 10:44:58,303:o_output
+2020-07-20 10:44:58,304:tensor([[0.1447, 0.0338, 0.0158, 0.0205, 0.0624, 0.0178, 0.0109, 0.0730, 0.0103,
+2020-07-20 10:44:58,304:         0.0305, 0.0538, 0.0277, 0.0120, 0.0064, 0.0122, 0.0434, 0.0808, 0.0047,
+2020-07-20 10:44:58,304:         0.0046, 0.0021, 0.0217, 0.0064, 0.0116, 0.0134, 0.0335, 0.0641, 0.0156,
+2020-07-20 10:44:58,305:         0.0173, 0.0031, 0.0201, 0.0093, 0.0174, 0.0164, 0.0459, 0.0096, 0.0211,
+2020-07-20 10:44:58,305:         0.0069, 0.0068]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:44:58,305:3.1.4 evaluation
+2020-07-20 10:44:58,319:updating parameters
+2020-07-20 10:45:00,155:Charades __getitem__
+2020-07-20 10:45:00,156:3.1.1 base_model
+2020-07-20 10:45:00,168:3.1.2 modeling
+2020-07-20 10:45:00,172:3.1.3 inference
+2020-07-20 10:45:00,174:s_output
+2020-07-20 10:45:00,175:tensor([[0.0095, 0.0456, 0.1755, 0.0439, 0.0673, 0.0481, 0.0283, 0.0461, 0.1085,
+2020-07-20 10:45:00,175:         0.1332, 0.0694, 0.1423, 0.0112, 0.0228, 0.0193, 0.0289]],
+2020-07-20 10:45:00,175:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:00,175:v_output
+2020-07-20 10:45:00,176:tensor([[0.0030, 0.0285, 0.0035, 0.0123, 0.0177, 0.0198, 0.0122, 0.0087, 0.6712,
+2020-07-20 10:45:00,176:         0.0172, 0.0066, 0.0012, 0.0460, 0.0046, 0.0218, 0.0050, 0.1327, 0.0062,
+2020-07-20 10:45:00,176:         0.0673, 0.0321, 0.0201, 0.0070, 0.0361, 0.1351, 0.0090, 0.0191, 0.1120,
+2020-07-20 10:45:00,176:         0.0054, 0.0144, 0.0140, 0.0165, 0.0754, 0.0049]], device='cuda:0',
+2020-07-20 10:45:00,176:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:00,176:o_output
+2020-07-20 10:45:00,177:tensor([[0.1327, 0.0254, 0.0069, 0.0181, 0.0177, 0.0147, 0.0447, 0.0265, 0.0174,
+2020-07-20 10:45:00,177:         0.0332, 0.0571, 0.0309, 0.0183, 0.0096, 0.0145, 0.0745, 0.0474, 0.0046,
+2020-07-20 10:45:00,177:         0.0046, 0.0024, 0.0157, 0.0073, 0.0089, 0.0156, 0.0133, 0.0418, 0.0110,
+2020-07-20 10:45:00,177:         0.0159, 0.0036, 0.0129, 0.0127, 0.0174, 0.0053, 0.0271, 0.0070, 0.0281,
+2020-07-20 10:45:00,177:         0.0141, 0.0109]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:00,177:3.1.4 evaluation
+2020-07-20 10:45:00,191:updating parameters
+2020-07-20 10:45:02,036:Charades __getitem__
+2020-07-20 10:45:02,037:3.1.1 base_model
+2020-07-20 10:45:02,050:3.1.2 modeling
+2020-07-20 10:45:02,053:3.1.3 inference
+2020-07-20 10:45:02,056:s_output
+2020-07-20 10:45:02,057:tensor([[0.0135, 0.0287, 0.2476, 0.0558, 0.0477, 0.0889, 0.0208, 0.0591, 0.0844,
+2020-07-20 10:45:02,057:         0.0576, 0.0550, 0.1497, 0.0085, 0.0175, 0.0250, 0.0400]],
+2020-07-20 10:45:02,057:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:02,057:v_output
+2020-07-20 10:45:02,058:tensor([[0.0035, 0.0285, 0.0036, 0.0147, 0.0166, 0.0144, 0.0121, 0.0084, 0.6464,
+2020-07-20 10:45:02,058:         0.0198, 0.0081, 0.0011, 0.0488, 0.0045, 0.0205, 0.0052, 0.1289, 0.0056,
+2020-07-20 10:45:02,058:         0.0880, 0.0390, 0.0171, 0.0079, 0.0345, 0.1239, 0.0093, 0.0218, 0.0899,
+2020-07-20 10:45:02,058:         0.0050, 0.0167, 0.0119, 0.0141, 0.0770, 0.0058]], device='cuda:0',
+2020-07-20 10:45:02,058:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:02,058:o_output
+2020-07-20 10:45:02,059:tensor([[0.1357, 0.0297, 0.0078, 0.0178, 0.0197, 0.0126, 0.0343, 0.0323, 0.0167,
+2020-07-20 10:45:02,059:         0.0357, 0.0535, 0.0230, 0.0170, 0.0090, 0.0122, 0.0690, 0.0380, 0.0049,
+2020-07-20 10:45:02,059:         0.0041, 0.0021, 0.0144, 0.0068, 0.0081, 0.0135, 0.0147, 0.0407, 0.0105,
+2020-07-20 10:45:02,059:         0.0167, 0.0033, 0.0093, 0.0118, 0.0231, 0.0063, 0.0292, 0.0076, 0.0284,
+2020-07-20 10:45:02,059:         0.0156, 0.0095]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:02,059:3.1.4 evaluation
+2020-07-20 10:45:02,073:updating parameters
+2020-07-20 10:45:04,229:Charades __getitem__
+2020-07-20 10:45:04,229:3.1.1 base_model
+2020-07-20 10:45:04,242:3.1.2 modeling
+2020-07-20 10:45:04,246:3.1.3 inference
+2020-07-20 10:45:04,248:s_output
+2020-07-20 10:45:04,249:tensor([[0.0106, 0.0264, 0.2019, 0.0412, 0.0538, 0.0404, 0.0175, 0.0713, 0.0928,
+2020-07-20 10:45:04,249:         0.1312, 0.0607, 0.1663, 0.0135, 0.0155, 0.0212, 0.0357]],
+2020-07-20 10:45:04,249:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:04,249:v_output
+2020-07-20 10:45:04,250:tensor([[0.0053, 0.0237, 0.0026, 0.0129, 0.0188, 0.0206, 0.0126, 0.0061, 0.5743,
+2020-07-20 10:45:04,250:         0.0175, 0.0190, 0.0012, 0.0399, 0.0051, 0.0326, 0.0039, 0.1238, 0.0039,
+2020-07-20 10:45:04,250:         0.1569, 0.0366, 0.0195, 0.0153, 0.0317, 0.1058, 0.0111, 0.0187, 0.0544,
+2020-07-20 10:45:04,250:         0.0048, 0.0132, 0.0085, 0.0136, 0.1219, 0.0062]], device='cuda:0',
+2020-07-20 10:45:04,250:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:04,250:o_output
+2020-07-20 10:45:04,251:tensor([[0.1424, 0.0202, 0.0138, 0.0313, 0.0186, 0.0119, 0.0096, 0.0526, 0.0179,
+2020-07-20 10:45:04,251:         0.0415, 0.0460, 0.0190, 0.0135, 0.0070, 0.0086, 0.0583, 0.0427, 0.0041,
+2020-07-20 10:45:04,251:         0.0049, 0.0024, 0.0190, 0.0064, 0.0086, 0.0179, 0.0109, 0.0484, 0.0110,
+2020-07-20 10:45:04,251:         0.0227, 0.0027, 0.0122, 0.0129, 0.0147, 0.0079, 0.0343, 0.0108, 0.0306,
+2020-07-20 10:45:04,251:         0.0072, 0.0107]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:04,251:3.1.4 evaluation
+2020-07-20 10:45:04,265:updating parameters
+2020-07-20 10:45:06,100:Charades __getitem__
+2020-07-20 10:45:06,101:3.1.1 base_model
+2020-07-20 10:45:06,114:3.1.2 modeling
+2020-07-20 10:45:06,117:3.1.3 inference
+2020-07-20 10:45:06,119:s_output
+2020-07-20 10:45:06,120:tensor([[0.0100, 0.0438, 0.1826, 0.0507, 0.0335, 0.0495, 0.0225, 0.0627, 0.1040,
+2020-07-20 10:45:06,120:         0.1045, 0.0604, 0.1716, 0.0100, 0.0292, 0.0252, 0.0398]],
+2020-07-20 10:45:06,120:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:06,120:v_output
+2020-07-20 10:45:06,121:tensor([[0.0032, 0.0326, 0.0043, 0.0154, 0.0162, 0.0212, 0.0126, 0.0076, 0.6115,
+2020-07-20 10:45:06,121:         0.0192, 0.0065, 0.0015, 0.0574, 0.0049, 0.0260, 0.0055, 0.1676, 0.0075,
+2020-07-20 10:45:06,121:         0.0910, 0.0394, 0.0156, 0.0068, 0.0397, 0.1516, 0.0099, 0.0223, 0.0790,
+2020-07-20 10:45:06,121:         0.0061, 0.0175, 0.0148, 0.0199, 0.0853, 0.0067]], device='cuda:0',
+2020-07-20 10:45:06,121:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:06,121:o_output
+2020-07-20 10:45:06,122:tensor([[0.1471, 0.0353, 0.0076, 0.0179, 0.0204, 0.0195, 0.0194, 0.0358, 0.0196,
+2020-07-20 10:45:06,122:         0.0438, 0.0488, 0.0305, 0.0172, 0.0088, 0.0153, 0.0523, 0.0608, 0.0063,
+2020-07-20 10:45:06,123:         0.0049, 0.0029, 0.0224, 0.0078, 0.0094, 0.0163, 0.0141, 0.0412, 0.0119,
+2020-07-20 10:45:06,123:         0.0166, 0.0042, 0.0140, 0.0160, 0.0237, 0.0066, 0.0370, 0.0075, 0.0318,
+2020-07-20 10:45:06,123:         0.0103, 0.0101]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:06,123:3.1.4 evaluation
+2020-07-20 10:45:06,137:updating parameters
+2020-07-20 10:45:07,982:Charades __getitem__
+2020-07-20 10:45:07,983:3.1.1 base_model
+2020-07-20 10:45:07,996:3.1.2 modeling
+2020-07-20 10:45:07,999:3.1.3 inference
+2020-07-20 10:45:08,002:s_output
+2020-07-20 10:45:08,002:tensor([[0.0164, 0.0487, 0.1737, 0.0636, 0.0481, 0.0500, 0.0310, 0.0517, 0.0743,
+2020-07-20 10:45:08,002:         0.1178, 0.1004, 0.1424, 0.0070, 0.0209, 0.0217, 0.0325]],
+2020-07-20 10:45:08,002:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:08,003:v_output
+2020-07-20 10:45:08,004:tensor([[0.0028, 0.0263, 0.0031, 0.0105, 0.0169, 0.0278, 0.0138, 0.0071, 0.5999,
+2020-07-20 10:45:08,004:         0.0225, 0.0070, 0.0012, 0.0461, 0.0051, 0.0230, 0.0041, 0.1074, 0.0044,
+2020-07-20 10:45:08,004:         0.0768, 0.0520, 0.0173, 0.0099, 0.0262, 0.1043, 0.0102, 0.0149, 0.0521,
+2020-07-20 10:45:08,004:         0.0052, 0.0117, 0.0107, 0.0134, 0.1407, 0.0045]], device='cuda:0',
+2020-07-20 10:45:08,004:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:08,004:o_output
+2020-07-20 10:45:08,005:tensor([[0.1396, 0.0281, 0.0075, 0.0201, 0.0166, 0.0118, 0.0128, 0.0270, 0.0187,
+2020-07-20 10:45:08,005:         0.0344, 0.0456, 0.0206, 0.0157, 0.0082, 0.0110, 0.0386, 0.0671, 0.0046,
+2020-07-20 10:45:08,005:         0.0055, 0.0023, 0.0155, 0.0070, 0.0094, 0.0320, 0.0103, 0.0399, 0.0123,
+2020-07-20 10:45:08,005:         0.0157, 0.0032, 0.0151, 0.0133, 0.0090, 0.0052, 0.0229, 0.0077, 0.0272,
+2020-07-20 10:45:08,005:         0.0075, 0.0125]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:08,005:3.1.4 evaluation
+2020-07-20 10:45:08,019:updating parameters
+2020-07-20 10:45:09,857:Charades __getitem__
+2020-07-20 10:45:09,858:3.1.1 base_model
+2020-07-20 10:45:09,870:3.1.2 modeling
+2020-07-20 10:45:09,874:3.1.3 inference
+2020-07-20 10:45:09,876:s_output
+2020-07-20 10:45:09,877:tensor([[0.0156, 0.0488, 0.1607, 0.0483, 0.0668, 0.0415, 0.0215, 0.0614, 0.0904,
+2020-07-20 10:45:09,877:         0.1265, 0.0652, 0.1468, 0.0164, 0.0141, 0.0206, 0.0554]],
+2020-07-20 10:45:09,877:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:09,877:v_output
+2020-07-20 10:45:09,878:tensor([[0.0026, 0.0220, 0.0037, 0.0137, 0.0161, 0.0170, 0.0097, 0.0048, 0.6762,
+2020-07-20 10:45:09,878:         0.0157, 0.0059, 0.0012, 0.0457, 0.0047, 0.0283, 0.0043, 0.1600, 0.0042,
+2020-07-20 10:45:09,878:         0.0845, 0.0359, 0.0156, 0.0079, 0.0273, 0.1378, 0.0090, 0.0198, 0.0828,
+2020-07-20 10:45:09,878:         0.0042, 0.0141, 0.0093, 0.0207, 0.0895, 0.0057]], device='cuda:0',
+2020-07-20 10:45:09,878:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:09,878:o_output
+2020-07-20 10:45:09,880:tensor([[0.1175, 0.0300, 0.0075, 0.0227, 0.0203, 0.0135, 0.0133, 0.0270, 0.0149,
+2020-07-20 10:45:09,880:         0.0543, 0.0483, 0.0261, 0.0108, 0.0054, 0.0093, 0.0437, 0.0469, 0.0047,
+2020-07-20 10:45:09,880:         0.0046, 0.0023, 0.0142, 0.0053, 0.0081, 0.0166, 0.0121, 0.0495, 0.0087,
+2020-07-20 10:45:09,880:         0.0157, 0.0028, 0.0105, 0.0133, 0.0134, 0.0067, 0.0332, 0.0062, 0.0415,
+2020-07-20 10:45:09,880:         0.0066, 0.0086]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:09,880:3.1.4 evaluation
+2020-07-20 10:45:09,893:updating parameters
+2020-07-20 10:45:11,730:Charades __getitem__
+2020-07-20 10:45:11,730:3.1.1 base_model
+2020-07-20 10:45:11,743:3.1.2 modeling
+2020-07-20 10:45:11,746:3.1.3 inference
+2020-07-20 10:45:11,749:s_output
+2020-07-20 10:45:11,750:tensor([[0.0109, 0.0150, 0.2184, 0.0416, 0.0403, 0.0555, 0.0192, 0.0697, 0.1191,
+2020-07-20 10:45:11,750:         0.0871, 0.0318, 0.1986, 0.0145, 0.0154, 0.0282, 0.0347]],
+2020-07-20 10:45:11,750:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:11,750:v_output
+2020-07-20 10:45:11,751:tensor([[0.0036, 0.0225, 0.0038, 0.0083, 0.0186, 0.0340, 0.0108, 0.0044, 0.7205,
+2020-07-20 10:45:11,751:         0.0267, 0.0128, 0.0014, 0.0401, 0.0065, 0.0586, 0.0039, 0.0945, 0.0040,
+2020-07-20 10:45:11,751:         0.1619, 0.0544, 0.0177, 0.0131, 0.0258, 0.1006, 0.0103, 0.0127, 0.0356,
+2020-07-20 10:45:11,751:         0.0047, 0.0082, 0.0077, 0.0097, 0.2346, 0.0097]], device='cuda:0',
+2020-07-20 10:45:11,751:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:11,751:o_output
+2020-07-20 10:45:11,752:tensor([[0.1357, 0.0179, 0.0123, 0.0200, 0.0346, 0.0130, 0.0089, 0.0517, 0.0109,
+2020-07-20 10:45:11,752:         0.0200, 0.0452, 0.0220, 0.0089, 0.0050, 0.0078, 0.0519, 0.0778, 0.0035,
+2020-07-20 10:45:11,752:         0.0047, 0.0020, 0.0447, 0.0055, 0.0084, 0.0220, 0.0179, 0.0511, 0.0196,
+2020-07-20 10:45:11,752:         0.0221, 0.0028, 0.0207, 0.0104, 0.0091, 0.0090, 0.0305, 0.0092, 0.0193,
+2020-07-20 10:45:11,752:         0.0068, 0.0080]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:11,752:3.1.4 evaluation
+2020-07-20 10:45:11,766:updating parameters
+2020-07-20 10:45:13,832:Charades __getitem__
+2020-07-20 10:45:13,832:3.1.1 base_model
+2020-07-20 10:45:13,845:3.1.2 modeling
+2020-07-20 10:45:13,848:3.1.3 inference
+2020-07-20 10:45:13,851:s_output
+2020-07-20 10:45:13,852:tensor([[0.0124, 0.0470, 0.1332, 0.0448, 0.0522, 0.0514, 0.0313, 0.0545, 0.0824,
+2020-07-20 10:45:13,852:         0.0950, 0.0780, 0.1838, 0.0195, 0.0191, 0.0334, 0.0621]],
+2020-07-20 10:45:13,852:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:13,852:v_output
+2020-07-20 10:45:13,853:tensor([[0.0037, 0.0288, 0.0044, 0.0163, 0.0170, 0.0221, 0.0106, 0.0065, 0.5436,
+2020-07-20 10:45:13,853:         0.0134, 0.0068, 0.0017, 0.0551, 0.0044, 0.0252, 0.0061, 0.1890, 0.0062,
+2020-07-20 10:45:13,853:         0.1595, 0.0268, 0.0157, 0.0069, 0.0452, 0.1604, 0.0082, 0.0218, 0.1031,
+2020-07-20 10:45:13,853:         0.0054, 0.0152, 0.0119, 0.0235, 0.0661, 0.0092]], device='cuda:0',
+2020-07-20 10:45:13,853:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:13,853:o_output
+2020-07-20 10:45:13,854:tensor([[0.1422, 0.0333, 0.0085, 0.0174, 0.0199, 0.0190, 0.0134, 0.0495, 0.0195,
+2020-07-20 10:45:13,854:         0.0363, 0.0550, 0.0346, 0.0149, 0.0076, 0.0123, 0.0604, 0.0611, 0.0067,
+2020-07-20 10:45:13,854:         0.0043, 0.0030, 0.0188, 0.0071, 0.0111, 0.0119, 0.0175, 0.0413, 0.0102,
+2020-07-20 10:45:13,854:         0.0151, 0.0040, 0.0146, 0.0167, 0.0315, 0.0078, 0.0711, 0.0079, 0.0387,
+2020-07-20 10:45:13,854:         0.0091, 0.0089]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:13,854:3.1.4 evaluation
+2020-07-20 10:45:13,868:updating parameters
+2020-07-20 10:45:15,704:Charades __getitem__
+2020-07-20 10:45:15,704:3.1.1 base_model
+2020-07-20 10:45:15,717:3.1.2 modeling
+2020-07-20 10:45:15,720:3.1.3 inference
+2020-07-20 10:45:15,723:s_output
+2020-07-20 10:45:15,724:tensor([[0.0119, 0.0394, 0.1568, 0.0595, 0.0576, 0.0452, 0.0166, 0.0898, 0.1249,
+2020-07-20 10:45:15,724:         0.1072, 0.0837, 0.1294, 0.0117, 0.0122, 0.0159, 0.0382]],
+2020-07-20 10:45:15,724:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:15,724:v_output
+2020-07-20 10:45:15,725:tensor([[0.0031, 0.0331, 0.0053, 0.0157, 0.0185, 0.0241, 0.0144, 0.0080, 0.6410,
+2020-07-20 10:45:15,725:         0.0176, 0.0061, 0.0018, 0.0649, 0.0058, 0.0242, 0.0059, 0.1906, 0.0075,
+2020-07-20 10:45:15,725:         0.0573, 0.0352, 0.0178, 0.0065, 0.0355, 0.1710, 0.0088, 0.0272, 0.0930,
+2020-07-20 10:45:15,725:         0.0063, 0.0184, 0.0135, 0.0282, 0.0715, 0.0052]], device='cuda:0',
+2020-07-20 10:45:15,725:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:15,725:o_output
+2020-07-20 10:45:15,726:tensor([[0.1213, 0.0462, 0.0062, 0.0167, 0.0240, 0.0269, 0.0137, 0.0243, 0.0267,
+2020-07-20 10:45:15,726:         0.0554, 0.0565, 0.0358, 0.0182, 0.0094, 0.0138, 0.0490, 0.0773, 0.0087,
+2020-07-20 10:45:15,726:         0.0054, 0.0035, 0.0140, 0.0088, 0.0119, 0.0196, 0.0139, 0.0462, 0.0128,
+2020-07-20 10:45:15,726:         0.0164, 0.0046, 0.0182, 0.0256, 0.0237, 0.0056, 0.0282, 0.0063, 0.0434,
+2020-07-20 10:45:15,726:         0.0108, 0.0093]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:15,726:3.1.4 evaluation
+2020-07-20 10:45:15,740:updating parameters
+2020-07-20 10:45:15,744:Charades __len__
+2020-07-20 10:45:15,744:Charades __len__
+2020-07-20 10:45:15,765:Epoch: [7][70/282926(1414632)]	Time 1.873 (2.020)	Data 1.832 (1.939)	Loss 5.7867 (6.1533)	S_Prec@1 0.000 (15.493)	S_Prec@5 100.000 (52.113)	O_Prec@1 0.000 (11.268)	O_Prec@5 100.000 (78.873)	V_Prec@1 100.000 (52.113)	V_Prec@5 200.000 (146.479)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 10:45:17,597:Charades __getitem__
+2020-07-20 10:45:17,598:3.1.1 base_model
+2020-07-20 10:45:17,611:3.1.2 modeling
+2020-07-20 10:45:17,614:3.1.3 inference
+2020-07-20 10:45:17,617:s_output
+2020-07-20 10:45:17,617:tensor([[0.0081, 0.0699, 0.1629, 0.0644, 0.0342, 0.0423, 0.0181, 0.0833, 0.0803,
+2020-07-20 10:45:17,617:         0.1163, 0.0904, 0.1328, 0.0150, 0.0165, 0.0191, 0.0465]],
+2020-07-20 10:45:17,617:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:17,617:v_output
+2020-07-20 10:45:17,618:tensor([[0.0027, 0.0229, 0.0037, 0.0106, 0.0177, 0.0180, 0.0096, 0.0058, 0.6815,
+2020-07-20 10:45:17,618:         0.0199, 0.0062, 0.0012, 0.0409, 0.0052, 0.0260, 0.0045, 0.1314, 0.0053,
+2020-07-20 10:45:17,618:         0.0736, 0.0406, 0.0162, 0.0111, 0.0290, 0.1220, 0.0099, 0.0174, 0.0710,
+2020-07-20 10:45:17,618:         0.0047, 0.0134, 0.0110, 0.0133, 0.0907, 0.0043]], device='cuda:0',
+2020-07-20 10:45:17,619:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:17,619:o_output
+2020-07-20 10:45:17,620:tensor([[0.1298, 0.0297, 0.0064, 0.0259, 0.0164, 0.0146, 0.0164, 0.0327, 0.0152,
+2020-07-20 10:45:17,620:         0.0421, 0.0513, 0.0263, 0.0132, 0.0065, 0.0114, 0.0391, 0.0517, 0.0049,
+2020-07-20 10:45:17,620:         0.0038, 0.0021, 0.0157, 0.0062, 0.0079, 0.0140, 0.0099, 0.0510, 0.0108,
+2020-07-20 10:45:17,620:         0.0179, 0.0033, 0.0110, 0.0132, 0.0134, 0.0061, 0.0255, 0.0077, 0.0255,
+2020-07-20 10:45:17,620:         0.0115, 0.0111]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:17,620:3.1.4 evaluation
+2020-07-20 10:45:17,634:updating parameters
+2020-07-20 10:45:20,013:Charades __getitem__
+2020-07-20 10:45:20,013:3.1.1 base_model
+2020-07-20 10:45:20,026:3.1.2 modeling
+2020-07-20 10:45:20,029:3.1.3 inference
+2020-07-20 10:45:20,032:s_output
+2020-07-20 10:45:20,032:tensor([[0.0135, 0.0343, 0.1597, 0.0558, 0.0747, 0.0675, 0.0222, 0.0509, 0.0886,
+2020-07-20 10:45:20,033:         0.1469, 0.0790, 0.1190, 0.0109, 0.0183, 0.0253, 0.0335]],
+2020-07-20 10:45:20,033:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:20,033:v_output
+2020-07-20 10:45:20,034:tensor([[0.0042, 0.0358, 0.0039, 0.0143, 0.0122, 0.0267, 0.0114, 0.0079, 0.6204,
+2020-07-20 10:45:20,034:         0.0238, 0.0108, 0.0016, 0.0625, 0.0050, 0.0208, 0.0035, 0.1463, 0.0064,
+2020-07-20 10:45:20,034:         0.0899, 0.0467, 0.0191, 0.0125, 0.0355, 0.1425, 0.0090, 0.0219, 0.0702,
+2020-07-20 10:45:20,034:         0.0063, 0.0159, 0.0142, 0.0158, 0.1372, 0.0094]], device='cuda:0',
+2020-07-20 10:45:20,034:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:20,034:o_output
+2020-07-20 10:45:20,035:tensor([[0.1367, 0.0249, 0.0104, 0.0257, 0.0369, 0.0224, 0.0167, 0.0325, 0.0195,
+2020-07-20 10:45:20,035:         0.0481, 0.0276, 0.0239, 0.0186, 0.0085, 0.0145, 0.0480, 0.0692, 0.0054,
+2020-07-20 10:45:20,035:         0.0056, 0.0029, 0.0209, 0.0079, 0.0075, 0.0205, 0.0251, 0.0318, 0.0147,
+2020-07-20 10:45:20,035:         0.0347, 0.0040, 0.0168, 0.0153, 0.0132, 0.0087, 0.0307, 0.0085, 0.0328,
+2020-07-20 10:45:20,035:         0.0070, 0.0108]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:20,035:3.1.4 evaluation
+2020-07-20 10:45:20,049:updating parameters
+2020-07-20 10:45:22,049:Charades __getitem__
+2020-07-20 10:45:22,050:3.1.1 base_model
+2020-07-20 10:45:22,062:3.1.2 modeling
+2020-07-20 10:45:22,066:3.1.3 inference
+2020-07-20 10:45:22,068:s_output
+2020-07-20 10:45:22,069:tensor([[0.0122, 0.0540, 0.1331, 0.0521, 0.0395, 0.0511, 0.0182, 0.1227, 0.0786,
+2020-07-20 10:45:22,069:         0.0688, 0.1127, 0.1372, 0.0211, 0.0193, 0.0296, 0.0498]],
+2020-07-20 10:45:22,069:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:22,069:v_output
+2020-07-20 10:45:22,070:tensor([[0.0091, 0.0184, 0.0028, 0.0114, 0.0243, 0.0178, 0.0118, 0.0061, 0.6408,
+2020-07-20 10:45:22,070:         0.0248, 0.0404, 0.0013, 0.0298, 0.0074, 0.0331, 0.0049, 0.0931, 0.0043,
+2020-07-20 10:45:22,070:         0.1096, 0.0460, 0.0206, 0.0414, 0.0326, 0.0934, 0.0141, 0.0181, 0.0322,
+2020-07-20 10:45:22,070:         0.0055, 0.0148, 0.0092, 0.0081, 0.1079, 0.0038]], device='cuda:0',
+2020-07-20 10:45:22,070:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:22,070:o_output
+2020-07-20 10:45:22,071:tensor([[0.1783, 0.0192, 0.0210, 0.0599, 0.0166, 0.0093, 0.0085, 0.0332, 0.0111,
+2020-07-20 10:45:22,071:         0.0378, 0.0639, 0.0261, 0.0122, 0.0066, 0.0097, 0.0516, 0.0372, 0.0034,
+2020-07-20 10:45:22,071:         0.0051, 0.0021, 0.0130, 0.0073, 0.0103, 0.0206, 0.0102, 0.0708, 0.0120,
+2020-07-20 10:45:22,071:         0.0485, 0.0026, 0.0106, 0.0090, 0.0122, 0.0143, 0.0190, 0.0146, 0.0261,
+2020-07-20 10:45:22,071:         0.0083, 0.0103]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:22,071:3.1.4 evaluation
+2020-07-20 10:45:22,085:updating parameters
+2020-07-20 10:45:23,921:Charades __getitem__
+2020-07-20 10:45:23,922:3.1.1 base_model
+2020-07-20 10:45:23,934:3.1.2 modeling
+2020-07-20 10:45:23,938:3.1.3 inference
+2020-07-20 10:45:23,940:s_output
+2020-07-20 10:45:23,941:tensor([[0.0149, 0.0438, 0.1585, 0.0653, 0.0722, 0.0329, 0.0224, 0.0730, 0.0749,
+2020-07-20 10:45:23,941:         0.0900, 0.0497, 0.1757, 0.0199, 0.0271, 0.0246, 0.0551]],
+2020-07-20 10:45:23,941:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:23,941:v_output
+2020-07-20 10:45:23,942:tensor([[0.0053, 0.0212, 0.0035, 0.0098, 0.0299, 0.0272, 0.0131, 0.0043, 0.6258,
+2020-07-20 10:45:23,942:         0.0189, 0.0180, 0.0013, 0.0378, 0.0057, 0.0284, 0.0066, 0.1375, 0.0038,
+2020-07-20 10:45:23,942:         0.1554, 0.0374, 0.0199, 0.0138, 0.0313, 0.1340, 0.0086, 0.0159, 0.0545,
+2020-07-20 10:45:23,942:         0.0042, 0.0097, 0.0070, 0.0126, 0.0759, 0.0048]], device='cuda:0',
+2020-07-20 10:45:23,942:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:23,942:o_output
+2020-07-20 10:45:23,943:tensor([[0.1639, 0.0268, 0.0130, 0.0254, 0.0152, 0.0151, 0.0082, 0.0416, 0.0156,
+2020-07-20 10:45:23,943:         0.0278, 0.0884, 0.0323, 0.0100, 0.0051, 0.0073, 0.0659, 0.0712, 0.0054,
+2020-07-20 10:45:23,943:         0.0044, 0.0022, 0.0156, 0.0058, 0.0127, 0.0141, 0.0100, 0.0449, 0.0106,
+2020-07-20 10:45:23,943:         0.0172, 0.0035, 0.0141, 0.0142, 0.0159, 0.0096, 0.0310, 0.0096, 0.0243,
+2020-07-20 10:45:23,943:         0.0102, 0.0074]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:23,943:3.1.4 evaluation
+2020-07-20 10:45:23,957:updating parameters
+2020-07-20 10:45:25,802:Charades __getitem__
+2020-07-20 10:45:25,803:3.1.1 base_model
+2020-07-20 10:45:25,816:3.1.2 modeling
+2020-07-20 10:45:25,819:3.1.3 inference
+2020-07-20 10:45:25,821:s_output
+2020-07-20 10:45:25,822:tensor([[0.0119, 0.0410, 0.2335, 0.0379, 0.0611, 0.0619, 0.0163, 0.0790, 0.0895,
+2020-07-20 10:45:25,822:         0.0606, 0.0790, 0.1400, 0.0113, 0.0169, 0.0236, 0.0366]],
+2020-07-20 10:45:25,822:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:25,822:v_output
+2020-07-20 10:45:25,823:tensor([[0.0043, 0.0331, 0.0041, 0.0164, 0.0157, 0.0149, 0.0094, 0.0080, 0.6116,
+2020-07-20 10:45:25,823:         0.0210, 0.0099, 0.0013, 0.0559, 0.0060, 0.0405, 0.0041, 0.1395, 0.0111,
+2020-07-20 10:45:25,823:         0.0848, 0.0406, 0.0171, 0.0114, 0.0445, 0.1376, 0.0116, 0.0220, 0.0487,
+2020-07-20 10:45:25,823:         0.0063, 0.0192, 0.0165, 0.0128, 0.0927, 0.0065]], device='cuda:0',
+2020-07-20 10:45:25,823:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:25,823:o_output
+2020-07-20 10:45:25,825:tensor([[0.1857, 0.0251, 0.0091, 0.0245, 0.0261, 0.0199, 0.0122, 0.0344, 0.0164,
+2020-07-20 10:45:25,825:         0.0458, 0.0477, 0.0237, 0.0189, 0.0087, 0.0167, 0.0345, 0.0399, 0.0050,
+2020-07-20 10:45:25,825:         0.0046, 0.0025, 0.0225, 0.0081, 0.0089, 0.0151, 0.0149, 0.0674, 0.0131,
+2020-07-20 10:45:25,825:         0.0255, 0.0040, 0.0105, 0.0132, 0.0224, 0.0086, 0.0332, 0.0074, 0.0260,
+2020-07-20 10:45:25,825:         0.0074, 0.0088]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:25,825:3.1.4 evaluation
+2020-07-20 10:45:25,839:updating parameters
+2020-07-20 10:45:28,217:Charades __getitem__
+2020-07-20 10:45:28,218:3.1.1 base_model
+2020-07-20 10:45:28,230:3.1.2 modeling
+2020-07-20 10:45:28,234:3.1.3 inference
+2020-07-20 10:45:28,236:s_output
+2020-07-20 10:45:28,237:tensor([[0.0140, 0.0247, 0.1730, 0.0530, 0.0781, 0.0506, 0.0179, 0.0571, 0.1279,
+2020-07-20 10:45:28,237:         0.1071, 0.0827, 0.1333, 0.0145, 0.0118, 0.0207, 0.0334]],
+2020-07-20 10:45:28,237:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:28,237:v_output
+2020-07-20 10:45:28,238:tensor([[0.0081, 0.0184, 0.0034, 0.0146, 0.0216, 0.0183, 0.0109, 0.0049, 0.5820,
+2020-07-20 10:45:28,238:         0.0220, 0.0368, 0.0012, 0.0315, 0.0053, 0.0387, 0.0043, 0.0993, 0.0048,
+2020-07-20 10:45:28,238:         0.1563, 0.0392, 0.0161, 0.0168, 0.0395, 0.0976, 0.0116, 0.0184, 0.0333,
+2020-07-20 10:45:28,238:         0.0048, 0.0164, 0.0087, 0.0082, 0.0999, 0.0048]], device='cuda:0',
+2020-07-20 10:45:28,238:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:28,238:o_output
+2020-07-20 10:45:28,239:tensor([[0.1851, 0.0208, 0.0218, 0.0275, 0.0163, 0.0122, 0.0095, 0.0474, 0.0117,
+2020-07-20 10:45:28,239:         0.0328, 0.0585, 0.0234, 0.0106, 0.0056, 0.0089, 0.0742, 0.0438, 0.0036,
+2020-07-20 10:45:28,239:         0.0040, 0.0020, 0.0232, 0.0061, 0.0089, 0.0123, 0.0104, 0.0559, 0.0121,
+2020-07-20 10:45:28,239:         0.0234, 0.0028, 0.0112, 0.0093, 0.0276, 0.0122, 0.0213, 0.0148, 0.0189,
+2020-07-20 10:45:28,239:         0.0094, 0.0064]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:28,239:3.1.4 evaluation
+2020-07-20 10:45:28,253:updating parameters
+2020-07-20 10:45:30,199:Charades __getitem__
+2020-07-20 10:45:30,200:3.1.1 base_model
+2020-07-20 10:45:30,213:3.1.2 modeling
+2020-07-20 10:45:30,216:3.1.3 inference
+2020-07-20 10:45:30,218:s_output
+2020-07-20 10:45:30,219:tensor([[0.0158, 0.0287, 0.2012, 0.0514, 0.0356, 0.0561, 0.0219, 0.0941, 0.0829,
+2020-07-20 10:45:30,219:         0.0884, 0.0442, 0.1790, 0.0116, 0.0166, 0.0254, 0.0470]],
+2020-07-20 10:45:30,219:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:30,219:v_output
+2020-07-20 10:45:30,220:tensor([[0.0044, 0.0371, 0.0044, 0.0176, 0.0176, 0.0171, 0.0126, 0.0111, 0.5268,
+2020-07-20 10:45:30,220:         0.0157, 0.0085, 0.0016, 0.0634, 0.0062, 0.0217, 0.0049, 0.1654, 0.0104,
+2020-07-20 10:45:30,220:         0.0504, 0.0282, 0.0165, 0.0108, 0.0420, 0.1540, 0.0097, 0.0274, 0.0856,
+2020-07-20 10:45:30,220:         0.0086, 0.0227, 0.0207, 0.0167, 0.0612, 0.0045]], device='cuda:0',
+2020-07-20 10:45:30,220:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:30,220:o_output
+2020-07-20 10:45:30,221:tensor([[0.1358, 0.0284, 0.0068, 0.0250, 0.0238, 0.0235, 0.0167, 0.0214, 0.0238,
+2020-07-20 10:45:30,222:         0.0641, 0.0502, 0.0248, 0.0255, 0.0122, 0.0210, 0.0441, 0.0488, 0.0065,
+2020-07-20 10:45:30,222:         0.0047, 0.0029, 0.0131, 0.0111, 0.0101, 0.0130, 0.0131, 0.0480, 0.0133,
+2020-07-20 10:45:30,222:         0.0238, 0.0057, 0.0115, 0.0226, 0.0212, 0.0058, 0.0252, 0.0062, 0.0317,
+2020-07-20 10:45:30,222:         0.0088, 0.0114]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:30,222:3.1.4 evaluation
+2020-07-20 10:45:30,236:updating parameters
+2020-07-20 10:45:32,072:Charades __getitem__
+2020-07-20 10:45:32,073:3.1.1 base_model
+2020-07-20 10:45:32,086:3.1.2 modeling
+2020-07-20 10:45:32,089:3.1.3 inference
+2020-07-20 10:45:32,091:s_output
+2020-07-20 10:45:32,092:tensor([[0.0125, 0.0496, 0.2102, 0.0399, 0.0521, 0.0799, 0.0208, 0.0529, 0.0664,
+2020-07-20 10:45:32,092:         0.1030, 0.0743, 0.1518, 0.0156, 0.0135, 0.0307, 0.0267]],
+2020-07-20 10:45:32,092:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:32,092:v_output
+2020-07-20 10:45:32,093:tensor([[0.0036, 0.0256, 0.0035, 0.0174, 0.0143, 0.0190, 0.0095, 0.0071, 0.6565,
+2020-07-20 10:45:32,093:         0.0193, 0.0081, 0.0013, 0.0498, 0.0041, 0.0189, 0.0041, 0.1431, 0.0066,
+2020-07-20 10:45:32,093:         0.0693, 0.0384, 0.0176, 0.0109, 0.0334, 0.1391, 0.0105, 0.0273, 0.0863,
+2020-07-20 10:45:32,093:         0.0055, 0.0216, 0.0148, 0.0136, 0.0690, 0.0040]], device='cuda:0',
+2020-07-20 10:45:32,093:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:32,093:o_output
+2020-07-20 10:45:32,095:tensor([[0.1482, 0.0421, 0.0077, 0.0297, 0.0165, 0.0140, 0.0273, 0.0275, 0.0163,
+2020-07-20 10:45:32,095:         0.0665, 0.0413, 0.0226, 0.0171, 0.0079, 0.0150, 0.0573, 0.0473, 0.0054,
+2020-07-20 10:45:32,095:         0.0042, 0.0022, 0.0118, 0.0066, 0.0082, 0.0137, 0.0111, 0.0421, 0.0088,
+2020-07-20 10:45:32,095:         0.0193, 0.0035, 0.0117, 0.0119, 0.0210, 0.0076, 0.0248, 0.0079, 0.0356,
+2020-07-20 10:45:32,095:         0.0125, 0.0091]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:32,095:3.1.4 evaluation
+2020-07-20 10:45:32,109:updating parameters
+2020-07-20 10:45:33,945:Charades __getitem__
+2020-07-20 10:45:33,946:3.1.1 base_model
+2020-07-20 10:45:33,958:3.1.2 modeling
+2020-07-20 10:45:33,962:3.1.3 inference
+2020-07-20 10:45:33,964:s_output
+2020-07-20 10:45:33,965:tensor([[0.0138, 0.0573, 0.1547, 0.0600, 0.0445, 0.0567, 0.0215, 0.0900, 0.0663,
+2020-07-20 10:45:33,965:         0.0643, 0.0632, 0.2094, 0.0123, 0.0147, 0.0284, 0.0430]],
+2020-07-20 10:45:33,965:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:33,965:v_output
+2020-07-20 10:45:33,966:tensor([[0.0037, 0.0232, 0.0029, 0.0123, 0.0146, 0.0182, 0.0091, 0.0050, 0.5706,
+2020-07-20 10:45:33,966:         0.0186, 0.0093, 0.0010, 0.0392, 0.0036, 0.0278, 0.0032, 0.1220, 0.0046,
+2020-07-20 10:45:33,966:         0.1218, 0.0353, 0.0197, 0.0118, 0.0335, 0.1179, 0.0075, 0.0171, 0.0532,
+2020-07-20 10:45:33,966:         0.0041, 0.0126, 0.0086, 0.0093, 0.0975, 0.0057]], device='cuda:0',
+2020-07-20 10:45:33,966:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:33,966:o_output
+2020-07-20 10:45:33,967:tensor([[0.1689, 0.0195, 0.0090, 0.0264, 0.0171, 0.0118, 0.0097, 0.0458, 0.0131,
+2020-07-20 10:45:33,967:         0.0356, 0.0379, 0.0181, 0.0115, 0.0056, 0.0089, 0.0401, 0.0461, 0.0034,
+2020-07-20 10:45:33,967:         0.0040, 0.0017, 0.0171, 0.0052, 0.0075, 0.0152, 0.0118, 0.0385, 0.0091,
+2020-07-20 10:45:33,967:         0.0169, 0.0027, 0.0098, 0.0090, 0.0146, 0.0066, 0.0336, 0.0073, 0.0217,
+2020-07-20 10:45:33,967:         0.0064, 0.0076]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:33,967:3.1.4 evaluation
+2020-07-20 10:45:33,982:updating parameters
+2020-07-20 10:45:35,817:Charades __getitem__
+2020-07-20 10:45:35,817:3.1.1 base_model
+2020-07-20 10:45:35,830:3.1.2 modeling
+2020-07-20 10:45:35,834:3.1.3 inference
+2020-07-20 10:45:35,836:s_output
+2020-07-20 10:45:35,837:tensor([[0.0136, 0.0690, 0.1569, 0.0676, 0.0757, 0.0648, 0.0253, 0.0487, 0.0714,
+2020-07-20 10:45:35,837:         0.0979, 0.0667, 0.1579, 0.0134, 0.0266, 0.0154, 0.0290]],
+2020-07-20 10:45:35,837:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:35,837:v_output
+2020-07-20 10:45:35,838:tensor([[0.0062, 0.0165, 0.0023, 0.0096, 0.0213, 0.0218, 0.0085, 0.0046, 0.6548,
+2020-07-20 10:45:35,838:         0.0250, 0.0280, 0.0011, 0.0296, 0.0055, 0.0351, 0.0040, 0.0839, 0.0037,
+2020-07-20 10:45:35,838:         0.1582, 0.0437, 0.0172, 0.0200, 0.0300, 0.0850, 0.0113, 0.0147, 0.0326,
+2020-07-20 10:45:35,838:         0.0043, 0.0117, 0.0080, 0.0066, 0.1495, 0.0045]], device='cuda:0',
+2020-07-20 10:45:35,838:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:35,838:o_output
+2020-07-20 10:45:35,839:tensor([[0.1763, 0.0183, 0.0243, 0.0318, 0.0191, 0.0103, 0.0089, 0.0446, 0.0086,
+2020-07-20 10:45:35,839:         0.0263, 0.0577, 0.0199, 0.0088, 0.0051, 0.0082, 0.0468, 0.0445, 0.0027,
+2020-07-20 10:45:35,839:         0.0039, 0.0017, 0.0181, 0.0053, 0.0096, 0.0145, 0.0116, 0.0587, 0.0122,
+2020-07-20 10:45:35,839:         0.0240, 0.0021, 0.0118, 0.0069, 0.0132, 0.0144, 0.0212, 0.0200, 0.0172,
+2020-07-20 10:45:35,839:         0.0069, 0.0074]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:35,839:3.1.4 evaluation
+2020-07-20 10:45:35,853:updating parameters
+2020-07-20 10:45:35,857:Charades __len__
+2020-07-20 10:45:35,857:Charades __len__
+2020-07-20 10:45:35,878:Epoch: [7][80/282926(1414632)]	Time 1.872 (2.019)	Data 1.831 (1.943)	Loss 4.7398 (6.1467)	S_Prec@1 0.000 (14.815)	S_Prec@5 100.000 (54.321)	O_Prec@1 0.000 (11.111)	O_Prec@5 100.000 (79.012)	V_Prec@1 100.000 (50.617)	V_Prec@5 200.000 (140.741)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 10:45:37,916:Charades __getitem__
+2020-07-20 10:45:37,917:3.1.1 base_model
+2020-07-20 10:45:37,930:3.1.2 modeling
+2020-07-20 10:45:37,934:3.1.3 inference
+2020-07-20 10:45:37,936:s_output
+2020-07-20 10:45:37,937:tensor([[0.0136, 0.0339, 0.1527, 0.0733, 0.0508, 0.0431, 0.0215, 0.0702, 0.0926,
+2020-07-20 10:45:37,937:         0.0913, 0.0899, 0.1663, 0.0141, 0.0143, 0.0276, 0.0449]],
+2020-07-20 10:45:37,937:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:37,937:v_output
+2020-07-20 10:45:37,938:tensor([[0.0042, 0.0293, 0.0036, 0.0223, 0.0158, 0.0166, 0.0129, 0.0081, 0.6094,
+2020-07-20 10:45:37,938:         0.0163, 0.0083, 0.0015, 0.0581, 0.0046, 0.0199, 0.0049, 0.1778, 0.0066,
+2020-07-20 10:45:37,938:         0.1316, 0.0326, 0.0178, 0.0082, 0.0461, 0.1554, 0.0083, 0.0294, 0.0881,
+2020-07-20 10:45:37,938:         0.0057, 0.0237, 0.0131, 0.0226, 0.0667, 0.0056]], device='cuda:0',
+2020-07-20 10:45:37,938:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:37,938:o_output
+2020-07-20 10:45:37,939:tensor([[0.1551, 0.0479, 0.0111, 0.0225, 0.0176, 0.0169, 0.0158, 0.0398, 0.0223,
+2020-07-20 10:45:37,939:         0.0635, 0.0468, 0.0281, 0.0171, 0.0091, 0.0133, 0.0644, 0.0488, 0.0066,
+2020-07-20 10:45:37,939:         0.0049, 0.0031, 0.0132, 0.0076, 0.0096, 0.0158, 0.0120, 0.0394, 0.0092,
+2020-07-20 10:45:37,939:         0.0235, 0.0036, 0.0116, 0.0151, 0.0392, 0.0083, 0.0366, 0.0090, 0.0417,
+2020-07-20 10:45:37,939:         0.0130, 0.0104]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:37,939:3.1.4 evaluation
+2020-07-20 10:45:37,953:updating parameters
+2020-07-20 10:45:39,788:Charades __getitem__
+2020-07-20 10:45:39,789:3.1.1 base_model
+2020-07-20 10:45:39,801:3.1.2 modeling
+2020-07-20 10:45:39,805:3.1.3 inference
+2020-07-20 10:45:39,807:s_output
+2020-07-20 10:45:39,808:tensor([[0.0116, 0.0355, 0.2662, 0.0710, 0.0297, 0.0479, 0.0176, 0.0611, 0.0836,
+2020-07-20 10:45:39,808:         0.0726, 0.0633, 0.1506, 0.0184, 0.0202, 0.0237, 0.0270]],
+2020-07-20 10:45:39,808:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:39,808:v_output
+2020-07-20 10:45:39,809:tensor([[0.0026, 0.0261, 0.0034, 0.0116, 0.0245, 0.0152, 0.0100, 0.0085, 0.6654,
+2020-07-20 10:45:39,809:         0.0145, 0.0061, 0.0010, 0.0442, 0.0049, 0.0178, 0.0043, 0.1047, 0.0045,
+2020-07-20 10:45:39,809:         0.0347, 0.0299, 0.0189, 0.0108, 0.0268, 0.1082, 0.0110, 0.0162, 0.0536,
+2020-07-20 10:45:39,809:         0.0057, 0.0162, 0.0126, 0.0135, 0.1333, 0.0029]], device='cuda:0',
+2020-07-20 10:45:39,809:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:39,809:o_output
+2020-07-20 10:45:39,810:tensor([[0.1001, 0.0212, 0.0067, 0.0246, 0.0163, 0.0157, 0.0167, 0.0142, 0.0166,
+2020-07-20 10:45:39,810:         0.0518, 0.0707, 0.0303, 0.0181, 0.0092, 0.0127, 0.0292, 0.0364, 0.0035,
+2020-07-20 10:45:39,810:         0.0041, 0.0023, 0.0144, 0.0078, 0.0076, 0.0170, 0.0087, 0.0431, 0.0097,
+2020-07-20 10:45:39,810:         0.0227, 0.0029, 0.0086, 0.0118, 0.0102, 0.0060, 0.0124, 0.0110, 0.0305,
+2020-07-20 10:45:39,810:         0.0089, 0.0198]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:39,810:3.1.4 evaluation
+2020-07-20 10:45:39,824:updating parameters
+2020-07-20 10:45:41,660:Charades __getitem__
+2020-07-20 10:45:41,661:3.1.1 base_model
+2020-07-20 10:45:41,674:3.1.2 modeling
+2020-07-20 10:45:41,677:3.1.3 inference
+2020-07-20 10:45:41,680:s_output
+2020-07-20 10:45:41,681:tensor([[0.0158, 0.0308, 0.2101, 0.0564, 0.0689, 0.0677, 0.0219, 0.0660, 0.0797,
+2020-07-20 10:45:41,681:         0.0848, 0.0790, 0.1157, 0.0158, 0.0187, 0.0168, 0.0519]],
+2020-07-20 10:45:41,681:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:41,681:v_output
+2020-07-20 10:45:41,682:tensor([[0.0048, 0.0232, 0.0027, 0.0251, 0.0131, 0.0162, 0.0122, 0.0066, 0.5346,
+2020-07-20 10:45:41,682:         0.0171, 0.0127, 0.0012, 0.0418, 0.0045, 0.0269, 0.0030, 0.1336, 0.0058,
+2020-07-20 10:45:41,682:         0.0978, 0.0328, 0.0182, 0.0159, 0.0346, 0.1256, 0.0083, 0.0248, 0.0719,
+2020-07-20 10:45:41,682:         0.0057, 0.0244, 0.0112, 0.0173, 0.0963, 0.0054]], device='cuda:0',
+2020-07-20 10:45:41,682:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:41,682:o_output
+2020-07-20 10:45:41,683:tensor([[0.1456, 0.0222, 0.0123, 0.0395, 0.0151, 0.0134, 0.0103, 0.0324, 0.0174,
+2020-07-20 10:45:41,683:         0.0872, 0.0318, 0.0165, 0.0145, 0.0075, 0.0117, 0.0434, 0.0321, 0.0040,
+2020-07-20 10:45:41,683:         0.0064, 0.0027, 0.0155, 0.0070, 0.0087, 0.0222, 0.0114, 0.0416, 0.0087,
+2020-07-20 10:45:41,683:         0.0275, 0.0028, 0.0092, 0.0124, 0.0151, 0.0082, 0.0273, 0.0092, 0.0460,
+2020-07-20 10:45:41,683:         0.0053, 0.0104]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:41,683:3.1.4 evaluation
+2020-07-20 10:45:41,697:updating parameters
+2020-07-20 10:45:44,076:Charades __getitem__
+2020-07-20 10:45:44,076:3.1.1 base_model
+2020-07-20 10:45:44,089:3.1.2 modeling
+2020-07-20 10:45:44,093:3.1.3 inference
+2020-07-20 10:45:44,095:s_output
+2020-07-20 10:45:44,096:tensor([[0.0185, 0.0482, 0.1555, 0.0495, 0.0834, 0.0564, 0.0191, 0.0610, 0.0579,
+2020-07-20 10:45:44,096:         0.1391, 0.0619, 0.1480, 0.0119, 0.0229, 0.0168, 0.0499]],
+2020-07-20 10:45:44,096:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:44,096:v_output
+2020-07-20 10:45:44,097:tensor([[0.0046, 0.0244, 0.0033, 0.0205, 0.0300, 0.0483, 0.0130, 0.0060, 0.6348,
+2020-07-20 10:45:44,097:         0.0195, 0.0103, 0.0017, 0.0496, 0.0055, 0.0258, 0.0059, 0.1539, 0.0054,
+2020-07-20 10:45:44,097:         0.1494, 0.0398, 0.0247, 0.0136, 0.0318, 0.1397, 0.0123, 0.0209, 0.0524,
+2020-07-20 10:45:44,097:         0.0056, 0.0193, 0.0107, 0.0118, 0.0942, 0.0067]], device='cuda:0',
+2020-07-20 10:45:44,097:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:44,097:o_output
+2020-07-20 10:45:44,098:tensor([[0.1443, 0.0409, 0.0131, 0.0277, 0.0204, 0.0161, 0.0108, 0.0486, 0.0150,
+2020-07-20 10:45:44,098:         0.0526, 0.0734, 0.0286, 0.0135, 0.0069, 0.0115, 0.0399, 0.0834, 0.0059,
+2020-07-20 10:45:44,098:         0.0062, 0.0025, 0.0176, 0.0071, 0.0163, 0.0201, 0.0128, 0.0463, 0.0104,
+2020-07-20 10:45:44,098:         0.0221, 0.0032, 0.0229, 0.0125, 0.0153, 0.0108, 0.0397, 0.0091, 0.0298,
+2020-07-20 10:45:44,098:         0.0062, 0.0093]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:44,098:3.1.4 evaluation
+2020-07-20 10:45:44,112:updating parameters
+2020-07-20 10:45:46,100:Charades __getitem__
+2020-07-20 10:45:46,101:3.1.1 base_model
+2020-07-20 10:45:46,113:3.1.2 modeling
+2020-07-20 10:45:46,117:3.1.3 inference
+2020-07-20 10:45:46,119:s_output
+2020-07-20 10:45:46,120:tensor([[0.0142, 0.0469, 0.1742, 0.0464, 0.0425, 0.0466, 0.0210, 0.0493, 0.1105,
+2020-07-20 10:45:46,120:         0.1358, 0.0833, 0.1355, 0.0182, 0.0177, 0.0193, 0.0386]],
+2020-07-20 10:45:46,120:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:46,120:v_output
+2020-07-20 10:45:46,121:tensor([[0.0035, 0.0340, 0.0034, 0.0126, 0.0186, 0.0185, 0.0104, 0.0083, 0.6817,
+2020-07-20 10:45:46,121:         0.0200, 0.0090, 0.0014, 0.0607, 0.0061, 0.0342, 0.0048, 0.1484, 0.0066,
+2020-07-20 10:45:46,121:         0.0799, 0.0423, 0.0172, 0.0130, 0.0338, 0.1495, 0.0094, 0.0202, 0.0639,
+2020-07-20 10:45:46,121:         0.0058, 0.0153, 0.0140, 0.0162, 0.0879, 0.0056]], device='cuda:0',
+2020-07-20 10:45:46,121:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:46,121:o_output
+2020-07-20 10:45:46,122:tensor([[0.1384, 0.0306, 0.0092, 0.0309, 0.0197, 0.0256, 0.0122, 0.0295, 0.0196,
+2020-07-20 10:45:46,122:         0.0523, 0.0547, 0.0300, 0.0192, 0.0089, 0.0142, 0.0437, 0.0481, 0.0056,
+2020-07-20 10:45:46,122:         0.0049, 0.0028, 0.0192, 0.0073, 0.0103, 0.0162, 0.0119, 0.0540, 0.0115,
+2020-07-20 10:45:46,122:         0.0276, 0.0043, 0.0123, 0.0148, 0.0150, 0.0090, 0.0263, 0.0085, 0.0313,
+2020-07-20 10:45:46,122:         0.0075, 0.0102]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:46,122:3.1.4 evaluation
+2020-07-20 10:45:46,136:updating parameters
+2020-07-20 10:45:47,972:Charades __getitem__
+2020-07-20 10:45:47,973:3.1.1 base_model
+2020-07-20 10:45:47,986:3.1.2 modeling
+2020-07-20 10:45:47,989:3.1.3 inference
+2020-07-20 10:45:47,992:s_output
+2020-07-20 10:45:47,992:tensor([[0.0113, 0.0413, 0.2325, 0.0379, 0.0482, 0.0670, 0.0177, 0.0691, 0.0776,
+2020-07-20 10:45:47,993:         0.1011, 0.0741, 0.1307, 0.0163, 0.0094, 0.0232, 0.0427]],
+2020-07-20 10:45:47,993:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:47,993:v_output
+2020-07-20 10:45:47,994:tensor([[0.0044, 0.0207, 0.0040, 0.0094, 0.0211, 0.0272, 0.0084, 0.0045, 0.6893,
+2020-07-20 10:45:47,994:         0.0205, 0.0138, 0.0013, 0.0400, 0.0067, 0.0510, 0.0057, 0.1212, 0.0046,
+2020-07-20 10:45:47,994:         0.1409, 0.0380, 0.0154, 0.0118, 0.0299, 0.1241, 0.0113, 0.0143, 0.0346,
+2020-07-20 10:45:47,994:         0.0047, 0.0110, 0.0086, 0.0099, 0.0813, 0.0067]], device='cuda:0',
+2020-07-20 10:45:47,994:       grad_fn=<CloneBackward>)
+2020-07-20 10:45:47,994:o_output
+2020-07-20 10:45:47,995:tensor([[0.1533, 0.0248, 0.0155, 0.0227, 0.0200, 0.0162, 0.0076, 0.0414, 0.0094,
+2020-07-20 10:45:47,995:         0.0288, 0.0618, 0.0299, 0.0095, 0.0051, 0.0089, 0.0344, 0.0723, 0.0042,
+2020-07-20 10:45:47,995:         0.0038, 0.0021, 0.0158, 0.0056, 0.0133, 0.0120, 0.0144, 0.0896, 0.0116,
+2020-07-20 10:45:47,995:         0.0159, 0.0032, 0.0158, 0.0086, 0.0123, 0.0102, 0.0322, 0.0084, 0.0184,
+2020-07-20 10:45:47,995:         0.0059, 0.0061]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 10:45:47,995:3.1.4 evaluation
+2020-07-20 10:45:48,009:updating parameters
+2020-07-20 10:45:49,990:Exception in thread Thread-1:
+2020-07-20 10:45:49,990:Traceback (most recent call last):
+2020-07-20 10:45:49,990:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/threading.py", line 926, in _bootstrap_inner
+2020-07-20 10:45:49,990:    self.run()
+2020-07-20 10:45:49,990:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/threading.py", line 870, in run
+2020-07-20 10:45:49,991:    self._target(*self._args, **self._kwargs)
+2020-07-20 10:45:49,991:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/site-packages/torch/utils/data/_utils/pin_memory.py", line 25, in _pin_memory_loop
+2020-07-20 10:45:49,991:    r = in_queue.get(timeout=MP_STATUS_CHECK_INTERVAL)
+2020-07-20 10:45:49,991:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/multiprocessing/queues.py", line 113, in get
+2020-07-20 10:45:49,991:    return _ForkingPickler.loads(res)
+2020-07-20 10:45:49,991:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/site-packages/torch/multiprocessing/reductions.py", line 294, in rebuild_storage_fd
+2020-07-20 10:45:49,991:    fd = df.detach()
+2020-07-20 10:45:49,991:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/multiprocessing/resource_sharer.py", line 57, in detach
+2020-07-20 10:45:49,991:    with _resource_sharer.get_connection(self._id) as conn:
+2020-07-20 10:45:49,991:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/multiprocessing/resource_sharer.py", line 87, in get_connection
+2020-07-20 10:45:49,992:    c = Client(address, authkey=process.current_process().authkey)
+2020-07-20 10:45:49,992:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/multiprocessing/connection.py", line 492, in Client
+2020-07-20 10:45:49,992:    c = SocketClient(address)
+2020-07-20 10:45:49,992:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/multiprocessing/connection.py", line 619, in SocketClient
+2020-07-20 10:45:49,992:    s.connect(address)
+2020-07-20 10:45:49,992:FileNotFoundError: [Errno 2] No such file or directory
+2020-07-20 10:45:50,004:Traceback (most recent call last):
+2020-07-20 10:45:50,004:  File "exp/GSTEG.py", line 26, in <module>
+2020-07-20 10:45:50,005:main()
+2020-07-20 10:45:50,005:  File "./main.py", line 65, in main
+2020-07-20 10:45:50,006:s_top1,s_top5,o_top1,o_top5,v_top1,v_top5, sov_top1 = trainer.train(train_loader, base_model, logits_model, criterion, base_optimizer, logits_optimizer, epoch, opt)
+2020-07-20 10:45:50,006:  File "./train.py", line 129, in train
+2020-07-20 10:45:50,008:gc.collect()
+2020-07-20 10:45:50,008:KeyboardInterrupt

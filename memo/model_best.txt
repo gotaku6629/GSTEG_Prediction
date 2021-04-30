@@ -1,0 +1,27 @@
+# refer to 'Table2'
+
+# Relationship Detection 
+mAP 0.09955841112910262
+sov_rec_at_n {50: 0.24396381, 100: 0.3304176}
+
+# Relationship Tagging
+sov_mprec_at_n {1: 0.20075148, 5: 0.12839507, 10: 0.09753087}
+
+# Relationship Recognition
+# for train
+o_top1      51.723602294921875
+o_top5     131.51470947265625
+s_top1      88.06539154052734
+s_top5      98.02738952636719
+v_top1      59.717594146728516
+v_top5     158.07582092285156
+sov_top1    37.147300720214844
+
+# for test
+o_top1val   43.90848159790039
+o_top5val  131.04852294921875
+v_top1val   65.05877685546875
+v_top5val  179.99684143066406
+s_top1val   39.41933059692383
+s_top5val   74.67140197753906
+sov_top1val 14.807100296020508

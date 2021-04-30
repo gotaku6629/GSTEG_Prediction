@@ -1,0 +1,1226 @@
+2020-07-20 11:51:46,450:Logging to file ./gsteg/cr_caches/test//log_0720_1155.txt
+2020-07-20 11:51:46,450:{'rgb_data': './gsteg/Charades_v1_rgb/', 'dataset': 'charades', 'train_file': './gsteg/Charades/Charades_v1_train.csv', 'val_file': './gsteg/Charades/Charades_v1_test.csv', 'groundtruth_lookup': './utils/groundtruth.p', 'rgb_arch': 'i3d', 'workers': 4, 'epochs': 10, 'start_epoch': 0, 'batch_size': 1, 'lr': 0.005, 'lr_decay_rate': 3, 'momentum': 0.9, 'weight_decay': 0.0001, 'print_freq': 10, 'resume': './gsteg/cr_caches/test/model.pth.tar', 'evaluate': False, 'rgb_pretrained_weights': './gsteg/rgb_i3d_pretrained.pt', 'inputsize': 224, 'extract_feat_dim': 1024, 'world_size': 1, 'manual_seed': 0, 'dist_url': 'tcp://224.66.41.62:23456', 'dist_backend': 'gloo', 'train_size': 0.2, 'val_size': 0.2, 'cache_dir': './gsteg/cr_caches/', 'name': 'test', 's_class': 16, 'o_class': 38, 'v_class': 33, 'accum_grad': 1, 'distributed': False, 'cache': './gsteg/cr_caches/test/'}
+2020-07-20 11:51:46,455:1. create_model
+2020-07-20 11:51:46,455:1.1 create model & Networks
+2020-07-20 11:51:47,824:1.2 define optimizer
+2020-07-20 11:51:47,824:1.3 create sub_model
+2020-07-20 11:51:47,880:loading pretrained-weights from ./gsteg/rgb_i3d_pretrained.pt
+2020-07-20 11:51:47,940:1.4 define loss function
+2020-07-20 11:51:47,940:class AsyncTFCriterion -- def __init__
+2020-07-20 11:51:47,941:=> loading checkpoint './gsteg/cr_caches/test/model.pth.tar'
+2020-07-20 11:51:48,032:=> loaded checkpoint './gsteg/cr_caches/test/model.pth.tar' (epoch 7)
+2020-07-20 11:51:48,032:base_model
+2020-07-20 11:51:48,034:DataParallel(
+2020-07-20 11:51:48,034:  (module): InceptionI3d(
+2020-07-20 11:51:48,034:    (avg_pool): AvgPool3d(kernel_size=[2, 7, 7], stride=(1, 1, 1), padding=0)
+2020-07-20 11:51:48,034:    (dropout): Dropout(p=0.5, inplace=False)
+2020-07-20 11:51:48,034:    (logits): Unit3D(
+2020-07-20 11:51:48,034:      (conv3d): Conv3d(1024, 157, kernel_size=[1, 1, 1], stride=(1, 1, 1))
+2020-07-20 11:51:48,034:    )
+2020-07-20 11:51:48,034:    (Conv3d_1a_7x7): Unit3D(
+2020-07-20 11:51:48,034:      (conv3d): Conv3d(3, 64, kernel_size=[7, 7, 7], stride=(2, 2, 2), bias=False)
+2020-07-20 11:51:48,034:      (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,034:    )
+2020-07-20 11:51:48,034:    (MaxPool3d_2a_3x3): MaxPool3dSamePadding(kernel_size=[1, 3, 3], stride=(1, 2, 2), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,034:    (Conv3d_2b_1x1): Unit3D(
+2020-07-20 11:51:48,034:      (conv3d): Conv3d(64, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,034:      (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,034:    )
+2020-07-20 11:51:48,034:    (Conv3d_2c_3x3): Unit3D(
+2020-07-20 11:51:48,034:      (conv3d): Conv3d(64, 192, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,034:      (bn): BatchNorm3d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,034:    )
+2020-07-20 11:51:48,034:    (MaxPool3d_3a_3x3): MaxPool3dSamePadding(kernel_size=[1, 3, 3], stride=(1, 2, 2), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,034:    (Mixed_3b): InceptionModule(
+2020-07-20 11:51:48,034:      (b0): Unit3D(
+2020-07-20 11:51:48,034:        (conv3d): Conv3d(192, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,034:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,034:      )
+2020-07-20 11:51:48,034:      (b1a): Unit3D(
+2020-07-20 11:51:48,034:        (conv3d): Conv3d(192, 96, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,034:        (bn): BatchNorm3d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,034:      )
+2020-07-20 11:51:48,034:      (b1b): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(96, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:      (b2a): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(192, 16, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:      (b2b): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(16, 32, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,035:      (b3b): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(192, 32, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:    )
+2020-07-20 11:51:48,035:    (Mixed_3c): InceptionModule(
+2020-07-20 11:51:48,035:      (b0): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(256, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:      (b1a): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(256, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:      (b1b): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(128, 192, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:      (b2a): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(256, 32, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:      (b2b): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(32, 96, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,035:      (b3b): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(256, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:    )
+2020-07-20 11:51:48,035:    (MaxPool3d_4a_3x3): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(2, 2, 2), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,035:    (Mixed_4b): InceptionModule(
+2020-07-20 11:51:48,035:      (b0): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(480, 192, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:      (b1a): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(480, 96, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,035:        (bn): BatchNorm3d(96, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,035:      )
+2020-07-20 11:51:48,035:      (b1b): Unit3D(
+2020-07-20 11:51:48,035:        (conv3d): Conv3d(96, 208, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(208, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b2a): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(480, 16, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b2b): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(16, 48, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(48, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,036:      (b3b): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(480, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:    )
+2020-07-20 11:51:48,036:    (Mixed_4c): InceptionModule(
+2020-07-20 11:51:48,036:      (b0): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(512, 160, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(160, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b1a): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(512, 112, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(112, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b1b): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(112, 224, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(224, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b2a): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(512, 24, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(24, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b2b): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(24, 64, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,036:      (b3b): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(512, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:    )
+2020-07-20 11:51:48,036:    (Mixed_4d): InceptionModule(
+2020-07-20 11:51:48,036:      (b0): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(512, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b1a): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(512, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b1b): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(128, 256, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,036:      )
+2020-07-20 11:51:48,036:      (b2a): Unit3D(
+2020-07-20 11:51:48,036:        (conv3d): Conv3d(512, 24, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,036:        (bn): BatchNorm3d(24, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b2b): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(24, 64, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,037:      (b3b): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(512, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:    )
+2020-07-20 11:51:48,037:    (Mixed_4e): InceptionModule(
+2020-07-20 11:51:48,037:      (b0): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(512, 112, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(112, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b1a): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(512, 144, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(144, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b1b): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(144, 288, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(288, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b2a): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(512, 32, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b2b): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(32, 64, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,037:      (b3b): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(512, 64, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:    )
+2020-07-20 11:51:48,037:    (Mixed_4f): InceptionModule(
+2020-07-20 11:51:48,037:      (b0): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(528, 256, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b1a): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(528, 160, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(160, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b1b): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(160, 320, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(320, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b2a): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(528, 32, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,037:      )
+2020-07-20 11:51:48,037:      (b2b): Unit3D(
+2020-07-20 11:51:48,037:        (conv3d): Conv3d(32, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,037:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,038:      (b3b): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(528, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:    )
+2020-07-20 11:51:48,038:    (MaxPool3d_5a_2x2): MaxPool3dSamePadding(kernel_size=[2, 2, 2], stride=(2, 2, 2), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,038:    (Mixed_5b): InceptionModule(
+2020-07-20 11:51:48,038:      (b0): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(832, 256, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b1a): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(832, 160, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(160, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b1b): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(160, 320, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(320, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b2a): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(832, 32, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b2b): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(32, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,038:      (b3b): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(832, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:    )
+2020-07-20 11:51:48,038:    (Mixed_5c): InceptionModule(
+2020-07-20 11:51:48,038:      (b0): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(832, 384, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(384, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b1a): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(832, 192, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(192, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b1b): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(192, 384, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(384, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b2a): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(832, 48, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(48, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b2b): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(48, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,038:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,038:      )
+2020-07-20 11:51:48,038:      (b3a): MaxPool3dSamePadding(kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=0, dilation=1, ceil_mode=False)
+2020-07-20 11:51:48,038:      (b3b): Unit3D(
+2020-07-20 11:51:48,038:        (conv3d): Conv3d(832, 128, kernel_size=[1, 1, 1], stride=(1, 1, 1), bias=False)
+2020-07-20 11:51:48,039:        (bn): BatchNorm3d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+2020-07-20 11:51:48,039:      )
+2020-07-20 11:51:48,039:    )
+2020-07-20 11:51:48,039:  )
+2020-07-20 11:51:48,039:)
+2020-07-20 11:51:48,039:logits_model
+2020-07-20 11:51:48,039:AsyncTFBase(
+2020-07-20 11:51:48,040:  (s): Sequential(
+2020-07-20 11:51:48,040:    (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,040:    (1): ReLU()
+2020-07-20 11:51:48,040:    (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,040:    (3): Linear(in_features=1000, out_features=1000, bias=True)
+2020-07-20 11:51:48,040:    (4): ReLU()
+2020-07-20 11:51:48,040:    (5): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,040:    (6): Linear(in_features=1000, out_features=16, bias=True)
+2020-07-20 11:51:48,040:  )
+2020-07-20 11:51:48,040:  (o): Linear(in_features=1024, out_features=38, bias=True)
+2020-07-20 11:51:48,040:  (v): Linear(in_features=1024, out_features=33, bias=True)
+2020-07-20 11:51:48,040:  (so_a): BasicModule(
+2020-07-20 11:51:48,040:    (layers): Sequential(
+2020-07-20 11:51:48,040:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,040:      (1): ReLU()
+2020-07-20 11:51:48,040:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,040:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 11:51:48,040:    )
+2020-07-20 11:51:48,040:  )
+2020-07-20 11:51:48,040:  (so_b): BasicModule(
+2020-07-20 11:51:48,040:    (layers): Sequential(
+2020-07-20 11:51:48,040:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,040:      (1): ReLU()
+2020-07-20 11:51:48,040:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,040:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 11:51:48,040:    )
+2020-07-20 11:51:48,040:  )
+2020-07-20 11:51:48,040:  (ov_a): BasicModule(
+2020-07-20 11:51:48,040:    (layers): Sequential(
+2020-07-20 11:51:48,040:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,040:      (1): ReLU()
+2020-07-20 11:51:48,040:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,040:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 11:51:48,040:    )
+2020-07-20 11:51:48,040:  )
+2020-07-20 11:51:48,040:  (ov_b): BasicModule(
+2020-07-20 11:51:48,040:    (layers): Sequential(
+2020-07-20 11:51:48,040:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,040:      (1): ReLU()
+2020-07-20 11:51:48,040:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,040:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 11:51:48,040:    )
+2020-07-20 11:51:48,040:  )
+2020-07-20 11:51:48,040:  (vs_a): BasicModule(
+2020-07-20 11:51:48,040:    (layers): Sequential(
+2020-07-20 11:51:48,040:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,040:      (1): ReLU()
+2020-07-20 11:51:48,040:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,040:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 11:51:48,040:    )
+2020-07-20 11:51:48,040:  )
+2020-07-20 11:51:48,040:  (vs_b): BasicModule(
+2020-07-20 11:51:48,040:    (layers): Sequential(
+2020-07-20 11:51:48,040:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,040:      (1): ReLU()
+2020-07-20 11:51:48,041:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,041:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 11:51:48,041:    )
+2020-07-20 11:51:48,041:  )
+2020-07-20 11:51:48,041:  (ss_a): BasicModule(
+2020-07-20 11:51:48,041:    (layers): Sequential(
+2020-07-20 11:51:48,041:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,041:      (1): ReLU()
+2020-07-20 11:51:48,041:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,041:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 11:51:48,041:    )
+2020-07-20 11:51:48,041:  )
+2020-07-20 11:51:48,041:  (ss_b): BasicModule(
+2020-07-20 11:51:48,041:    (layers): Sequential(
+2020-07-20 11:51:48,041:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,041:      (1): ReLU()
+2020-07-20 11:51:48,041:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,041:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 11:51:48,041:    )
+2020-07-20 11:51:48,041:  )
+2020-07-20 11:51:48,041:  (oo_a): BasicModule(
+2020-07-20 11:51:48,041:    (layers): Sequential(
+2020-07-20 11:51:48,041:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,041:      (1): ReLU()
+2020-07-20 11:51:48,041:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,041:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 11:51:48,041:    )
+2020-07-20 11:51:48,041:  )
+2020-07-20 11:51:48,041:  (oo_b): BasicModule(
+2020-07-20 11:51:48,041:    (layers): Sequential(
+2020-07-20 11:51:48,041:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,041:      (1): ReLU()
+2020-07-20 11:51:48,041:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,041:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 11:51:48,041:    )
+2020-07-20 11:51:48,041:  )
+2020-07-20 11:51:48,041:  (vv_a): BasicModule(
+2020-07-20 11:51:48,041:    (layers): Sequential(
+2020-07-20 11:51:48,041:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,041:      (1): ReLU()
+2020-07-20 11:51:48,041:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,041:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 11:51:48,041:    )
+2020-07-20 11:51:48,041:  )
+2020-07-20 11:51:48,041:  (vv_b): BasicModule(
+2020-07-20 11:51:48,041:    (layers): Sequential(
+2020-07-20 11:51:48,041:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,041:      (1): ReLU()
+2020-07-20 11:51:48,041:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,041:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 11:51:48,041:    )
+2020-07-20 11:51:48,041:  )
+2020-07-20 11:51:48,041:  (so_t_a): BasicModule(
+2020-07-20 11:51:48,041:    (layers): Sequential(
+2020-07-20 11:51:48,041:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,041:      (1): ReLU()
+2020-07-20 11:51:48,041:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,042:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 11:51:48,042:    )
+2020-07-20 11:51:48,042:  )
+2020-07-20 11:51:48,042:  (so_t_b): BasicModule(
+2020-07-20 11:51:48,042:    (layers): Sequential(
+2020-07-20 11:51:48,042:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,042:      (1): ReLU()
+2020-07-20 11:51:48,042:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,042:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 11:51:48,042:    )
+2020-07-20 11:51:48,042:  )
+2020-07-20 11:51:48,042:  (ov_t_a): BasicModule(
+2020-07-20 11:51:48,042:    (layers): Sequential(
+2020-07-20 11:51:48,042:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,042:      (1): ReLU()
+2020-07-20 11:51:48,042:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,042:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 11:51:48,042:    )
+2020-07-20 11:51:48,042:  )
+2020-07-20 11:51:48,042:  (ov_t_b): BasicModule(
+2020-07-20 11:51:48,042:    (layers): Sequential(
+2020-07-20 11:51:48,042:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,042:      (1): ReLU()
+2020-07-20 11:51:48,042:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,042:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 11:51:48,042:    )
+2020-07-20 11:51:48,042:  )
+2020-07-20 11:51:48,042:  (vs_t_a): BasicModule(
+2020-07-20 11:51:48,042:    (layers): Sequential(
+2020-07-20 11:51:48,042:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,042:      (1): ReLU()
+2020-07-20 11:51:48,042:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,042:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 11:51:48,042:    )
+2020-07-20 11:51:48,042:  )
+2020-07-20 11:51:48,042:  (vs_t_b): BasicModule(
+2020-07-20 11:51:48,042:    (layers): Sequential(
+2020-07-20 11:51:48,042:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,042:      (1): ReLU()
+2020-07-20 11:51:48,042:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,042:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 11:51:48,042:    )
+2020-07-20 11:51:48,042:  )
+2020-07-20 11:51:48,042:  (os_t_a): BasicModule(
+2020-07-20 11:51:48,042:    (layers): Sequential(
+2020-07-20 11:51:48,042:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,042:      (1): ReLU()
+2020-07-20 11:51:48,042:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,042:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 11:51:48,042:    )
+2020-07-20 11:51:48,042:  )
+2020-07-20 11:51:48,042:  (os_t_b): BasicModule(
+2020-07-20 11:51:48,042:    (layers): Sequential(
+2020-07-20 11:51:48,042:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,042:      (1): ReLU()
+2020-07-20 11:51:48,042:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,042:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 11:51:48,042:    )
+2020-07-20 11:51:48,043:  )
+2020-07-20 11:51:48,043:  (vo_t_a): BasicModule(
+2020-07-20 11:51:48,043:    (layers): Sequential(
+2020-07-20 11:51:48,043:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,043:      (1): ReLU()
+2020-07-20 11:51:48,043:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,043:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 11:51:48,043:    )
+2020-07-20 11:51:48,043:  )
+2020-07-20 11:51:48,043:  (vo_t_b): BasicModule(
+2020-07-20 11:51:48,043:    (layers): Sequential(
+2020-07-20 11:51:48,043:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,043:      (1): ReLU()
+2020-07-20 11:51:48,043:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,043:      (3): Linear(in_features=1000, out_features=190, bias=True)
+2020-07-20 11:51:48,043:    )
+2020-07-20 11:51:48,043:  )
+2020-07-20 11:51:48,043:  (sv_t_a): BasicModule(
+2020-07-20 11:51:48,043:    (layers): Sequential(
+2020-07-20 11:51:48,043:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,043:      (1): ReLU()
+2020-07-20 11:51:48,043:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,043:      (3): Linear(in_features=1000, out_features=80, bias=True)
+2020-07-20 11:51:48,043:    )
+2020-07-20 11:51:48,043:  )
+2020-07-20 11:51:48,043:  (sv_t_b): BasicModule(
+2020-07-20 11:51:48,043:    (layers): Sequential(
+2020-07-20 11:51:48,043:      (0): Linear(in_features=1024, out_features=1000, bias=True)
+2020-07-20 11:51:48,043:      (1): ReLU()
+2020-07-20 11:51:48,043:      (2): Dropout(p=0.3, inplace=False)
+2020-07-20 11:51:48,043:      (3): Linear(in_features=1000, out_features=165, bias=True)
+2020-07-20 11:51:48,043:    )
+2020-07-20 11:51:48,043:  )
+2020-07-20 11:51:48,043:)
+2020-07-20 11:51:48,043:2. get_dataset
+2020-07-20 11:51:48,387:2.1 dataset.get
+2020-07-20 11:51:48,388:Charades __init__
+2020-07-20 11:51:48,388:2.1.1 label from csv
+2020-07-20 11:51:48,549:2.1.2 video and label cache
+2020-07-20 11:51:48,549:cachefile ./gsteg/cr_caches/Charades_train.pkl
+2020-07-20 11:51:48,550:Loading cached result from './gsteg/cr_caches/Charades_train.pkl'
+2020-07-20 11:53:26,704:Charades __init__
+2020-07-20 11:53:26,704:2.1.1 label from csv
+2020-07-20 11:53:26,747:2.1.2 video and label cache
+2020-07-20 11:53:26,747:cachefile ./gsteg/cr_caches/Charades_val.pkl
+2020-07-20 11:53:26,748:Loading cached result from './gsteg/cr_caches/Charades_val.pkl'
+2020-07-20 11:53:50,148:Charades __init__
+2020-07-20 11:53:50,149:2.1.1 label from csv
+2020-07-20 11:53:50,174:2.1.2 video and label cache
+2020-07-20 11:53:50,174:cachefile ./gsteg/cr_caches/Charades_val_video.pkl
+2020-07-20 11:53:50,176:Loading cached result from './gsteg/cr_caches/Charades_val_video.pkl'
+2020-07-20 11:53:50,300:2.2 DataLoader
+2020-07-20 11:53:50,300:Charades __len__
+2020-07-20 11:53:50,300:Charades __len__
+2020-07-20 11:53:50,300:Charades __len__
+2020-07-20 11:53:50,300:Charades __len__
+2020-07-20 11:53:50,300:train_loader
+2020-07-20 11:53:50,300:<torch.utils.data.dataloader.DataLoader object at 0x7fd51b1b6dd0>
+2020-07-20 11:53:50,300:val_loader
+2020-07-20 11:53:50,300:<torch.utils.data.dataloader.DataLoader object at 0x7fd51b1b6950>
+2020-07-20 11:53:50,300:valvideo_loader
+2020-07-20 11:53:50,300:<torch.utils.data.dataloader.DataLoader object at 0x7fd51b1b6a10>
+2020-07-20 11:53:50,300:3. Train & Test (Validation)
+2020-07-20 11:53:50,300:epoch =
+2020-07-20 11:53:50,300:7
+2020-07-20 11:53:50,300:3.1 Training
+2020-07-20 11:53:50,301:Charades __len__
+2020-07-20 11:53:50,477:Charades __len__
+2020-07-20 11:53:50,522:Charades __getitem__
+2020-07-20 11:53:50,522:Charades __getitem__
+2020-07-20 11:53:50,522:Charades __getitem__
+2020-07-20 11:53:50,522:Charades __getitem__
+2020-07-20 11:53:50,576:Charades __getitem__
+2020-07-20 11:53:50,600:Charades __getitem__
+2020-07-20 11:53:50,648:Charades __getitem__
+2020-07-20 11:53:50,654:meta
+2020-07-20 11:53:50,654:{'id': ['0DBQD'], 'time': tensor([700])}
+2020-07-20 11:53:50,657:Charades __getitem__
+2020-07-20 11:53:52,874:Charades __getitem__
+2020-07-20 11:53:52,875:3.1.1 base_model
+2020-07-20 11:53:54,019:3.1.2 modeling
+2020-07-20 11:53:54,029:3.1.3 inference
+2020-07-20 11:53:54,030:class AsyncTFCriterion -- def forward
+2020-07-20 11:53:54,035:s_output
+2020-07-20 11:53:54,037:tensor([[0.0092, 0.0714, 0.1864, 0.0429, 0.0415, 0.0800, 0.0297, 0.0433, 0.0653,
+2020-07-20 11:53:54,037:         0.1201, 0.0684, 0.1439, 0.0118, 0.0204, 0.0183, 0.0473]],
+2020-07-20 11:53:54,037:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:53:54,037:s_target
+2020-07-20 11:53:54,037:tensor([11], device='cuda:0')
+2020-07-20 11:53:54,037:v_output
+2020-07-20 11:53:54,039:tensor([[0.0034, 0.0175, 0.0038, 0.0081, 0.0515, 0.0697, 0.0095, 0.0042, 0.7130,
+2020-07-20 11:53:54,039:         0.0175, 0.0094, 0.0016, 0.0344, 0.0057, 0.0295, 0.0079, 0.1260, 0.0043,
+2020-07-20 11:53:54,039:         0.1948, 0.0340, 0.0234, 0.0111, 0.0272, 0.1334, 0.0134, 0.0125, 0.0387,
+2020-07-20 11:53:54,039:         0.0045, 0.0085, 0.0082, 0.0133, 0.1109, 0.0084]], device='cuda:0',
+2020-07-20 11:53:54,039:       grad_fn=<CloneBackward>)
+2020-07-20 11:53:54,039:v_target
+2020-07-20 11:53:54,040:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+2020-07-20 11:53:54,040:         0, 0, 0, 0, 0, 0, 0, 1, 0]], device='cuda:0')
+2020-07-20 11:53:54,040:o_output
+2020-07-20 11:53:54,042:tensor([[0.1376, 0.0231, 0.0113, 0.0194, 0.0210, 0.0126, 0.0084, 0.0512, 0.0095,
+2020-07-20 11:53:54,042:         0.0197, 0.1349, 0.0563, 0.0087, 0.0051, 0.0083, 0.0402, 0.1483, 0.0042,
+2020-07-20 11:53:54,042:         0.0045, 0.0022, 0.0172, 0.0055, 0.0140, 0.0133, 0.0167, 0.0502, 0.0106,
+2020-07-20 11:53:54,042:         0.0146, 0.0030, 0.0416, 0.0089, 0.0097, 0.0120, 0.0520, 0.0098, 0.0238,
+2020-07-20 11:53:54,042:         0.0060, 0.0090]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:53:54,042:o_target
+2020-07-20 11:53:54,043:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:53:54,043:         0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:53:54,043:3.1.4 evaluation
+2020-07-20 11:53:55,198:updating parameters
+2020-07-20 11:53:55,206:Charades __len__
+2020-07-20 11:53:55,206:Charades __len__
+2020-07-20 11:53:55,206:Epoch: [7][0/282926(1414632)]	Time 4.905 (4.905)	Data 2.573 (2.573)	Loss 5.0847 (5.0847)	S_Prec@1 0.000 (0.000)	S_Prec@5 100.000 (100.000)	O_Prec@1 100.000 (100.000)	O_Prec@5 100.000 (100.000)	V_Prec@1 100.000 (100.000)	V_Prec@5 300.000 (300.000)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 11:53:55,207:meta
+2020-07-20 11:53:55,207:{'id': ['HBPZJ'], 'time': tensor([44])}
+2020-07-20 11:53:57,086:Charades __getitem__
+2020-07-20 11:53:57,087:3.1.1 base_model
+2020-07-20 11:53:57,099:3.1.2 modeling
+2020-07-20 11:53:57,103:3.1.3 inference
+2020-07-20 11:53:57,103:class AsyncTFCriterion -- def forward
+2020-07-20 11:53:57,105:s_output
+2020-07-20 11:53:57,106:tensor([[0.0121, 0.0432, 0.1469, 0.0700, 0.0468, 0.0562, 0.0195, 0.0655, 0.1586,
+2020-07-20 11:53:57,106:         0.0827, 0.0789, 0.1207, 0.0207, 0.0130, 0.0264, 0.0388]],
+2020-07-20 11:53:57,106:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:53:57,106:s_target
+2020-07-20 11:53:57,107:tensor([14], device='cuda:0')
+2020-07-20 11:53:57,107:v_output
+2020-07-20 11:53:57,108:tensor([[0.0031, 0.0214, 0.0037, 0.0090, 0.0247, 0.0293, 0.0098, 0.0042, 0.6607,
+2020-07-20 11:53:57,108:         0.0213, 0.0079, 0.0013, 0.0379, 0.0062, 0.0679, 0.0053, 0.1246, 0.0038,
+2020-07-20 11:53:57,108:         0.2190, 0.0447, 0.0161, 0.0085, 0.0294, 0.1209, 0.0110, 0.0124, 0.0376,
+2020-07-20 11:53:57,108:         0.0042, 0.0091, 0.0071, 0.0125, 0.1204, 0.0117]], device='cuda:0',
+2020-07-20 11:53:57,108:       grad_fn=<CloneBackward>)
+2020-07-20 11:53:57,108:v_target
+2020-07-20 11:53:57,108:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+2020-07-20 11:53:57,108:         0, 0, 0, 0, 0, 0, 0, 1, 1]], device='cuda:0')
+2020-07-20 11:53:57,108:o_output
+2020-07-20 11:53:57,110:tensor([[0.1455, 0.0173, 0.0096, 0.0156, 0.0204, 0.0140, 0.0076, 0.0688, 0.0102,
+2020-07-20 11:53:57,110:         0.0210, 0.0673, 0.0267, 0.0087, 0.0048, 0.0073, 0.0378, 0.0670, 0.0037,
+2020-07-20 11:53:57,110:         0.0041, 0.0021, 0.0371, 0.0052, 0.0112, 0.0138, 0.0164, 0.0671, 0.0124,
+2020-07-20 11:53:57,110:         0.0127, 0.0027, 0.0154, 0.0093, 0.0123, 0.0082, 0.0636, 0.0070, 0.0192,
+2020-07-20 11:53:57,110:         0.0060, 0.0070]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:53:57,110:o_target
+2020-07-20 11:53:57,110:tensor([[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+2020-07-20 11:53:57,110:         0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:53:57,110:3.1.4 evaluation
+2020-07-20 11:53:57,124:updating parameters
+2020-07-20 11:53:57,128:meta
+2020-07-20 11:53:57,129:{'id': ['P73KX'], 'time': tensor([76])}
+2020-07-20 11:53:57,129:Charades __getitem__
+2020-07-20 11:53:59,005:3.1.1 base_model
+2020-07-20 11:53:59,019:3.1.2 modeling
+2020-07-20 11:53:59,023:3.1.3 inference
+2020-07-20 11:53:59,023:class AsyncTFCriterion -- def forward
+2020-07-20 11:53:59,025:s_output
+2020-07-20 11:53:59,026:tensor([[0.0074, 0.0439, 0.1659, 0.0503, 0.0503, 0.0570, 0.0220, 0.0686, 0.1142,
+2020-07-20 11:53:59,026:         0.1030, 0.0743, 0.1588, 0.0100, 0.0164, 0.0199, 0.0376]],
+2020-07-20 11:53:59,026:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:53:59,026:s_target
+2020-07-20 11:53:59,026:tensor([8], device='cuda:0')
+2020-07-20 11:53:59,026:v_output
+2020-07-20 11:53:59,028:tensor([[0.0030, 0.0300, 0.0026, 0.0094, 0.0187, 0.0164, 0.0069, 0.0068, 0.6301,
+2020-07-20 11:53:59,028:         0.0150, 0.0071, 0.0010, 0.0516, 0.0038, 0.0206, 0.0039, 0.1381, 0.0073,
+2020-07-20 11:53:59,028:         0.0960, 0.0288, 0.0133, 0.0081, 0.0373, 0.1341, 0.0082, 0.0176, 0.0517,
+2020-07-20 11:53:59,028:         0.0050, 0.0124, 0.0151, 0.0106, 0.0723, 0.0050]], device='cuda:0',
+2020-07-20 11:53:59,028:       grad_fn=<CloneBackward>)
+2020-07-20 11:53:59,028:v_target
+2020-07-20 11:53:59,028:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:53:59,028:         0, 0, 0, 0, 1, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:53:59,028:o_output
+2020-07-20 11:53:59,029:tensor([[0.1539, 0.0199, 0.0076, 0.0199, 0.0228, 0.0211, 0.0125, 0.0307, 0.0126,
+2020-07-20 11:53:59,029:         0.0361, 0.0589, 0.0280, 0.0165, 0.0074, 0.0155, 0.0390, 0.0447, 0.0038,
+2020-07-20 11:53:59,029:         0.0030, 0.0018, 0.0157, 0.0063, 0.0070, 0.0092, 0.0134, 0.0390, 0.0098,
+2020-07-20 11:53:59,029:         0.0170, 0.0034, 0.0110, 0.0097, 0.0158, 0.0063, 0.0278, 0.0067, 0.0213,
+2020-07-20 11:53:59,029:         0.0066, 0.0077]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:53:59,029:o_target
+2020-07-20 11:53:59,030:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:53:59,030:         0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:53:59,030:3.1.4 evaluation
+2020-07-20 11:53:59,044:updating parameters
+2020-07-20 11:53:59,048:meta
+2020-07-20 11:53:59,048:{'id': ['LHPQS'], 'time': tensor([132])}
+2020-07-20 11:54:00,914:Charades __getitem__
+2020-07-20 11:54:00,915:3.1.1 base_model
+2020-07-20 11:54:00,927:3.1.2 modeling
+2020-07-20 11:54:00,930:3.1.3 inference
+2020-07-20 11:54:00,930:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:00,933:s_output
+2020-07-20 11:54:00,934:tensor([[0.0124, 0.0613, 0.1576, 0.0864, 0.0313, 0.0677, 0.0200, 0.0713, 0.0757,
+2020-07-20 11:54:00,934:         0.0776, 0.0734, 0.1469, 0.0115, 0.0179, 0.0296, 0.0594]],
+2020-07-20 11:54:00,934:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:00,934:s_target
+2020-07-20 11:54:00,934:tensor([9], device='cuda:0')
+2020-07-20 11:54:00,934:v_output
+2020-07-20 11:54:00,935:tensor([[0.0032, 0.0247, 0.0041, 0.0090, 0.0230, 0.0341, 0.0087, 0.0060, 0.7112,
+2020-07-20 11:54:00,935:         0.0229, 0.0084, 0.0015, 0.0434, 0.0057, 0.0290, 0.0062, 0.1215, 0.0051,
+2020-07-20 11:54:00,935:         0.0807, 0.0396, 0.0208, 0.0108, 0.0304, 0.1256, 0.0089, 0.0146, 0.0452,
+2020-07-20 11:54:00,935:         0.0053, 0.0097, 0.0109, 0.0138, 0.1124, 0.0052]], device='cuda:0',
+2020-07-20 11:54:00,935:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:00,935:v_target
+2020-07-20 11:54:00,936:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:00,936:         0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:00,936:o_output
+2020-07-20 11:54:00,937:tensor([[0.1546, 0.0295, 0.0086, 0.0199, 0.0255, 0.0185, 0.0111, 0.0261, 0.0145,
+2020-07-20 11:54:00,937:         0.0264, 0.0826, 0.0419, 0.0134, 0.0067, 0.0117, 0.0375, 0.0941, 0.0054,
+2020-07-20 11:54:00,937:         0.0040, 0.0025, 0.0152, 0.0063, 0.0124, 0.0173, 0.0153, 0.0526, 0.0124,
+2020-07-20 11:54:00,937:         0.0184, 0.0043, 0.0249, 0.0129, 0.0137, 0.0076, 0.0268, 0.0094, 0.0241,
+2020-07-20 11:54:00,937:         0.0085, 0.0087]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:00,937:o_target
+2020-07-20 11:54:00,937:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:00,937:         0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:00,937:3.1.4 evaluation
+2020-07-20 11:54:00,951:updating parameters
+2020-07-20 11:54:00,956:meta
+2020-07-20 11:54:00,956:{'id': ['2DPEC'], 'time': tensor([380])}
+2020-07-20 11:54:00,956:Charades __getitem__
+2020-07-20 11:54:02,834:3.1.1 base_model
+2020-07-20 11:54:02,848:3.1.2 modeling
+2020-07-20 11:54:02,852:3.1.3 inference
+2020-07-20 11:54:02,852:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:02,854:s_output
+2020-07-20 11:54:02,855:tensor([[0.0090, 0.0501, 0.1659, 0.0574, 0.0541, 0.0708, 0.0169, 0.0556, 0.0821,
+2020-07-20 11:54:02,855:         0.0800, 0.0477, 0.1897, 0.0151, 0.0249, 0.0222, 0.0585]],
+2020-07-20 11:54:02,855:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:02,855:s_target
+2020-07-20 11:54:02,856:tensor([13], device='cuda:0')
+2020-07-20 11:54:02,856:v_output
+2020-07-20 11:54:02,857:tensor([[0.0029, 0.0197, 0.0036, 0.0089, 0.0280, 0.0358, 0.0110, 0.0049, 0.7021,
+2020-07-20 11:54:02,857:         0.0205, 0.0081, 0.0013, 0.0384, 0.0064, 0.0555, 0.0067, 0.1197, 0.0043,
+2020-07-20 11:54:02,857:         0.1538, 0.0411, 0.0175, 0.0082, 0.0306, 0.1195, 0.0108, 0.0121, 0.0379,
+2020-07-20 11:54:02,857:         0.0043, 0.0093, 0.0083, 0.0126, 0.1179, 0.0091]], device='cuda:0',
+2020-07-20 11:54:02,857:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:02,857:v_target
+2020-07-20 11:54:02,858:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0,
+2020-07-20 11:54:02,858:         0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:02,858:o_output
+2020-07-20 11:54:02,859:tensor([[0.1406, 0.0227, 0.0083, 0.0154, 0.0165, 0.0114, 0.0106, 0.0526, 0.0107,
+2020-07-20 11:54:02,859:         0.0214, 0.0835, 0.0350, 0.0101, 0.0057, 0.0083, 0.0402, 0.0777, 0.0040,
+2020-07-20 11:54:02,859:         0.0044, 0.0022, 0.0283, 0.0055, 0.0129, 0.0165, 0.0142, 0.0646, 0.0118,
+2020-07-20 11:54:02,859:         0.0130, 0.0028, 0.0215, 0.0095, 0.0112, 0.0081, 0.0481, 0.0073, 0.0195,
+2020-07-20 11:54:02,859:         0.0069, 0.0086]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:02,859:o_target
+2020-07-20 11:54:02,860:tensor([[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:02,860:         0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:02,860:3.1.4 evaluation
+2020-07-20 11:54:02,874:updating parameters
+2020-07-20 11:54:02,878:meta
+2020-07-20 11:54:02,878:{'id': ['YXQWH'], 'time': tensor([424])}
+2020-07-20 11:54:02,878:Charades __getitem__
+2020-07-20 11:54:04,740:3.1.1 base_model
+2020-07-20 11:54:04,753:3.1.2 modeling
+2020-07-20 11:54:04,757:3.1.3 inference
+2020-07-20 11:54:04,757:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:04,759:s_output
+2020-07-20 11:54:04,760:tensor([[0.0186, 0.0439, 0.1386, 0.0421, 0.0585, 0.0503, 0.0216, 0.0885, 0.1476,
+2020-07-20 11:54:04,760:         0.1058, 0.0865, 0.1310, 0.0094, 0.0128, 0.0172, 0.0277]],
+2020-07-20 11:54:04,760:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:04,760:s_target
+2020-07-20 11:54:04,761:tensor([7], device='cuda:0')
+2020-07-20 11:54:04,761:v_output
+2020-07-20 11:54:04,762:tensor([[0.0042, 0.0315, 0.0032, 0.0152, 0.0136, 0.0164, 0.0103, 0.0083, 0.6167,
+2020-07-20 11:54:04,762:         0.0165, 0.0105, 0.0012, 0.0597, 0.0041, 0.0192, 0.0039, 0.1656, 0.0060,
+2020-07-20 11:54:04,762:         0.0837, 0.0315, 0.0164, 0.0101, 0.0419, 0.1526, 0.0078, 0.0262, 0.0721,
+2020-07-20 11:54:04,762:         0.0058, 0.0187, 0.0141, 0.0138, 0.0712, 0.0045]], device='cuda:0',
+2020-07-20 11:54:04,762:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:04,762:v_target
+2020-07-20 11:54:04,762:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:04,762:         0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:04,762:o_output
+2020-07-20 11:54:04,764:tensor([[0.1467, 0.0367, 0.0099, 0.0258, 0.0202, 0.0167, 0.0145, 0.0292, 0.0190,
+2020-07-20 11:54:04,764:         0.0502, 0.0386, 0.0240, 0.0192, 0.0095, 0.0146, 0.0551, 0.0460, 0.0057,
+2020-07-20 11:54:04,764:         0.0041, 0.0023, 0.0133, 0.0077, 0.0077, 0.0137, 0.0118, 0.0370, 0.0105,
+2020-07-20 11:54:04,764:         0.0242, 0.0035, 0.0105, 0.0143, 0.0248, 0.0067, 0.0262, 0.0081, 0.0307,
+2020-07-20 11:54:04,764:         0.0084, 0.0090]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:04,764:o_target
+2020-07-20 11:54:04,764:tensor([[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:04,764:         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:04,764:3.1.4 evaluation
+2020-07-20 11:54:04,778:updating parameters
+2020-07-20 11:54:04,782:meta
+2020-07-20 11:54:04,782:{'id': ['FQGQS'], 'time': tensor([28])}
+2020-07-20 11:54:06,639:Charades __getitem__
+2020-07-20 11:54:06,639:3.1.1 base_model
+2020-07-20 11:54:06,651:3.1.2 modeling
+2020-07-20 11:54:06,655:3.1.3 inference
+2020-07-20 11:54:06,655:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:06,657:s_output
+2020-07-20 11:54:06,658:tensor([[0.0161, 0.0310, 0.1665, 0.0449, 0.0506, 0.0643, 0.0207, 0.0515, 0.1383,
+2020-07-20 11:54:06,658:         0.1035, 0.0774, 0.1282, 0.0164, 0.0159, 0.0256, 0.0491]],
+2020-07-20 11:54:06,658:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:06,658:s_target
+2020-07-20 11:54:06,658:tensor([2], device='cuda:0')
+2020-07-20 11:54:06,658:v_output
+2020-07-20 11:54:06,660:tensor([[0.0034, 0.0386, 0.0028, 0.0179, 0.0173, 0.0187, 0.0157, 0.0111, 0.5386,
+2020-07-20 11:54:06,660:         0.0184, 0.0061, 0.0013, 0.0627, 0.0049, 0.0185, 0.0047, 0.1415, 0.0064,
+2020-07-20 11:54:06,660:         0.0787, 0.0378, 0.0223, 0.0093, 0.0385, 0.1270, 0.0100, 0.0206, 0.0762,
+2020-07-20 11:54:06,660:         0.0067, 0.0185, 0.0165, 0.0167, 0.1089, 0.0057]], device='cuda:0',
+2020-07-20 11:54:06,660:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:06,660:v_target
+2020-07-20 11:54:06,660:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:06,660:         0, 1, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:06,660:o_output
+2020-07-20 11:54:06,661:tensor([[0.1476, 0.0289, 0.0070, 0.0215, 0.0206, 0.0157, 0.0163, 0.0345, 0.0268,
+2020-07-20 11:54:06,661:         0.0505, 0.0491, 0.0245, 0.0249, 0.0124, 0.0171, 0.0386, 0.0394, 0.0055,
+2020-07-20 11:54:06,661:         0.0064, 0.0029, 0.0139, 0.0091, 0.0105, 0.0273, 0.0139, 0.0391, 0.0109,
+2020-07-20 11:54:06,661:         0.0204, 0.0042, 0.0113, 0.0178, 0.0174, 0.0055, 0.0304, 0.0072, 0.0345,
+2020-07-20 11:54:06,661:         0.0095, 0.0133]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:06,662:o_target
+2020-07-20 11:54:06,662:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:06,662:         0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:06,662:3.1.4 evaluation
+2020-07-20 11:54:06,676:updating parameters
+2020-07-20 11:54:06,680:meta
+2020-07-20 11:54:06,680:{'id': ['12LGF'], 'time': tensor([296])}
+2020-07-20 11:54:08,541:Charades __getitem__
+2020-07-20 11:54:08,541:3.1.1 base_model
+2020-07-20 11:54:08,554:3.1.2 modeling
+2020-07-20 11:54:08,558:3.1.3 inference
+2020-07-20 11:54:08,558:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:08,561:s_output
+2020-07-20 11:54:08,562:tensor([[0.0115, 0.0596, 0.1395, 0.0588, 0.0563, 0.0632, 0.0172, 0.0615, 0.1196,
+2020-07-20 11:54:08,562:         0.0827, 0.0657, 0.1677, 0.0169, 0.0214, 0.0159, 0.0425]],
+2020-07-20 11:54:08,562:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:08,562:s_target
+2020-07-20 11:54:08,562:tensor([9], device='cuda:0')
+2020-07-20 11:54:08,562:v_output
+2020-07-20 11:54:08,563:tensor([[0.0029, 0.0311, 0.0041, 0.0111, 0.0268, 0.0227, 0.0099, 0.0096, 0.6638,
+2020-07-20 11:54:08,563:         0.0171, 0.0063, 0.0015, 0.0527, 0.0068, 0.0268, 0.0062, 0.1553, 0.0080,
+2020-07-20 11:54:08,563:         0.0568, 0.0336, 0.0170, 0.0059, 0.0378, 0.1552, 0.0122, 0.0242, 0.0669,
+2020-07-20 11:54:08,563:         0.0068, 0.0155, 0.0179, 0.0152, 0.0571, 0.0046]], device='cuda:0',
+2020-07-20 11:54:08,563:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:08,563:v_target
+2020-07-20 11:54:08,564:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:08,564:         0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:08,564:o_output
+2020-07-20 11:54:08,565:tensor([[0.1293, 0.0338, 0.0072, 0.0165, 0.0181, 0.0230, 0.0180, 0.0227, 0.0175,
+2020-07-20 11:54:08,565:         0.0445, 0.0841, 0.0334, 0.0218, 0.0107, 0.0183, 0.0427, 0.0658, 0.0062,
+2020-07-20 11:54:08,565:         0.0042, 0.0024, 0.0136, 0.0091, 0.0127, 0.0120, 0.0123, 0.0642, 0.0130,
+2020-07-20 11:54:08,565:         0.0168, 0.0047, 0.0172, 0.0163, 0.0184, 0.0065, 0.0247, 0.0067, 0.0323,
+2020-07-20 11:54:08,565:         0.0078, 0.0103]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:08,565:o_target
+2020-07-20 11:54:08,566:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:08,566:         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:08,566:3.1.4 evaluation
+2020-07-20 11:54:08,579:updating parameters
+2020-07-20 11:54:08,583:meta
+2020-07-20 11:54:08,584:{'id': ['8X7D6'], 'time': tensor([444])}
+2020-07-20 11:54:08,584:Charades __getitem__
+2020-07-20 11:54:10,439:3.1.1 base_model
+2020-07-20 11:54:10,453:3.1.2 modeling
+2020-07-20 11:54:10,457:3.1.3 inference
+2020-07-20 11:54:10,457:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:10,459:s_output
+2020-07-20 11:54:10,460:tensor([[0.0141, 0.0312, 0.2416, 0.0561, 0.0452, 0.0488, 0.0170, 0.0674, 0.0821,
+2020-07-20 11:54:10,460:         0.0633, 0.0587, 0.1814, 0.0168, 0.0186, 0.0250, 0.0326]],
+2020-07-20 11:54:10,460:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:10,460:s_target
+2020-07-20 11:54:10,460:tensor([12], device='cuda:0')
+2020-07-20 11:54:10,460:v_output
+2020-07-20 11:54:10,461:tensor([[0.0041, 0.0249, 0.0116, 0.0093, 0.0259, 0.0314, 0.0086, 0.0052, 0.6317,
+2020-07-20 11:54:10,462:         0.0184, 0.0088, 0.0020, 0.0456, 0.0050, 0.0381, 0.0084, 0.1359, 0.0068,
+2020-07-20 11:54:10,462:         0.1672, 0.0330, 0.0164, 0.0088, 0.0343, 0.1426, 0.0113, 0.0157, 0.0519,
+2020-07-20 11:54:10,462:         0.0053, 0.0108, 0.0104, 0.0182, 0.0870, 0.0128]], device='cuda:0',
+2020-07-20 11:54:10,462:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:10,462:v_target
+2020-07-20 11:54:10,462:tensor([[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+2020-07-20 11:54:10,462:         0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:10,462:o_output
+2020-07-20 11:54:10,463:tensor([[0.1497, 0.0245, 0.0094, 0.0170, 0.0242, 0.0152, 0.0122, 0.0516, 0.0109,
+2020-07-20 11:54:10,463:         0.0248, 0.0825, 0.0590, 0.0112, 0.0058, 0.0108, 0.0488, 0.1197, 0.0051,
+2020-07-20 11:54:10,463:         0.0036, 0.0028, 0.0312, 0.0062, 0.0102, 0.0097, 0.0210, 0.0478, 0.0127,
+2020-07-20 11:54:10,463:         0.0119, 0.0046, 0.0195, 0.0098, 0.0176, 0.0090, 0.0601, 0.0072, 0.0221,
+2020-07-20 11:54:10,463:         0.0116, 0.0080]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:10,463:o_target
+2020-07-20 11:54:10,464:tensor([[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:10,464:         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:10,464:3.1.4 evaluation
+2020-07-20 11:54:10,478:updating parameters
+2020-07-20 11:54:10,482:meta
+2020-07-20 11:54:10,482:{'id': ['INT61'], 'time': tensor([448])}
+2020-07-20 11:54:10,482:Charades __getitem__
+2020-07-20 11:54:12,345:3.1.1 base_model
+2020-07-20 11:54:12,358:3.1.2 modeling
+2020-07-20 11:54:12,361:3.1.3 inference
+2020-07-20 11:54:12,361:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:12,364:s_output
+2020-07-20 11:54:12,365:tensor([[0.0084, 0.0277, 0.1820, 0.0400, 0.0591, 0.0589, 0.0223, 0.0675, 0.1172,
+2020-07-20 11:54:12,365:         0.0780, 0.0671, 0.1892, 0.0096, 0.0125, 0.0166, 0.0439]],
+2020-07-20 11:54:12,365:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:12,365:s_target
+2020-07-20 11:54:12,365:tensor([0], device='cuda:0')
+2020-07-20 11:54:12,365:v_output
+2020-07-20 11:54:12,366:tensor([[0.0033, 0.0250, 0.0031, 0.0118, 0.0150, 0.0208, 0.0097, 0.0052, 0.6977,
+2020-07-20 11:54:12,366:         0.0212, 0.0081, 0.0012, 0.0486, 0.0048, 0.0350, 0.0040, 0.1250, 0.0044,
+2020-07-20 11:54:12,366:         0.1862, 0.0434, 0.0163, 0.0125, 0.0305, 0.1211, 0.0100, 0.0162, 0.0550,
+2020-07-20 11:54:12,366:         0.0045, 0.0125, 0.0094, 0.0121, 0.1277, 0.0080]], device='cuda:0',
+2020-07-20 11:54:12,366:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:12,366:v_target
+2020-07-20 11:54:12,367:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0,
+2020-07-20 11:54:12,367:         0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:12,367:o_output
+2020-07-20 11:54:12,368:tensor([[0.1371, 0.0258, 0.0095, 0.0238, 0.0264, 0.0143, 0.0128, 0.0590, 0.0131,
+2020-07-20 11:54:12,368:         0.0350, 0.0410, 0.0219, 0.0117, 0.0060, 0.0095, 0.0512, 0.0481, 0.0040,
+2020-07-20 11:54:12,368:         0.0043, 0.0021, 0.0250, 0.0055, 0.0077, 0.0172, 0.0166, 0.0476, 0.0122,
+2020-07-20 11:54:12,368:         0.0217, 0.0029, 0.0116, 0.0098, 0.0153, 0.0086, 0.0389, 0.0081, 0.0243,
+2020-07-20 11:54:12,368:         0.0088, 0.0083]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:12,368:o_target
+2020-07-20 11:54:12,368:tensor([[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:12,368:         0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:12,368:3.1.4 evaluation
+2020-07-20 11:54:12,382:updating parameters
+2020-07-20 11:54:12,386:meta
+2020-07-20 11:54:12,386:{'id': ['5TF8P'], 'time': tensor([252])}
+2020-07-20 11:54:12,386:Charades __getitem__
+2020-07-20 11:54:14,249:3.1.1 base_model
+2020-07-20 11:54:14,262:3.1.2 modeling
+2020-07-20 11:54:14,265:3.1.3 inference
+2020-07-20 11:54:14,266:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:14,268:s_output
+2020-07-20 11:54:14,269:tensor([[0.0110, 0.0457, 0.2195, 0.0460, 0.0692, 0.0624, 0.0187, 0.0563, 0.0847,
+2020-07-20 11:54:14,269:         0.0770, 0.0580, 0.1567, 0.0115, 0.0166, 0.0164, 0.0505]],
+2020-07-20 11:54:14,269:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:14,269:s_target
+2020-07-20 11:54:14,269:tensor([13], device='cuda:0')
+2020-07-20 11:54:14,269:v_output
+2020-07-20 11:54:14,270:tensor([[0.0031, 0.0285, 0.0052, 0.0191, 0.0299, 0.0222, 0.0119, 0.0064, 0.6321,
+2020-07-20 11:54:14,270:         0.0167, 0.0055, 0.0018, 0.0461, 0.0057, 0.0200, 0.0074, 0.1984, 0.0059,
+2020-07-20 11:54:14,270:         0.0461, 0.0362, 0.0183, 0.0098, 0.0323, 0.1578, 0.0085, 0.0235, 0.1019,
+2020-07-20 11:54:14,270:         0.0065, 0.0211, 0.0122, 0.0317, 0.0828, 0.0045]], device='cuda:0',
+2020-07-20 11:54:14,270:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:14,270:v_target
+2020-07-20 11:54:14,271:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+2020-07-20 11:54:14,271:         0, 0, 1, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:14,271:o_output
+2020-07-20 11:54:14,272:tensor([[0.1131, 0.0287, 0.0060, 0.0222, 0.0214, 0.0227, 0.0139, 0.0216, 0.0263,
+2020-07-20 11:54:14,272:         0.0705, 0.0927, 0.0548, 0.0144, 0.0072, 0.0125, 0.0282, 0.0667, 0.0085,
+2020-07-20 11:54:14,272:         0.0061, 0.0038, 0.0136, 0.0085, 0.0148, 0.0220, 0.0116, 0.0369, 0.0116,
+2020-07-20 11:54:14,272:         0.0195, 0.0042, 0.0138, 0.0282, 0.0140, 0.0058, 0.0296, 0.0065, 0.0452,
+2020-07-20 11:54:14,272:         0.0060, 0.0096]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:14,272:o_target
+2020-07-20 11:54:14,273:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:14,273:         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:14,273:3.1.4 evaluation
+2020-07-20 11:54:14,287:updating parameters
+2020-07-20 11:54:14,290:Charades __len__
+2020-07-20 11:54:14,291:Charades __len__
+2020-07-20 11:54:14,312:Epoch: [7][10/282926(1414632)]	Time 1.904 (2.181)	Data 1.862 (1.930)	Loss 8.6900 (6.8830)	S_Prec@1 0.000 (9.091)	S_Prec@5 0.000 (54.545)	O_Prec@1 0.000 (27.273)	O_Prec@5 100.000 (90.909)	V_Prec@1 100.000 (45.455)	V_Prec@5 300.000 (127.273)	SOV_Prec@1 0.000 (0.000)
+2020-07-20 11:54:14,312:meta
+2020-07-20 11:54:14,312:{'id': ['NLU6W'], 'time': tensor([232])}
+2020-07-20 11:54:16,162:Charades __getitem__
+2020-07-20 11:54:16,163:3.1.1 base_model
+2020-07-20 11:54:16,174:3.1.2 modeling
+2020-07-20 11:54:16,178:3.1.3 inference
+2020-07-20 11:54:16,178:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:16,181:s_output
+2020-07-20 11:54:16,181:tensor([[0.0080, 0.0426, 0.1726, 0.0439, 0.0740, 0.0514, 0.0198, 0.0588, 0.1010,
+2020-07-20 11:54:16,182:         0.0819, 0.0803, 0.1700, 0.0103, 0.0228, 0.0192, 0.0435]],
+2020-07-20 11:54:16,182:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:16,182:s_target
+2020-07-20 11:54:16,182:tensor([11], device='cuda:0')
+2020-07-20 11:54:16,182:v_output
+2020-07-20 11:54:16,183:tensor([[0.0039, 0.0298, 0.0033, 0.0123, 0.0174, 0.0295, 0.0091, 0.0055, 0.6911,
+2020-07-20 11:54:16,183:         0.0218, 0.0096, 0.0016, 0.0587, 0.0049, 0.0294, 0.0048, 0.1505, 0.0053,
+2020-07-20 11:54:16,183:         0.1673, 0.0499, 0.0153, 0.0102, 0.0315, 0.1519, 0.0087, 0.0189, 0.0481,
+2020-07-20 11:54:16,183:         0.0047, 0.0126, 0.0104, 0.0128, 0.1085, 0.0074]], device='cuda:0',
+2020-07-20 11:54:16,183:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:16,183:v_target
+2020-07-20 11:54:16,184:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0,
+2020-07-20 11:54:16,184:         0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:16,184:o_output
+2020-07-20 11:54:16,185:tensor([[0.1492, 0.0338, 0.0121, 0.0213, 0.0368, 0.0236, 0.0092, 0.0533, 0.0132,
+2020-07-20 11:54:16,185:         0.0362, 0.0488, 0.0286, 0.0122, 0.0062, 0.0108, 0.0510, 0.0725, 0.0050,
+2020-07-20 11:54:16,185:         0.0043, 0.0022, 0.0225, 0.0059, 0.0102, 0.0145, 0.0186, 0.0417, 0.0146,
+2020-07-20 11:54:16,185:         0.0178, 0.0031, 0.0174, 0.0113, 0.0175, 0.0092, 0.0342, 0.0077, 0.0238,
+2020-07-20 11:54:16,185:         0.0076, 0.0067]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:16,185:o_target
+2020-07-20 11:54:16,185:tensor([[1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:16,185:         0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:16,185:3.1.4 evaluation
+2020-07-20 11:54:16,199:updating parameters
+2020-07-20 11:54:16,203:meta
+2020-07-20 11:54:16,203:{'id': ['4VYE5'], 'time': tensor([1812])}
+2020-07-20 11:54:16,203:Charades __getitem__
+2020-07-20 11:54:18,063:3.1.1 base_model
+2020-07-20 11:54:18,077:3.1.2 modeling
+2020-07-20 11:54:18,081:3.1.3 inference
+2020-07-20 11:54:18,081:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:18,083:s_output
+2020-07-20 11:54:18,084:tensor([[0.0165, 0.0350, 0.2225, 0.0835, 0.0727, 0.0678, 0.0180, 0.0684, 0.0668,
+2020-07-20 11:54:18,084:         0.0796, 0.0414, 0.1373, 0.0176, 0.0110, 0.0163, 0.0457]],
+2020-07-20 11:54:18,084:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:18,084:s_target
+2020-07-20 11:54:18,084:tensor([2], device='cuda:0')
+2020-07-20 11:54:18,084:v_output
+2020-07-20 11:54:18,085:tensor([[0.0030, 0.0199, 0.0045, 0.0082, 0.0298, 0.0412, 0.0101, 0.0040, 0.6339,
+2020-07-20 11:54:18,085:         0.0176, 0.0079, 0.0014, 0.0373, 0.0048, 0.0345, 0.0066, 0.1298, 0.0035,
+2020-07-20 11:54:18,085:         0.2122, 0.0368, 0.0147, 0.0066, 0.0293, 0.1189, 0.0094, 0.0123, 0.0421,
+2020-07-20 11:54:18,085:         0.0041, 0.0086, 0.0065, 0.0127, 0.1171, 0.0102]], device='cuda:0',
+2020-07-20 11:54:18,085:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:18,085:v_target
+2020-07-20 11:54:18,086:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0,
+2020-07-20 11:54:18,086:         0, 0, 0, 0, 0, 0, 0, 1, 1]], device='cuda:0')
+2020-07-20 11:54:18,086:o_output
+2020-07-20 11:54:18,087:tensor([[0.1369, 0.0223, 0.0079, 0.0120, 0.0213, 0.0105, 0.0089, 0.0757, 0.0119,
+2020-07-20 11:54:18,087:         0.0193, 0.0825, 0.0382, 0.0087, 0.0049, 0.0065, 0.0381, 0.1036, 0.0048,
+2020-07-20 11:54:18,087:         0.0039, 0.0020, 0.0232, 0.0053, 0.0106, 0.0130, 0.0154, 0.0453, 0.0116,
+2020-07-20 11:54:18,087:         0.0112, 0.0030, 0.0210, 0.0113, 0.0122, 0.0072, 0.0636, 0.0080, 0.0195,
+2020-07-20 11:54:18,087:         0.0059, 0.0076]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:18,087:o_target
+2020-07-20 11:54:18,088:tensor([[0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+2020-07-20 11:54:18,088:         0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:18,088:3.1.4 evaluation
+2020-07-20 11:54:18,102:updating parameters
+2020-07-20 11:54:18,106:meta
+2020-07-20 11:54:18,106:{'id': ['XMINJ'], 'time': tensor([160])}
+2020-07-20 11:54:18,106:Charades __getitem__
+2020-07-20 11:54:19,964:3.1.1 base_model
+2020-07-20 11:54:19,977:3.1.2 modeling
+2020-07-20 11:54:19,981:3.1.3 inference
+2020-07-20 11:54:19,981:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:19,983:s_output
+2020-07-20 11:54:19,984:tensor([[0.0126, 0.0414, 0.1763, 0.0409, 0.0533, 0.0636, 0.0140, 0.0848, 0.0619,
+2020-07-20 11:54:19,984:         0.1153, 0.0585, 0.1859, 0.0140, 0.0136, 0.0168, 0.0471]],
+2020-07-20 11:54:19,984:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:19,984:s_target
+2020-07-20 11:54:19,984:tensor([11], device='cuda:0')
+2020-07-20 11:54:19,984:v_output
+2020-07-20 11:54:19,985:tensor([[0.0024, 0.0268, 0.0039, 0.0183, 0.0148, 0.0150, 0.0128, 0.0069, 0.6333,
+2020-07-20 11:54:19,985:         0.0148, 0.0048, 0.0013, 0.0519, 0.0059, 0.0335, 0.0047, 0.1605, 0.0047,
+2020-07-20 11:54:19,985:         0.0561, 0.0322, 0.0144, 0.0072, 0.0267, 0.1334, 0.0082, 0.0206, 0.0791,
+2020-07-20 11:54:19,985:         0.0055, 0.0187, 0.0103, 0.0381, 0.0967, 0.0053]], device='cuda:0',
+2020-07-20 11:54:19,985:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:19,985:v_target
+2020-07-20 11:54:19,986:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:19,986:         0, 0, 0, 0, 0, 0, 1, 0, 0]], device='cuda:0')
+2020-07-20 11:54:19,986:o_output
+2020-07-20 11:54:19,987:tensor([[0.0987, 0.0254, 0.0057, 0.0204, 0.0189, 0.0151, 0.0095, 0.0217, 0.0196,
+2020-07-20 11:54:19,987:         0.0710, 0.0478, 0.0279, 0.0142, 0.0079, 0.0105, 0.0295, 0.0375, 0.0052,
+2020-07-20 11:54:19,987:         0.0059, 0.0037, 0.0130, 0.0071, 0.0110, 0.0211, 0.0120, 0.0577, 0.0097,
+2020-07-20 11:54:19,987:         0.0158, 0.0031, 0.0097, 0.0192, 0.0140, 0.0052, 0.0289, 0.0055, 0.0610,
+2020-07-20 11:54:19,987:         0.0052, 0.0106]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:19,987:o_target
+2020-07-20 11:54:19,988:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+2020-07-20 11:54:19,988:         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]], device='cuda:0')
+2020-07-20 11:54:19,988:3.1.4 evaluation
+2020-07-20 11:54:20,001:updating parameters
+2020-07-20 11:54:20,005:meta
+2020-07-20 11:54:20,006:{'id': ['L5TI4'], 'time': tensor([100])}
+2020-07-20 11:54:20,006:Charades __getitem__
+2020-07-20 11:54:21,865:3.1.1 base_model
+2020-07-20 11:54:21,878:3.1.2 modeling
+2020-07-20 11:54:21,882:3.1.3 inference
+2020-07-20 11:54:21,882:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:21,885:s_output
+2020-07-20 11:54:21,885:tensor([[0.0139, 0.0404, 0.2355, 0.0444, 0.0332, 0.0532, 0.0185, 0.0884, 0.0705,
+2020-07-20 11:54:21,886:         0.1136, 0.0416, 0.1601, 0.0107, 0.0152, 0.0190, 0.0419]],
+2020-07-20 11:54:21,886:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:21,886:s_target
+2020-07-20 11:54:21,886:tensor([11], device='cuda:0')
+2020-07-20 11:54:21,886:v_output
+2020-07-20 11:54:21,887:tensor([[0.0028, 0.0194, 0.0033, 0.0077, 0.0313, 0.0590, 0.0076, 0.0043, 0.7194,
+2020-07-20 11:54:21,887:         0.0179, 0.0077, 0.0013, 0.0389, 0.0052, 0.0373, 0.0053, 0.1229, 0.0039,
+2020-07-20 11:54:21,887:         0.1991, 0.0370, 0.0180, 0.0084, 0.0261, 0.1278, 0.0127, 0.0114, 0.0319,
+2020-07-20 11:54:21,887:         0.0039, 0.0083, 0.0078, 0.0086, 0.1051, 0.0083]], device='cuda:0',
+2020-07-20 11:54:21,887:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:21,887:v_target
+2020-07-20 11:54:21,887:tensor([[0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1,
+2020-07-20 11:54:21,887:         0, 0, 0, 0, 0, 0, 0, 0, 1]], device='cuda:0')
+2020-07-20 11:54:21,888:o_output
+2020-07-20 11:54:21,889:tensor([[0.1399, 0.0234, 0.0099, 0.0167, 0.0190, 0.0110, 0.0081, 0.0600, 0.0083,
+2020-07-20 11:54:21,889:         0.0202, 0.0786, 0.0348, 0.0091, 0.0049, 0.0079, 0.0367, 0.1250, 0.0036,
+2020-07-20 11:54:21,889:         0.0036, 0.0017, 0.0234, 0.0048, 0.0115, 0.0112, 0.0145, 0.0556, 0.0108,
+2020-07-20 11:54:21,889:         0.0110, 0.0027, 0.0315, 0.0069, 0.0094, 0.0083, 0.0518, 0.0076, 0.0168,
+2020-07-20 11:54:21,889:         0.0058, 0.0067]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:21,889:o_target
+2020-07-20 11:54:21,889:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:21,889:         1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:21,889:3.1.4 evaluation
+2020-07-20 11:54:21,903:updating parameters
+2020-07-20 11:54:21,907:meta
+2020-07-20 11:54:21,907:{'id': ['7QWL3'], 'time': tensor([344])}
+2020-07-20 11:54:23,763:Charades __getitem__
+2020-07-20 11:54:23,763:3.1.1 base_model
+2020-07-20 11:54:23,775:3.1.2 modeling
+2020-07-20 11:54:23,779:3.1.3 inference
+2020-07-20 11:54:23,779:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:23,781:s_output
+2020-07-20 11:54:23,782:tensor([[0.0161, 0.0266, 0.1592, 0.0400, 0.0681, 0.0612, 0.0147, 0.0693, 0.0808,
+2020-07-20 11:54:23,782:         0.1037, 0.0596, 0.2191, 0.0144, 0.0124, 0.0239, 0.0309]],
+2020-07-20 11:54:23,782:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:23,782:s_target
+2020-07-20 11:54:23,782:tensor([3], device='cuda:0')
+2020-07-20 11:54:23,782:v_output
+2020-07-20 11:54:23,783:tensor([[0.0034, 0.0329, 0.0035, 0.0122, 0.0135, 0.0140, 0.0123, 0.0092, 0.5773,
+2020-07-20 11:54:23,783:         0.0178, 0.0074, 0.0011, 0.0549, 0.0048, 0.0203, 0.0034, 0.1267, 0.0058,
+2020-07-20 11:54:23,783:         0.0585, 0.0375, 0.0180, 0.0096, 0.0360, 0.1161, 0.0093, 0.0199, 0.0668,
+2020-07-20 11:54:23,783:         0.0056, 0.0157, 0.0126, 0.0156, 0.0994, 0.0044]], device='cuda:0',
+2020-07-20 11:54:23,783:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:23,783:v_target
+2020-07-20 11:54:23,784:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:23,784:         0, 0, 0, 0, 0, 0, 0, 1, 0]], device='cuda:0')
+2020-07-20 11:54:23,784:o_output
+2020-07-20 11:54:23,785:tensor([[0.1460, 0.0194, 0.0066, 0.0223, 0.0171, 0.0146, 0.0114, 0.0241, 0.0247,
+2020-07-20 11:54:23,785:         0.0454, 0.0372, 0.0200, 0.0213, 0.0100, 0.0130, 0.0358, 0.0383, 0.0044,
+2020-07-20 11:54:23,785:         0.0048, 0.0027, 0.0123, 0.0075, 0.0074, 0.0216, 0.0107, 0.0419, 0.0103,
+2020-07-20 11:54:23,785:         0.0236, 0.0037, 0.0092, 0.0155, 0.0150, 0.0048, 0.0221, 0.0070, 0.0328,
+2020-07-20 11:54:23,785:         0.0083, 0.0110]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:23,785:o_target
+2020-07-20 11:54:23,786:tensor([[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:23,786:         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:23,786:3.1.4 evaluation
+2020-07-20 11:54:23,800:updating parameters
+2020-07-20 11:54:23,804:meta
+2020-07-20 11:54:23,804:{'id': ['V1SQH'], 'time': tensor([412])}
+2020-07-20 11:54:25,664:Charades __getitem__
+2020-07-20 11:54:25,665:3.1.1 base_model
+2020-07-20 11:54:25,678:3.1.2 modeling
+2020-07-20 11:54:25,681:3.1.3 inference
+2020-07-20 11:54:25,681:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:25,684:s_output
+2020-07-20 11:54:25,685:tensor([[0.0158, 0.0499, 0.1934, 0.0387, 0.0542, 0.0564, 0.0190, 0.0896, 0.0933,
+2020-07-20 11:54:25,685:         0.1138, 0.0566, 0.1449, 0.0087, 0.0117, 0.0147, 0.0395]],
+2020-07-20 11:54:25,685:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:25,685:s_target
+2020-07-20 11:54:25,685:tensor([1], device='cuda:0')
+2020-07-20 11:54:25,685:v_output
+2020-07-20 11:54:25,686:tensor([[0.0034, 0.0257, 0.0030, 0.0131, 0.0572, 0.0296, 0.0156, 0.0086, 0.6379,
+2020-07-20 11:54:25,686:         0.0202, 0.0079, 0.0014, 0.0380, 0.0074, 0.0251, 0.0065, 0.1105, 0.0058,
+2020-07-20 11:54:25,686:         0.0814, 0.0454, 0.0242, 0.0091, 0.0328, 0.1121, 0.0148, 0.0160, 0.0405,
+2020-07-20 11:54:25,686:         0.0064, 0.0178, 0.0128, 0.0127, 0.1274, 0.0044]], device='cuda:0',
+2020-07-20 11:54:25,686:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:25,686:v_target
+2020-07-20 11:54:25,687:tensor([[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+2020-07-20 11:54:25,687:         0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:25,687:o_output
+2020-07-20 11:54:25,688:tensor([[0.1458, 0.0192, 0.0089, 0.0174, 0.0181, 0.0142, 0.0130, 0.0409, 0.0147,
+2020-07-20 11:54:25,688:         0.0363, 0.1368, 0.0382, 0.0151, 0.0089, 0.0132, 0.0300, 0.0518, 0.0041,
+2020-07-20 11:54:25,688:         0.0068, 0.0026, 0.0174, 0.0088, 0.0128, 0.0257, 0.0099, 0.0535, 0.0125,
+2020-07-20 11:54:25,688:         0.0159, 0.0032, 0.0158, 0.0121, 0.0122, 0.0075, 0.0251, 0.0100, 0.0235,
+2020-07-20 11:54:25,688:         0.0080, 0.0138]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:25,688:o_target
+2020-07-20 11:54:25,689:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:25,689:         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:25,689:3.1.4 evaluation
+2020-07-20 11:54:25,702:updating parameters
+2020-07-20 11:54:25,706:meta
+2020-07-20 11:54:25,707:{'id': ['BOH8J'], 'time': tensor([1048])}
+2020-07-20 11:54:27,566:Charades __getitem__
+2020-07-20 11:54:27,567:3.1.1 base_model
+2020-07-20 11:54:27,580:3.1.2 modeling
+2020-07-20 11:54:27,584:3.1.3 inference
+2020-07-20 11:54:27,584:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:27,586:s_output
+2020-07-20 11:54:27,587:tensor([[0.0152, 0.0507, 0.1580, 0.0591, 0.0598, 0.0626, 0.0241, 0.0570, 0.0811,
+2020-07-20 11:54:27,587:         0.0786, 0.0526, 0.1891, 0.0129, 0.0177, 0.0261, 0.0552]],
+2020-07-20 11:54:27,587:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:27,587:s_target
+2020-07-20 11:54:27,588:tensor([11], device='cuda:0')
+2020-07-20 11:54:27,588:v_output
+2020-07-20 11:54:27,589:tensor([[0.0029, 0.0299, 0.0036, 0.0077, 0.0240, 0.0239, 0.0103, 0.0064, 0.6315,
+2020-07-20 11:54:27,589:         0.0174, 0.0068, 0.0012, 0.0508, 0.0059, 0.0283, 0.0054, 0.1393, 0.0044,
+2020-07-20 11:54:27,589:         0.1060, 0.0347, 0.0160, 0.0072, 0.0335, 0.1279, 0.0092, 0.0150, 0.0709,
+2020-07-20 11:54:27,589:         0.0052, 0.0103, 0.0093, 0.0123, 0.1106, 0.0062]], device='cuda:0',
+2020-07-20 11:54:27,589:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:27,589:v_target
+2020-07-20 11:54:27,589:tensor([[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1,
+2020-07-20 11:54:27,589:         0, 0, 1, 0, 0, 0, 1, 0, 0]], device='cuda:0')
+2020-07-20 11:54:27,589:o_output
+2020-07-20 11:54:27,590:tensor([[0.1311, 0.0216, 0.0072, 0.0151, 0.0185, 0.0165, 0.0158, 0.0358, 0.0190,
+2020-07-20 11:54:27,590:         0.0248, 0.0644, 0.0266, 0.0152, 0.0074, 0.0095, 0.0410, 0.0640, 0.0048,
+2020-07-20 11:54:27,591:         0.0038, 0.0023, 0.0189, 0.0069, 0.0091, 0.0134, 0.0127, 0.0509, 0.0133,
+2020-07-20 11:54:27,591:         0.0154, 0.0037, 0.0129, 0.0161, 0.0124, 0.0064, 0.0374, 0.0090, 0.0221,
+2020-07-20 11:54:27,591:         0.0085, 0.0129]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:27,591:o_target
+2020-07-20 11:54:27,591:tensor([[0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:27,591:         0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0]], device='cuda:0')
+2020-07-20 11:54:27,591:3.1.4 evaluation
+2020-07-20 11:54:27,606:updating parameters
+2020-07-20 11:54:27,611:meta
+2020-07-20 11:54:27,611:{'id': ['WZRLQ'], 'time': tensor([84])}
+2020-07-20 11:54:29,469:Charades __getitem__
+2020-07-20 11:54:29,470:3.1.1 base_model
+2020-07-20 11:54:29,483:3.1.2 modeling
+2020-07-20 11:54:29,486:3.1.3 inference
+2020-07-20 11:54:29,486:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:29,489:s_output
+2020-07-20 11:54:29,490:tensor([[0.0127, 0.0391, 0.1929, 0.0564, 0.0309, 0.0414, 0.0241, 0.1040, 0.0952,
+2020-07-20 11:54:29,490:         0.0813, 0.0632, 0.1517, 0.0119, 0.0179, 0.0252, 0.0520]],
+2020-07-20 11:54:29,490:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:29,490:s_target
+2020-07-20 11:54:29,490:tensor([6], device='cuda:0')
+2020-07-20 11:54:29,490:v_output
+2020-07-20 11:54:29,491:tensor([[0.0035, 0.0214, 0.0036, 0.0101, 0.0200, 0.0535, 0.0101, 0.0058, 0.6168,
+2020-07-20 11:54:29,491:         0.0216, 0.0099, 0.0014, 0.0409, 0.0045, 0.0376, 0.0044, 0.1042, 0.0047,
+2020-07-20 11:54:29,491:         0.1386, 0.0385, 0.0179, 0.0110, 0.0278, 0.1072, 0.0112, 0.0147, 0.0405,
+2020-07-20 11:54:29,491:         0.0051, 0.0109, 0.0110, 0.0103, 0.1449, 0.0086]], device='cuda:0',
+2020-07-20 11:54:29,491:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:29,491:v_target
+2020-07-20 11:54:29,492:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+2020-07-20 11:54:29,492:         0, 0, 0, 0, 0, 0, 0, 1, 0]], device='cuda:0')
+2020-07-20 11:54:29,492:o_output
+2020-07-20 11:54:29,493:tensor([[0.1424, 0.0291, 0.0121, 0.0226, 0.0144, 0.0114, 0.0121, 0.0480, 0.0107,
+2020-07-20 11:54:29,493:         0.0298, 0.0499, 0.0285, 0.0130, 0.0068, 0.0116, 0.0399, 0.1153, 0.0042,
+2020-07-20 11:54:29,493:         0.0044, 0.0020, 0.0398, 0.0062, 0.0100, 0.0170, 0.0146, 0.0384, 0.0111,
+2020-07-20 11:54:29,493:         0.0169, 0.0033, 0.0276, 0.0080, 0.0093, 0.0078, 0.0425, 0.0117, 0.0228,
+2020-07-20 11:54:29,493:         0.0072, 0.0108]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:29,493:o_target
+2020-07-20 11:54:29,494:tensor([[0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:29,494:         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:29,494:3.1.4 evaluation
+2020-07-20 11:54:29,508:updating parameters
+2020-07-20 11:54:29,513:meta
+2020-07-20 11:54:29,513:{'id': ['9J074'], 'time': tensor([632])}
+2020-07-20 11:54:29,513:Charades __getitem__
+2020-07-20 11:54:31,374:3.1.1 base_model
+2020-07-20 11:54:31,388:3.1.2 modeling
+2020-07-20 11:54:31,392:3.1.3 inference
+2020-07-20 11:54:31,392:class AsyncTFCriterion -- def forward
+2020-07-20 11:54:31,394:s_output
+2020-07-20 11:54:31,395:tensor([[0.0158, 0.0381, 0.1874, 0.0458, 0.0320, 0.0637, 0.0126, 0.0695, 0.1072,
+2020-07-20 11:54:31,395:         0.1038, 0.0957, 0.1471, 0.0119, 0.0133, 0.0153, 0.0407]],
+2020-07-20 11:54:31,395:       device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:31,395:s_target
+2020-07-20 11:54:31,396:tensor([10], device='cuda:0')
+2020-07-20 11:54:31,396:v_output
+2020-07-20 11:54:31,397:tensor([[0.0035, 0.0242, 0.0038, 0.0165, 0.0143, 0.0175, 0.0092, 0.0054, 0.6239,
+2020-07-20 11:54:31,397:         0.0226, 0.0080, 0.0012, 0.0452, 0.0056, 0.0442, 0.0040, 0.1298, 0.0046,
+2020-07-20 11:54:31,397:         0.1571, 0.0427, 0.0152, 0.0092, 0.0349, 0.1218, 0.0102, 0.0197, 0.0476,
+2020-07-20 11:54:31,397:         0.0046, 0.0168, 0.0086, 0.0139, 0.1015, 0.0071]], device='cuda:0',
+2020-07-20 11:54:31,397:       grad_fn=<CloneBackward>)
+2020-07-20 11:54:31,397:v_target
+2020-07-20 11:54:31,397:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:31,397:         0, 0, 1, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:31,397:o_output
+2020-07-20 11:54:31,399:tensor([[0.1514, 0.0272, 0.0102, 0.0209, 0.0210, 0.0139, 0.0092, 0.0485, 0.0123,
+2020-07-20 11:54:31,399:         0.0517, 0.0404, 0.0167, 0.0116, 0.0063, 0.0085, 0.0436, 0.0423, 0.0040,
+2020-07-20 11:54:31,399:         0.0038, 0.0022, 0.0227, 0.0058, 0.0090, 0.0137, 0.0142, 0.0648, 0.0110,
+2020-07-20 11:54:31,399:         0.0180, 0.0031, 0.0105, 0.0099, 0.0244, 0.0079, 0.0314, 0.0076, 0.0276,
+2020-07-20 11:54:31,399:         0.0074, 0.0083]], device='cuda:0', grad_fn=<CloneBackward>)
+2020-07-20 11:54:31,399:o_target
+2020-07-20 11:54:31,399:tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+2020-07-20 11:54:31,399:         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], device='cuda:0')
+2020-07-20 11:54:31,399:3.1.4 evaluation
+2020-07-20 11:54:31,413:updating parameters
+2020-07-20 11:54:31,417:meta
+2020-07-20 11:54:31,417:{'id': ['4VYE5'], 'time': tensor([2548])}
+2020-07-20 11:54:31,417:Charades __getitem__
+2020-07-20 11:54:33,300:Exception in thread Thread-1:
+2020-07-20 11:54:33,300:Traceback (most recent call last):
+2020-07-20 11:54:33,300:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/threading.py", line 926, in _bootstrap_inner
+2020-07-20 11:54:33,300:    self.run()
+2020-07-20 11:54:33,300:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/threading.py", line 870, in run
+2020-07-20 11:54:33,300:    self._target(*self._args, **self._kwargs)
+2020-07-20 11:54:33,300:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/site-packages/torch/utils/data/_utils/pin_memory.py", line 25, in _pin_memory_loop
+2020-07-20 11:54:33,300:    r = in_queue.get(timeout=MP_STATUS_CHECK_INTERVAL)
+2020-07-20 11:54:33,300:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/multiprocessing/queues.py", line 113, in get
+2020-07-20 11:54:33,300:    return _ForkingPickler.loads(res)
+2020-07-20 11:54:33,300:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/site-packages/torch/multiprocessing/reductions.py", line 294, in rebuild_storage_fd
+2020-07-20 11:54:33,300:    fd = df.detach()
+2020-07-20 11:54:33,300:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/multiprocessing/resource_sharer.py", line 57, in detach
+2020-07-20 11:54:33,300:    with _resource_sharer.get_connection(self._id) as conn:
+2020-07-20 11:54:33,300:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/multiprocessing/resource_sharer.py", line 87, in get_connection
+2020-07-20 11:54:33,300:    c = Client(address, authkey=process.current_process().authkey)
+2020-07-20 11:54:33,300:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/multiprocessing/connection.py", line 492, in Client
+2020-07-20 11:54:33,300:    c = SocketClient(address)
+2020-07-20 11:54:33,300:  File "/usr/local/jlab/anaconda-gpu2/lib/python3.7/multiprocessing/connection.py", line 619, in SocketClient
+2020-07-20 11:54:33,300:    s.connect(address)
+2020-07-20 11:54:33,300:FileNotFoundError: [Errno 2] No such file or directory
+2020-07-20 11:54:33,307:Traceback (most recent call last):
+2020-07-20 11:54:33,307:  File "exp/GSTEG.py", line 26, in <module>
+2020-07-20 11:54:33,308:main()
+2020-07-20 11:54:33,308:  File "./main.py", line 65, in main
+2020-07-20 11:54:33,309:s_top1,s_top5,o_top1,o_top5,v_top1,v_top5, sov_top1 = trainer.train(train_loader, base_model, logits_model, criterion, base_optimizer, logits_optimizer, epoch, opt)
+2020-07-20 11:54:33,309:  File "./train.py", line 129, in train
+2020-07-20 11:54:33,310:gc.collect()
+2020-07-20 11:54:33,310:KeyboardInterrupt
